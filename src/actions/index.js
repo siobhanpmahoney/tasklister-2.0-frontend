@@ -16,7 +16,7 @@ export function loadCurrentUser(user) {
 export function loadAllTasks() {
   return (dispatch) => {
     fetch('http://localhost:3000/api/v1/tasks')
-    .then(response => response.response.json())
+    .then(response => response.json())
     .then(json => dispatch({
       type: ALL_TASKS,
       tasks: json

@@ -74,6 +74,7 @@ class App extends Component {
               },
 
             }); this.props.loadCurrentUser(this.state.auth.currentUser)
+            this.props.loadAllTasks()
           }
 
           else {
@@ -149,7 +150,8 @@ if (!!this.state.auth.loggingIn) {
 function mapStateToProps(state, props) {
   return {
     user: state.user.currentUser,
-    userTasks: state.user.userTasks
+    userTasks: state.user.userTasks,
+    teamTasks: state.teamTasks.allTasks
 
   }
 }
