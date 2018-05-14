@@ -26,3 +26,90 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+html, body {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.table-container {
+  margin: 1em;
+  padding: 1em;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: stretch;
+  align-items: stretch;
+
+  align-content: stretch;
+}
+
+ .table-header-row, .table-row {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+/* 
+.table-header-row. .table-row {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  padding: 1em;
+  width: 100%;
+  justify-content: stretch;
+  align-items: stretch;
+  align-content: flex-start;
+} */
+
+.table-row {
+  align-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+
+  padding: 1em;
+  margin: 1em;
+  flex-grow: 1;
+  flex-shrink: 1;
+
+}
+
+.header-cell, .task-cell {
+
+  padding: 1em;
+  margin: 1em;
+  width: 20%;
+  flex-wrap: nowrap;
+  align-items: stretch;
+  flex-grow: 1;
+  flex-shrink: 1;
+  align-self: stretch;
+}
+
+.cell-task {
+  order: 0;
+}
+
+.cell-team-member {
+  order: 1;
+}
+
+.cell-tags {
+  order: 2;
+}
+
+.cell-relevant-pages {
+  order: 3;
+}
+
+.cell-status-summary {
+  order: 4;
+}
+
+
+.table-header, .task-cell {
+
+}

@@ -20,7 +20,7 @@ const user = (state = {currentUser: null, userTasks: [] }, action) => {
   }
 }
 
-const teamTasks = (state = {allTasks: null }, action) => {
+const teamTasks = (state = {allTasks: [] }, action) => {
   switch(action.type) {
     case ALL_TASKS:
       state = Object.assign({},

@@ -5,6 +5,7 @@ import * as Actions from '../actions'
 import { withRouter } from 'react-router';
 import { Redirect } from 'react-router-dom'
 import WithAuth from '../wrappers/WithAuth'
+import TeamTaskContainer from './teamTasks/TeamTaskContainer'
 
 class Home extends React.Component {
 
@@ -23,7 +24,9 @@ render() {
   }
   if (!!this.props.auth.loggingIn) {
     return (
-      <div>Welcome {this.props.user.username}</div>
+      <div>Welcome {this.props.user.username}
+      <TeamTaskContainer setLoggedInUser={this.props.setLoggedInUser} auth={this.props.auth}/>
+      </div>
     )
   }
 
