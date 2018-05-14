@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { CURRENT_USER } from '../actions'
+import { CURRENT_USER, ALL_TASKS } from '../actions'
 
 const user = (state = {currentUser: null, userTasks: [] }, action) => {
   switch(action.type) {
@@ -20,8 +20,24 @@ const user = (state = {currentUser: null, userTasks: [] }, action) => {
   }
 }
 
+const teamTasks = (state = {allTasks: null }, action) => {
+  switch(action.type) {
+    case ALL_TASKS:
+      state = Object.assign({},
+      state,
+      {
+        allTasks: action.tasks,
+      }
+    );
+    return state;
+
+    default:
+      return state;
+  }
+}
+
 const rootReducer = combineReducers({
-  user,
+  user, teamTasks
     // ,[ANOTHER REDUCER], [ANOTHER REDUCER] ....
 });
 

@@ -17,6 +17,7 @@ componentDidMount() {
 }
 
 render() {
+  console.log("in Home, rendering props", this.props)
   if (this.props.user == null && !!this.props.auth.loggingIn) {
     return <div>loading..</div>
   }
@@ -35,7 +36,8 @@ render() {
 function mapStateToProps(state, props) {
   return {
     user: state.user.currentUser,
-    tasks: state.user.userTasks
+    userTasks: state.user.userTasks,
+    teamTasks: state.teamTasks.allTasks
   }
 }
 

@@ -40,6 +40,7 @@ class App extends Component {
      })
 
      this.props.loadCurrentUser(this.state.auth.currentUser)
+     this.props.loadAllTasks()
 
    }
 
