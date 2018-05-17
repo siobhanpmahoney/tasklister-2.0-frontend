@@ -3,14 +3,14 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as Actions from '../actions'
 import { withRouter } from 'react-router';
-import { NavLink, Redirect } from 'react-router-dom';
-import WithAuth from '../wrappers/WithAuth'
+import { NavLink } from 'react-router-dom';
+// import WithAuth from '../wrappers/WithAuth'
 
 
 class NavBar extends React.Component {
 
   renderHTML = () => {
-    if (!!this.props.user) {
+    if (this.props.auth.loggingIn) {
       console.log("in Nav", this.props.user)
       return (
 

@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
-import {BrowserRouter as Router, Route, Switch, Redirect, NavLink, Link, withRouter} from 'react-router-dom';
+import {BrowserRouter as Router, Route, withRouter} from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import logo from './logo.svg';
 import './App.css';
 import registerServiceWorker from './registerServiceWorker';
 
 import * as Actions from './actions'
-import Main from './Main'
 
 import Home from './components/Home'
 import LogIn from './components/LogIn'
@@ -112,16 +110,16 @@ class App extends Component {
     console.log("in app#render", this.state.auth.loggingIn)
 
 
-if (!!this.state.auth.loggingIn) {
+if (this.state.auth.loggingIn) {
     return (
 
       <Router>
               <div className="App">
 
-                <NavBar loggedIn = {this.state.auth.currentUser} logOutUser = {this.logOutUser} />
+                <NavBar auth={this.state.auth} loggedIn = {this.state.auth.loggingIn} logOutUser = {this.logOutUser} />
 
 
-                <Route exact path="/" render={() => <Home loggedIn = {this.state.auth.currentUser} auth = {this.state.auth}/> } />
+                <Route exact path="/" render={() => <Home loggedIn = {this.state.auth.loggingIn} auth = {this.state.auth}/> } />
 
               </div>
 
@@ -134,9 +132,10 @@ if (!!this.state.auth.loggingIn) {
     console.log("in app#render, !this.state.auth.loggingIn", !this.state.auth.loggingIn)
     return (
       <Router>
-
+        <div>
         <Route exact path="/login" render={() => <LogIn setLoggedInUser={this.setLoggedInUser} auth={this.state.auth} /> } />
 
+      </div>
 
       </Router>
     )
