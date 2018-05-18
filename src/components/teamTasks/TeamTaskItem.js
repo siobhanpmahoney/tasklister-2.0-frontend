@@ -1,4 +1,7 @@
 import React from 'react'
+import TaskStatusDetail from './taskStatusDetails/TaskStatusDetail'
+import { withRouter } from 'react-router';
+
 
 class TeamTaskItem extends React.Component {
 
@@ -12,14 +15,23 @@ class TeamTaskItem extends React.Component {
     }
   }
 
-  render() {
-    if (this.props.taskTags != [] && this.props.taskTags[0] && this.props.taskTags[0]["title"]) {
-      console.log("in TeamTaskItem, props:", this.props.taskTags[0].title)
+  taskStatusDetails = () => {
+
+    if (this.props.t.status_details != undefined && this.props.t.status_details.length > 0) {
+      this.props.t.status_details.map((d) => {
+        return d
+      })
     }
 
+  }
+
+  render() {
+    if (this.props.taskTags != [] && this.props.taskTags[0] && this.props.taskTags[0]["title"]) {
+    }
 
     return (
-      <div className="table-row">
+      <div className="taskData">
+        <div className="table-row">
         <span className="task-cell cell-task">{this.props.t.title}</span>
         <span className="task-cell cell-team-member">{this.props.taskUsers.map((u) => {
           return <span>{u.username}</span>
@@ -31,10 +43,18 @@ class TeamTaskItem extends React.Component {
       </span>
       <span className="task-cell cell-relevant-pages">{this.relPages()}</span>
       <span className="task-cell cell-status-summary"> {this.props.t.status_summary} </span>
-        
+      </div>
+      <div className="taskDetails">
+        <div className="taskDescription">
+          <b>Description:</b>{this.props.t.description}
+        </div>
+
+
+      </div>
+
       </div>
     )
   }
 }
 
-export default TeamTaskItem
+export default withRouter(TeamTaskItem)

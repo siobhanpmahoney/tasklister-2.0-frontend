@@ -9,33 +9,36 @@ import throttle from 'lodash/throttle'
 import App from './App';
 import reducers from './reducers';
 import * as Actions from './actions'
-// import { loadState, saveState } from './localStorage'
+import { loadState, saveState } from './localStorage'
 
 import './index.css';
 import registerServiceWorker from './registerServiceWorker';
 
-// const persistedState = loadState();
+const persistedState = loadState();
 
-// function configureStore(){
-//   return createStore(
-//     rootReducer,
-//     persistedState,
-//     composeWithDevTools(applyMiddleware(thunk))}
+function configureStore(){
+  return createStore(
+    reducers,
+    persistedState,
+    applyMiddleware(thunk))}
 //
-// const store = configureStore()
+const store = configureStore()
 
-const store = createStore(reducers,
-  applyMiddleware(thunk)
-);
+// const store = createStore(reducers,
+//   applyMiddleware(thunk)
+// );
 
+store.subscribe(throttle(() => {
+  saveState(store.getState())
+}, 1000));
 
 // store.subscribe(() => {
 //   saveState(store.getState())
 // });
 
-store.subscribe(() => {
-  store.getState()
-});
+// store.subscribe(() => {
+//   store.getState()
+// });
 
 // Connect our store to the reducers
 

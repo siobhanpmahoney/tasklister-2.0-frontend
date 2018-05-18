@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { CURRENT_USER, ALL_TASKS } from '../actions'
+import { CURRENT_USER, ALL_TASKS, ADD_NEW_TASK } from '../actions'
 
 const user = (state = {currentUser: null, userTasks: [] }, action) => {
   switch(action.type) {
@@ -11,7 +11,6 @@ const user = (state = {currentUser: null, userTasks: [] }, action) => {
           userTasks: action.currentUser.tasks
         }
       );
-      console.log("in reducer", state)
       return state;
 
 
@@ -23,13 +22,24 @@ const user = (state = {currentUser: null, userTasks: [] }, action) => {
 const teamTasks = (state = {allTasks: [] }, action) => {
   switch(action.type) {
     case ALL_TASKS:
-      state = Object.assign({},
+      return Object.assign({},
       state,
       {
         allTasks: action.tasks,
       }
     );
-    return state;
+
+    case ADD_NEW_TASK:
+      let allTasksState = state.allTasks.slice(0)
+      console.log("in reducer")
+      console.log("in reducer — allTasks", allTasksState)
+      console.log("in reducer — pre ")
+      state = Object.assign({},
+        state,
+        {
+          allTasks: [...allTasksState, action.newTask]
+        })
+      console.log("in reducer — finished updating state", state)
 
     default:
       return state;

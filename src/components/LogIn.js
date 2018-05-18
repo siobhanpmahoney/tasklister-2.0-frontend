@@ -34,7 +34,6 @@ class LogIn extends React.Component {
   loginUser = (event) => {
     event.preventDefault()
     const token = localStorage.getItem('token')
-    console.log("in function LogIn#loginUser")
     return fetch("http://localhost:3000/api/v1/login", {
       method: 'POST',
       headers:  {

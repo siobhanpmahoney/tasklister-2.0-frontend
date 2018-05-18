@@ -25,7 +25,6 @@ class App extends Component {
   }
 
   setLoggedInUser = (user) => {
-    console.log("in App#setLoggedInUser - argument", user)
      localStorage.setItem('token', user.token)
      this.setState({
        auth: {
@@ -107,7 +106,6 @@ class App extends Component {
 
 
   render() {
-    console.log("in app#render", this.state.auth.loggingIn)
 
 
 if (this.state.auth.loggingIn) {
@@ -129,7 +127,7 @@ if (this.state.auth.loggingIn) {
   }
 
   if (!this.state.auth.loggingIn) {
-    console.log("in app#render, !this.state.auth.loggingIn", !this.state.auth.loggingIn)
+  
     return (
       <Router>
         <div>

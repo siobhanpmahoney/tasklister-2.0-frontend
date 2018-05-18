@@ -6,6 +6,7 @@ import { withRouter } from 'react-router';
 import { Redirect } from 'react-router-dom'
 import WithAuth from '../../wrappers/WithAuth'
 import TeamTaskList from './TeamTaskList'
+import TeamTaskNewItem from './TeamTaskNewItem'
 
 class TeamTaskContainer extends React.Component {
   constructor(props) {
@@ -13,6 +14,8 @@ class TeamTaskContainer extends React.Component {
 
     this.state = {
       tasksDisplayed: "",
+      showNewTaskForm: false,
+      newTask: {status_summary: ''}
     }
   }
 
@@ -32,12 +35,48 @@ class TeamTaskContainer extends React.Component {
     return <TeamTaskList tasks={t}/>
   }
 
+  newTaskFormListener = (event) => {
+    let value = event.target.type === "checkbox" ? event.target.checked : event.target.value
+    let name = event.target.name
+    let newTaskState = this.state.newTask
+    console.log("in container#newTaskFormListener — value", value)
+    console.log("in container#newTaskFormListener — name", name)
+    console.log("in container#newTaskFormListener — newTaskState", newTaskState)
+
+
+    newTaskState[name] = value
+    this.setState({
+      newTask: newTaskState
+    })
+    console.log("in container#newTaskFormListener — updated state[newTask]", this.state.newTask)
+
+  }
+
+
+  newTaskSubmit = (event) => {
+    event.preventDefault()
+    let task = this.state.newTask
+    console.log("in container#newTaskSubmit — task", task)
+    this.props.createNewTask(task)
+    this.setState({
+      newTask: {
+        title: '',
+        description: '',
+        priority: '',
+        status_summary: ''
+      }
+    })
+  }
+
   render() {
     return (
       <div className="team-task-container">
-        <h1>Team Tasks</h1>
+        <div className="header"><h1>Team Tasks</h1></div>
+        <div className="section">
+          <TeamTaskNewItem newTaskFormListener={this.newTaskFormListener} newTaskStatusListener={this.newTaskStatusListener} newTaskSubmit={this.newTaskSubmit} newTask = {this.state.newTask} />
+        </div>
 
-            {this.renderTasks()}
+        <div className="taskList">{this.renderTasks()}</div>
 
       </div>
     )
@@ -56,4 +95,4 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators(Actions, dispatch);
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(WithAuth(TeamTaskContainer)));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(TeamTaskContainer));

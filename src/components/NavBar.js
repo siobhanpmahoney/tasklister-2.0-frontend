@@ -11,13 +11,13 @@ class NavBar extends React.Component {
 
   renderHTML = () => {
     if (this.props.auth.loggingIn) {
-      console.log("in Nav", this.props.user)
       return (
 
-        <span>
-          <span>
+        <span className="header-nav">
+          <span className="header-logo">CapTasks</span>
+          <span className="header-links">
 
-            <NavLink to="/" exact>Home</NavLink>
+            <span><NavLink to="/" exact>Home</NavLink></span>
 
             <span onClick={this.props.logOutUser}> Log Out </span>
 

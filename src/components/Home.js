@@ -18,7 +18,6 @@ class Home extends React.Component {
 // }
 
 render() {
-  console.log("in Home, rendering props", this.props)
 
   if (!this.props.auth.loggingIn) {
     return (
@@ -31,7 +30,7 @@ render() {
   }
   if (this.props.auth.loggingIn) {
     return (
-      <div>Welcome {this.props.user.username}
+      <div>
       <TeamTaskContainer setLoggedInUser={this.props.setLoggedInUser} auth={this.props.auth}/>
       </div>
     )

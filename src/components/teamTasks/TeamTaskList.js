@@ -1,5 +1,7 @@
 import React from 'react'
 import TeamTaskItem from './TeamTaskItem'
+import { withRouter } from 'react-router';
+
 
 class TeamTaskList extends React.Component {
 
@@ -8,7 +10,6 @@ class TeamTaskList extends React.Component {
   }
 
   render() {
-    console.log("in TeamTaskList")
     return (
       <div className="table-container">
         <div className="table-header-row">
@@ -29,4 +30,4 @@ class TeamTaskList extends React.Component {
   }
 }
 
-export default TeamTaskList
+export default withRouter(TeamTaskList)

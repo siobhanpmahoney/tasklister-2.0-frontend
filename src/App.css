@@ -1,5 +1,7 @@
 .App {
   text-align: center;
+  margin: 1em;
+  color: white;
 }
 
 .App-logo {
@@ -28,52 +30,67 @@
 }
 
 html, body {
-  width: 100%;
+  width: 96%;
   height: 100%;
   position: relative;
+  margin: -0.5em;
 }
 
-@font-face {
-    font-family: 'agane';
-    src: url('fonts/agane/Aganè 55 (roman) sign.ttf') format('ttf')
+body {
+  padding: 1em;
+  background-color: #2C3A51;
+
 }
 
-@font-face {
-    font-family: 'Clear Sans';
-    src: url('fonts/clear-sans/WOFF/ClearSans-Regular.woff') format('woff')
-}
+.header, .header-logo, .header-nav, .header-cell {
+  font-family: "Open Sans";
+  font-weight: 600;
 
-@font-face {
-    font-family: 'eau_sans';
-    src: url('fonts/eau_sans/outline font/eau_sans_book.otf') format('otf')
-}
-
-@font-face {
-    font-family: 'eau_douce_sans';
-    src: url('fonts/eau_douce_sans/outline font/eau_douce_sans_regular.otf') format('otf')
-}
-
-@font-face {
-    font-family: 'Lacuna Regular';
-    src: url('fonts/Lacuna-Regular-fontfacekit/web fonts/lacuna_regular_macroman/lacuna-webfont.woff') format('woff')
-}
-
-@font-face {
-    font-family: 'vision';
-    src: url('fonts/vision/WEBFONT/woff/vision-webfont.woff') format('woff')
-}
-
-@font-face {
-    font-family: 'HK Grotesk';
-    src: url('fonts/hk-grotesk/HKGrotesk-Regular.otf') format('otf')
 }
 
 
 
-
-* {
-  font-family: "Assistant";
+.header-logo {
+  font-weight: bold;
+  font-size: 30px;
 }
+
+.header-nav {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  background-color: white;
+  color: #2C3A51;
+  margin: -0.5em -1em;
+  width: 106%;
+  padding: 1em;
+  position: absolute;
+}
+
+.header-logo {
+  display: inline-flex;
+  justify-content: flex-start;
+  font-weight: 700;
+}
+
+.header-links {
+  display: inline-flex;
+  justify-content: flex-end;
+}
+
+.header-links span {
+  padding: 1em;
+  justify-content: flex-end;
+}
+
+
+
+div {
+  font-family: "Open Sans";
+}
+
+
+
 
 .table-container {
   /* font-family: "Carlito"; */
@@ -108,17 +125,43 @@ html, body {
   align-content: flex-start;
 } */
 
+.taskData {
+  border: #e4f6f6 4px solid;
+  background-color: white;
+  color: black;
+  width: 100%;
+  flex-grow: 1;
+  flex-shrink: 1;
+  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
+    margin: 1em;
+}
+
 .table-row {
   /* align-content: space-between;
   align-items: flex-start; */
-  width: 100%;
-  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
+
   padding: 1em;
   margin: 1em;
-  flex-grow: 1;
-  flex-shrink: 1;
+
+  display: flex;
+}
+
+.taskDescription, .status-details {
+  display: flex;
+  justify-content: flex-start;
+  padding: 1.5em;
+}
+
+.taskDescription {
+  border: #e4f6f6 solid 1px;
 
 }
+
+.status-details {
+  border: #e4f6f6 solid 1px;
+}
+
+
 
 .header-cell, .task-cell {
 
@@ -155,4 +198,11 @@ html, body {
 
 .table-header, .task-cell {
 
+}
+
+.newTaskForm {
+  display: flex;
+  justify-content: flex-start;
+  background-color: white;
+  color: black;
 }
