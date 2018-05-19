@@ -48,7 +48,8 @@ class TeamTaskContainer extends React.Component {
     if (this.state.taskDetail === 'new') {
       return <TeamTaskNewItem newTaskFormListener={this.newTaskFormListener} newTaskStatusListener={this.newTaskStatusListener} newTaskSubmit={this.newTaskSubmit} newTask = {this.state.newTask} />
     } else if (!!this.state.taskDetail) {
-      return <TeamTaskDetail task={this.state.taskDetail} />
+      let selectedTask = this.props.teamTasks.find((t) => t.task._id === this.state.taskDetail._id)
+      return <TeamTaskDetail task={selectedTask.task} pages={selectedTask.pages} users={selectedTask.users} tags={selectedTask.tags} />
     } else {
       return <div className="fillerText">Select a task or create a new one!</div>
     }

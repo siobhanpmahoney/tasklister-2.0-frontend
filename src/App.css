@@ -94,7 +94,7 @@ body {
 }
 
 .section-1 {
-  flex-basis: 25%;
+  flex-basis: 22%;
   text-align: left;
   background-color: #2C3A51;
   width: 100%;
@@ -102,7 +102,7 @@ body {
 }
 
 .section-2 {
-  flex-basis: 35%;
+  flex-basis: 38%;
   text-align: left;
   padding: 0.25em;
   width: 100%;
@@ -113,10 +113,36 @@ body {
   text-align: left;
   padding: 0.25em;
   width: 100%;
+  border-left: #f6f7fb solid 2px;
 }
 
+.task-list-item {
+  padding: 1em 0.5em;
+  font-size: 95%;
+  border-bottom: #f6f7fb solid 2px;
+  min-height: 40px;
+}
 
+.task-list-item-title, .task-list-item-tags-section {
+  display: inline;
+}
 
+.task-list-item-title {
+  float: left;
+}
+
+.task-list-item-tags-section {
+  float:right;
+
+}
+
+.task-detail-item-tag {
+  font-size: 4px;
+  padding: 3px 1px;
+  border-radius: 3px;
+  background-color: #4C648C;
+  color: white;
+}
 
 
 

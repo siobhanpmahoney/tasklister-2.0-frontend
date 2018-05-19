@@ -17,21 +17,18 @@ class TeamTaskItem extends React.Component {
       return <div>Loading..</div>
     }
     return (
-      <div className="taskData" onClick={this.renderTaskDetails}>
-        <div className="task-list-item">
-        <span className="task-cell cell-task">{this.props.t.title}</span>
+      <div className="task-list-item" onClick={this.renderTaskDetails}>
 
-      <span className="task-cell cell-tags">
-        {this.props.taskTags.map((t) => {
-          return <span>{t.title}</span>
-        })}
-      </span>
+        <div className="task-list-item-title">
+          {this.props.t.title}
+        </div>
+
 
 
       </div>
 
 
-      </div>
+
     )
   }
 }

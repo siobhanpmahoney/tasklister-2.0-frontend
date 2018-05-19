@@ -10,12 +10,12 @@ class TeamTaskList extends React.Component {
   }
 
   render() {
-    console.log(this.props.tasks)
+    console.log(this.props.tasks[0])
     return (
-      <div className="table-container">
+      <div className="task-list">
 
         {this.props.tasks.map((t) => {
-          return<TeamTaskItem t={t.task} taskPages={t.pages} taskUsers = {t.users} taskTags = {t.tags} selectTaskDetail={this.props.selectTaskDetail}/>
+          return<TeamTaskItem t={t.task} selectTaskDetail={this.props.selectTaskDetail}/>
         })}
       </div>
     )
