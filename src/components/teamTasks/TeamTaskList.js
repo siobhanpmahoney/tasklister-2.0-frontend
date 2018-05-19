@@ -10,6 +10,7 @@ class TeamTaskList extends React.Component {
   }
 
   render() {
+    console.log(this.props.tasks)
     return (
       <div className="table-container">
         <div className="table-header-row">
@@ -23,7 +24,7 @@ class TeamTaskList extends React.Component {
         </div>
 
         {this.props.tasks.map((t) => {
-          return<TeamTaskItem key={t.task._id["$oid"]} t={t.task} taskPages={t.pages} taskUsers = {t.users} taskTags = {t.tags}/>
+          return<TeamTaskItem t={t.task} taskPages={t.pages} taskUsers = {t.users} taskTags = {t.tags}/>
         })}
       </div>
     )

@@ -1,9 +1,16 @@
 import React from 'react'
 import TaskStatusDetail from './taskStatusDetails/TaskStatusDetail'
 import { withRouter } from 'react-router';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import * as Actions from '../../actions'
 
 
 class TeamTaskItem extends React.Component {
+
+  componentDidMount() {
+    this.props
+  }
 
   relPages = () => {
     if (this.props.taskPages.length > 0) {
@@ -26,9 +33,9 @@ class TeamTaskItem extends React.Component {
   }
 
   render() {
-    if (this.props.taskTags != [] && this.props.taskTags[0] && this.props.taskTags[0]["title"]) {
+    if (!this.props.t) {
+      return <div>Loading..</div>
     }
-
     return (
       <div className="taskData">
         <div className="table-row">
@@ -57,4 +64,16 @@ class TeamTaskItem extends React.Component {
   }
 }
 
-export default withRouter(TeamTaskItem)
+function mapStateToProps(state, props) {
+  return {
+    user: state.user.currentUser,
+    userTasks: state.user.userTasks,
+    teamTasks: state.teamTasks.allTasks
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(Actions, dispatch);
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(TeamTaskItem));

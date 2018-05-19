@@ -55,6 +55,7 @@ class TeamTaskContainer extends React.Component {
 
   newTaskSubmit = (event) => {
     event.preventDefault()
+
     let task = this.state.newTask
     console.log("in container#newTaskSubmit — task", task)
     this.props.createNewTask(task)
@@ -69,6 +70,7 @@ class TeamTaskContainer extends React.Component {
   }
 
   render() {
+    console.log(this.props.teamTasks)
     return (
       <div className="team-task-container">
         <div className="header"><h1>Team Tasks</h1></div>

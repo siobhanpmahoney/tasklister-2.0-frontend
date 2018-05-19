@@ -43,9 +43,12 @@ export function createNewTask(taskInfo) {
       })
     })
     .then(response => response.json())
-    .then(json => dispatch({
+
+    .then(json => {
+      dispatch({
       type: ADD_NEW_TASK,
       newTask: json
-    }))
+    })
+  })
   }
 }
