@@ -31,4 +31,4 @@ class TeamTaskList extends React.Component {
   }
 }
 
-export default withRouter(TeamTaskList)
+export default TeamTaskList

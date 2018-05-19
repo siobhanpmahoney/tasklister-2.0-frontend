@@ -64,16 +64,4 @@ class TeamTaskItem extends React.Component {
   }
 }
 
-function mapStateToProps(state, props) {
-  return {
-    user: state.user.currentUser,
-    userTasks: state.user.userTasks,
-    teamTasks: state.teamTasks.allTasks
-  }
-}
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators(Actions, dispatch);
-}
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(TeamTaskItem));
+export default TeamTaskItem;
