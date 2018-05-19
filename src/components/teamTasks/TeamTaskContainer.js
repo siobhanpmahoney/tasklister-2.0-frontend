@@ -35,7 +35,7 @@ class TeamTaskContainer extends React.Component {
   }
 
   tasksToList = (t) => {
-    return <TeamTaskList tasks={t}/>
+    return <TeamTaskList tasks={t} selectTaskDetail={this.selectTaskDetail}/>
   }
 
   // tasks listed in sidebar end
@@ -48,10 +48,17 @@ class TeamTaskContainer extends React.Component {
     if (this.state.taskDetail === 'new') {
       return <TeamTaskNewItem newTaskFormListener={this.newTaskFormListener} newTaskStatusListener={this.newTaskStatusListener} newTaskSubmit={this.newTaskSubmit} newTask = {this.state.newTask} />
     } else if (!!this.state.taskDetail) {
-      return <TeamTaskDetail />
+      return <TeamTaskDetail task={this.state.taskDetail} />
     } else {
       return <div className="fillerText">Select a task or create a new one!</div>
     }
+  }
+
+  selectTaskDetail = (event, t) => {
+    event.preventDefault()
+    this.setState({
+      taskDetail: t
+    })
   }
 
   newTaskFormListener = (event) => {
