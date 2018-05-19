@@ -1,9 +1,5 @@
 import React from 'react'
-import TaskStatusDetail from './taskStatusDetails/TaskStatusDetail'
 import { withRouter } from 'react-router';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import * as Actions from '../../actions'
 
 
 class TeamTaskItem extends React.Component {
@@ -38,7 +34,7 @@ class TeamTaskItem extends React.Component {
     }
     return (
       <div className="taskData">
-        <div className="table-row">
+        <div className="task-list-item">
         <span className="task-cell cell-task">{this.props.t.title}</span>
         <span className="task-cell cell-team-member">{this.props.taskUsers.map((u) => {
           return <span>{u.username}</span>
@@ -53,7 +49,7 @@ class TeamTaskItem extends React.Component {
       </div>
       <div className="taskDetails">
         <div className="taskDescription">
-          <b>Description:</b>{this.props.t.description}
+          <b>{this.props.t.description}</b>
         </div>
 
 

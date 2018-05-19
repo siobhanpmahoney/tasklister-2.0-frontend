@@ -1,7 +1,13 @@
+/* colors:
+  light: #e4f6f6
+  background-color: #2C3A51;
+   */
+
+
 .App {
   text-align: center;
   margin: 1em;
-  color: white;
+  font-family: "Open Sans";
 }
 
 .App-logo {
@@ -13,7 +19,6 @@
   background-color: #222;
   height: 150px;
   padding: 20px;
-  color: white;
 }
 
 .App-title {
@@ -38,12 +43,11 @@ html, body {
 
 body {
   padding: 1em;
-  background-color: #2C3A51;
-
+  font-family: "Khula";
 }
 
 .header, .header-logo, .header-nav, .header-cell {
-  font-family: "Open Sans";
+  font-family: "Khula";
   font-weight: 600;
 
 }
@@ -59,7 +63,6 @@ body {
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
-  background-color: white;
   color: #2C3A51;
   margin: -0.5em -1em;
   width: 106%;
@@ -83,36 +86,40 @@ body {
   justify-content: flex-end;
 }
 
-
-
-div {
-  font-family: "Open Sans";
-}
-
-
-
-
-.table-container {
-  /* font-family: "Carlito"; */
-  margin: 1em;
-  padding: 1em;
-  position: relative;
-  width: 100%;
-  height: 100%;
+.team-task-container {
   display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  justify-content: stretch;
-  align-items: stretch;
-
-  align-content: stretch;
-}
-
- .table-header-row, .table-row {
+  wrap: nowrap;
   width: 100%;
-  display: flex;
-  flex-direction: row;
+  justify-content: flex-start;
 }
+
+.section-1 {
+  flex-basis: 25%;
+  text-align: left;
+  background-color: #2C3A51;
+  width: 100%;
+  padding: 0.25em;
+}
+
+.section-2 {
+  flex-basis: 35%;
+  text-align: left;
+  padding: 0.25em;
+  width: 100%;
+}
+
+.section-3 {
+  flex-basis: 40%;
+  text-align: left;
+  padding: 0.25em;
+  width: 100%;
+}
+
+
+
+
+
+
 /*
 .table-header-row. .table-row {
   display: flex;
@@ -124,85 +131,3 @@ div {
   align-items: stretch;
   align-content: flex-start;
 } */
-
-.taskData {
-  border: #e4f6f6 4px solid;
-  background-color: white;
-  color: black;
-  width: 100%;
-  flex-grow: 1;
-  flex-shrink: 1;
-  box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
-    margin: 1em;
-}
-
-.table-row {
-  /* align-content: space-between;
-  align-items: flex-start; */
-
-  padding: 1em;
-  margin: 1em;
-
-  display: flex;
-}
-
-.taskDescription, .status-details {
-  display: flex;
-  justify-content: flex-start;
-  padding: 1.5em;
-}
-
-.taskDescription {
-  border: #e4f6f6 solid 1px;
-
-}
-
-.status-details {
-  border: #e4f6f6 solid 1px;
-}
-
-
-
-.header-cell, .task-cell {
-
-  padding: 1em;
-  margin: 1em;
-  width: 18%;
-  flex-wrap: nowrap;
-  align-items: stretch;
-  flex-grow: 1;
-  flex-shrink: 1;
-  align-self: stretch;
-}
-
-.cell-task {
-  order: 0;
-}
-
-.cell-team-member {
-  order: 1;
-}
-
-.cell-tags {
-  order: 2;
-}
-
-.cell-relevant-pages {
-  order: 3;
-}
-
-.cell-status-summary {
-  order: 4;
-}
-
-
-.table-header, .task-cell {
-
-}
-
-.newTaskForm {
-  display: flex;
-  justify-content: flex-start;
-  background-color: white;
-  color: black;
-}

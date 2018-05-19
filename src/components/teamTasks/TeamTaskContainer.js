@@ -4,9 +4,10 @@ import { connect } from 'react-redux';
 import * as Actions from '../../actions'
 import { withRouter } from 'react-router';
 import { Redirect } from 'react-router-dom'
-import WithAuth from '../../wrappers/WithAuth'
-import TeamTaskList from './TeamTaskList'
-import TeamTaskNewItem from './TeamTaskNewItem'
+
+import TeamTaskList from './taskListSection/TeamTaskList'
+import TeamTaskNewItem from './taskDetailSection/TeamTaskNewItem'
+import TeamTaskDetail from './taskDetailSection/TeamTaskDetail'
 
 class TeamTaskContainer extends React.Component {
   constructor(props) {
@@ -14,7 +15,7 @@ class TeamTaskContainer extends React.Component {
 
     this.state = {
       tasksDisplayed: "",
-      showNewTaskForm: false,
+      taskDetail: null,
       newTask: {status_summary: ''}
     }
   }
@@ -24,6 +25,8 @@ class TeamTaskContainer extends React.Component {
       tasksDisplayed: "all"
     })
   }
+
+  // tasks listed in sidebar begin
 
   renderTasks = () => {
     if (this.state.tasksDisplayed === "all") {
@@ -35,29 +38,36 @@ class TeamTaskContainer extends React.Component {
     return <TeamTaskList tasks={t}/>
   }
 
+  // tasks listed in sidebar end
+
+
+
+  // task rendered in detail section begin
+
+  renderTaskDetailSection = () => {
+    if (this.state.taskDetail === 'new') {
+      return <TeamTaskNewItem newTaskFormListener={this.newTaskFormListener} newTaskStatusListener={this.newTaskStatusListener} newTaskSubmit={this.newTaskSubmit} newTask = {this.state.newTask} />
+    } else if (!!this.state.taskDetail) {
+      return <TeamTaskDetail />
+    } else {
+      return <div className="fillerText">Select a task or create a new one!</div>
+    }
+  }
+
   newTaskFormListener = (event) => {
     let value = event.target.type === "checkbox" ? event.target.checked : event.target.value
     let name = event.target.name
     let newTaskState = this.state.newTask
-    console.log("in container#newTaskFormListener — value", value)
-    console.log("in container#newTaskFormListener — name", name)
-    console.log("in container#newTaskFormListener — newTaskState", newTaskState)
-
-
     newTaskState[name] = value
     this.setState({
       newTask: newTaskState
     })
-    console.log("in container#newTaskFormListener — updated state[newTask]", this.state.newTask)
-
   }
 
 
   newTaskSubmit = (event) => {
     event.preventDefault()
-
     let task = this.state.newTask
-    console.log("in container#newTaskSubmit — task", task)
     this.props.createNewTask(task)
     this.setState({
       newTask: {
@@ -69,17 +79,24 @@ class TeamTaskContainer extends React.Component {
     })
   }
 
+  // task listed in detail section end
+
   render() {
-    console.log(this.props.teamTasks)
     return (
-      <div className="team-task-container">
+      <div>
         <div className="header"><h1>Team Tasks</h1></div>
-        <div className="section">
-          <TeamTaskNewItem newTaskFormListener={this.newTaskFormListener} newTaskStatusListener={this.newTaskStatusListener} newTaskSubmit={this.newTaskSubmit} newTask = {this.state.newTask} />
+<div className="team-task-container">
+        <div className="section-1">
         </div>
 
-        <div className="taskList">{this.renderTasks()}</div>
+        <div className="section-2">
+          {this.renderTasks()}
+        </div>
 
+        <div className="section-3">
+          {this.renderTaskDetailSection()}
+        </div>
+</div>
       </div>
     )
   }
