@@ -1,5 +1,8 @@
 /* colors:
-  light: #e4f6f6
+grey: #f6f7fb
+  lightest turquoise: #e4f6f6
+  lighter turquoise: #caedf2
+  turquoise: #43cac2
   background-color: #2C3A51;
    */
 
@@ -35,15 +38,21 @@
 }
 
 html, body {
-  width: 96%;
+
   height: 100%;
   position: relative;
   margin: -0.5em;
 }
 
+html {
+  width: 96%;
+}
+
 body {
-  padding: 1em;
+  width: 97%;
+  padding: 0.5em;
   font-family: "Khula";
+  overflow-x: hidden;
 }
 
 .header, .header-logo, .header-nav, .header-cell {
@@ -109,11 +118,12 @@ body {
 }
 
 .section-3 {
-  flex-basis: 40%;
+  flex-basis: 38%;
   text-align: left;
   padding: 0.25em;
   width: 100%;
   border-left: #f6f7fb solid 2px;
+  position: relative;
 }
 
 .task-list-item {
@@ -135,6 +145,63 @@ body {
   float:right;
 
 }
+
+.task-detail-container {
+  position: relative;
+  width: 104%;
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+}
+
+.task-detail-header {
+  border-bottom: #f6f7fb solid 2px;
+  padding: 0.5em 0 0.5em 0.5em;
+  margin: 0.25em 0 0.25em 0.25em;
+  display: flex;
+  justify-content: space-between;
+  /* wrap: wrap; */
+  position: relative;
+  flex-direction: row;
+  width: 105%;
+  align-items: center;
+}
+
+.task-detail-title {
+  font-family: "Old Standard TT";
+  font-size: 24px;
+  display: inline;
+
+}
+
+.task-detail-tags {
+  display: inline;
+  /* float: right; */
+  /* text-align: right; */
+  margin-left: auto;
+  float:right;
+  padding: 0.1em 0.1em 0.1em 0.5em;
+
+}
+
+.ind-tag {
+  /* display: inline; */
+  float:right;
+  display: inline;
+  font-size: 12px;
+  background-color: #e4f6f6;
+  color: #43cac2;
+  padding: 3px 3px;
+  border-radius: 3px;
+
+
+}
+
+.material-icons {
+  position: relative;
+}
+
+
 
 .task-detail-item-tag {
   font-size: 4px;
