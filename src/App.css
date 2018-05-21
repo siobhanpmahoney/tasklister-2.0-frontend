@@ -152,6 +152,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: stretch;
+  align-content: stretch;
 }
 
 .task-detail-header {
@@ -160,7 +161,7 @@ body {
   margin: 0.25em 0 0.25em 0.25em;
   display: flex;
   justify-content: space-between;
-  /* wrap: wrap; */
+  wrap: wrap;
   position: relative;
   flex-direction: row;
   width: 105%;
@@ -171,11 +172,13 @@ body {
   font-family: "Old Standard TT";
   font-size: 24px;
   display: inline;
+  order: 1;
 
 }
 
 .task-detail-tags {
   display: inline;
+  order: 2;
   /* float: right; */
   /* text-align: right; */
   margin-left: auto;
@@ -201,14 +204,15 @@ body {
   position: relative;
 }
 
+.task-detail-description, .task-detail-date-updated, .task-detail-date-created, .task-detail-users, .task-detail-relevant-pages, .task-detail-github-branch, .task-detail-status-summary, .task-detail-details-status-updates {
+  padding: 1em;
+  font-size: 95%;
+}
 
-
-.task-detail-item-tag {
-  font-size: 4px;
-  padding: 3px 1px;
-  border-radius: 3px;
-  background-color: #4C648C;
-  color: white;
+.field-name {
+  font-family:"Khula";
+  font-weight: bold;
+  padding-right: 6px;
 }
 
 
