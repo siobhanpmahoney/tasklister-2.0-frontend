@@ -41,23 +41,26 @@ const teamTasks = (state = {allTasks: [] }, action) => {
 
     case EDIT_TASK:
       let updatedTask = state.allTasks.find((t) => {
-        return t.task._id["$oid"] == action.editedTask._id["$oid"]
+        return t.task._id["$oid"] == action.editedTask.task._id["$oid"]
       })
 
       let currentTasksState = state.allTasks.slice(0)
 
       const savedTasks = [
         ...currentTasksState.slice(0, currentTasksState.indexOf(updatedTask)),
-        {task: action.editedTask},
+        {task: action.editedTask.task, tags: action.editedTask.tags, users: action.editedTask.users, pages: action.editedTask.pages},
         ...currentTasksState.slice(currentTasksState.indexOf(updatedTask) + 1)
       ];
-      return Object.assign({},
+      state = Object.assign({},
         state,
           {
             allTasks: savedTasks
           },
         );
-      
+        console.log("in reducer — state after update", state)
+
+        return state;
+
 
 
       default:

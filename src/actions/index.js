@@ -79,7 +79,7 @@ export function editTask(selectedTask) {
       .then(response => response.json())
       .then(json => dispatch({
         type: EDIT_TASK,
-        editedTask: selectedTask
+        editedTask: json
       }))
   }
 }

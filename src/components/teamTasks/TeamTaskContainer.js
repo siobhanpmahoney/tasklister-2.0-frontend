@@ -17,6 +17,9 @@ class TeamTaskContainer extends React.Component {
     this.state = {
       tasksDisplayed: "",
       taskDetail: null,
+      taskDetailPages: [],
+      taskDetailUsers: [],
+      taskDetailTags: [],
       newTask: {status_summary: ''}
     }
   }
@@ -54,19 +57,20 @@ class TeamTaskContainer extends React.Component {
 
       let selectedTask = this.props.teamTasks.find((t) => t.task._id === this.state.taskDetail._id)
 
-
-
-      return <TeamTaskDetail task={this.state.taskDetail} pages={selectedTask.pages} users={selectedTask.users} tags={selectedTask.tags} taskEditListener={this.taskEditListener} taskEditSubmit={this.taskEditSubmit}/>
+      return <TeamTaskDetail task={this.state.taskDetail} pages={this.state.taskDetailPages} users={this.state.taskDetailUsers} tags={this.state.taskDetailTags} taskEditListener={this.taskEditListener} taskEditSubmit={this.taskEditSubmit}/>
     } else {
       return <div className="fillerText">Select a task or create a new one!</div>
     }
   }
 
-  selectTaskDetail = (event, t) => {
+  selectTaskDetail = (event, tsk, tskPages, tskTags, tskUsers) => {
     event.preventDefault()
-
+    console.log("in TTC#selectTaskDetail arguments: ",  tsk, tskPages, tskTags, tskUsers)
     this.setState({
-      taskDetail: t
+      taskDetail: tsk,
+      taskDetailPages: tskPages,
+      taskDetailTags: tskTags,
+      taskDetailUsers: tskUsers
     })
   }
 

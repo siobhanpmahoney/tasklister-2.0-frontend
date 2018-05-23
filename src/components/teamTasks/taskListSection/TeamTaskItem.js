@@ -9,14 +9,15 @@ class TeamTaskItem extends React.Component {
   }
 
   renderTaskDetails = (event) => {
-    this.props.selectTaskDetail(event, this.props.t)
+    console.log("in teamTaskItem", this.props)
+    this.props.selectTaskDetail(event, this.props.t, this.props.pages, this.props.tags, this.props.users)
   }
 
   render() {
     if (!this.props.t) {
       return <div>Loading..</div>
     }
-    
+
     return (
       <div className="task-list-item" onClick={this.renderTaskDetails}>
 
