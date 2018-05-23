@@ -16,6 +16,7 @@ class TeamTaskItem extends React.Component {
     if (!this.props.t) {
       return <div>Loading..</div>
     }
+    
     return (
       <div className="task-list-item" onClick={this.renderTaskDetails}>
 

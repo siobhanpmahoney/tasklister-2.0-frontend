@@ -1,6 +1,7 @@
 export const CURRENT_USER = 'CURRENT_USER'
 export const ALL_TASKS = 'ALL_TASKS'
 export const ADD_NEW_TASK = 'ADD_NEW_TASK'
+export const EDIT_TASK = 'EDIT_TASK'
 
 
 export function loadCurrentUser(user) {
@@ -50,5 +51,35 @@ export function createNewTask(taskInfo) {
       newTask: json
     })
   })
+  }
+}
+
+export function editTask(selectedTask) {
+  let url = "http://localhost:3000/api/v1/tasks/" + selectedTask._id["$oid"]
+  console.log("in action")
+  console.log("in action, testing url", url)
+  console.log("in action, testing selectedTask", selectedTask)
+  console.log("in action, testing selectedTask.title", selectedTask.title)
+  console.log("in action, testing selectedTask.description", selectedTask.description)
+
+  return (dispatch) => {
+    return fetch(url,
+      {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accepts': 'application/json'
+        },
+        body: JSON.stringify({
+          title: selectedTask.title,
+          // github_branch: selectedTask.github_branch,
+          description: selectedTask.description,
+        })
+      })
+      .then(response => response.json())
+      .then(json => dispatch({
+        type: EDIT_TASK,
+        editedTask: selectedTask
+      }))
   }
 }

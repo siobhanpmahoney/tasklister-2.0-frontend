@@ -45,12 +45,18 @@ class TeamTaskContainer extends React.Component {
 
   // task rendered in detail section begin
 
+    // task render begin
+
   renderTaskDetailSection = () => {
     if (this.state.taskDetail === 'new') {
       return <TeamTaskNewItem newTaskFormListener={this.newTaskFormListener} newTaskStatusListener={this.newTaskStatusListener} newTaskSubmit={this.newTaskSubmit} newTask = {this.state.newTask} />
     } else if (!!this.state.taskDetail) {
+
       let selectedTask = this.props.teamTasks.find((t) => t.task._id === this.state.taskDetail._id)
-      return <TeamTaskDetail task={selectedTask.task} pages={selectedTask.pages} users={selectedTask.users} tags={selectedTask.tags} />
+
+
+
+      return <TeamTaskDetail task={this.state.taskDetail} pages={selectedTask.pages} users={selectedTask.users} tags={selectedTask.tags} taskEditListener={this.taskEditListener} taskEditSubmit={this.taskEditSubmit}/>
     } else {
       return <div className="fillerText">Select a task or create a new one!</div>
     }
@@ -58,10 +64,15 @@ class TeamTaskContainer extends React.Component {
 
   selectTaskDetail = (event, t) => {
     event.preventDefault()
+
     this.setState({
       taskDetail: t
     })
   }
+
+    // task render end
+
+    // new task begin
 
   newTaskFormListener = (event) => {
     let value = event.target.type === "checkbox" ? event.target.checked : event.target.value
@@ -87,6 +98,31 @@ class TeamTaskContainer extends React.Component {
       }
     })
   }
+
+    // new task end
+
+    // edit task begin
+
+    taskEditListener = (event) => {
+      let value = event.target.type === "checkbox" ? event.target.checked : event.target.value
+      let name = event.target.name
+      let currentTaskState = Object.assign({}, this.state.taskDetail)
+      currentTaskState[name] = value
+      this.setState({
+        taskDetail: currentTaskState
+      })
+      console.log(this.state.taskDetail)
+    }
+
+    taskEditSubmit = (event) => {
+      event.preventDefault()
+
+      this.props.editTask(this.state.taskDetail)
+
+    }
+
+
+    // edit task end
 
   // task listed in detail section end
 

@@ -1,4 +1,8 @@
 import React from 'react'
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import * as Actions from '../../../actions'
+import { withRouter } from 'react-router';
 
 class TeamTaskDetail extends React.Component {
 
@@ -18,8 +22,11 @@ class TeamTaskDetail extends React.Component {
     return dateSaved.toLocaleDateString()
   }
 
+
+
   render() {
     console.log(this.props)
+
     return (
       <div className="task-detail-container">
 
@@ -38,11 +45,18 @@ class TeamTaskDetail extends React.Component {
 
 
         <div className="task-detail-detais">
+          <div className="task-detail-edit-submit-button">
+            <button onClick={this.props.taskEditSubmit}>Save</button>
+          </div>
           <div className="task-detail-details-dashboard">
-            <div className="task-detail-description">
-            </div>
+            <textarea className="task-detail-description" name="description" value={this.props.task.description} type="contentEditable" onChange={this.props.taskEditListener} />
+
+
             <div className="task-detail-date-updated">
-              <span className="field-name">Updated: </span>{this.formattedSavedDate(this.props.task.updated_at)}
+              <span className="field-name">
+                Updated:
+              </span>
+              <textarea name="updated_at" value={this.formattedSavedDate(this.props.task.updated_at)} type="contentEditable" readOnly />
             </div>
             <div className="task-detail-date-created">
               <span className="field-name">Created: </span>{this.formattedSavedDate(this.props.task.created_at)}
@@ -85,4 +99,16 @@ class TeamTaskDetail extends React.Component {
   }
 }
 
-export default TeamTaskDetail
+function mapStateToProps(state, props) {
+  return {
+    user: state.user.currentUser,
+    userTasks: state.user.userTasks,
+    teamTasks: state.teamTasks.allTasks
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(Actions, dispatch);
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(TeamTaskDetail));
