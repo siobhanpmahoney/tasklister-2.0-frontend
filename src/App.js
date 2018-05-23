@@ -3,6 +3,7 @@ import {BrowserRouter as Router, Route, withRouter} from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import './App.css';
+import './web-fonts.css'
 import registerServiceWorker from './registerServiceWorker';
 
 import * as Actions from './actions'
@@ -127,7 +128,7 @@ if (this.state.auth.loggingIn) {
   }
 
   if (!this.state.auth.loggingIn) {
-  
+
     return (
       <Router>
         <div>

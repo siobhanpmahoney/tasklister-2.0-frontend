@@ -6,11 +6,12 @@ grey: #f6f7fb
   background-color: #2C3A51;
    */
 
+  @import 'web-fonts.css';
 
 .App {
   text-align: center;
   margin: 1em;
-  font-family: "Open Sans";
+  font-family: "SamoSans-Regular";
 }
 
 .App-logo {
@@ -51,12 +52,12 @@ html {
 body {
   width: 97%;
   padding: 0.5em;
-  font-family: "Khula";
+  font-family: "SamoSans-Regular";
   overflow-x: hidden;
 }
 
 .header, .header-logo, .header-nav, .header-cell {
-  font-family: "Khula";
+  font-family: "SamoSans-Regular";
   font-weight: 600;
 
 }

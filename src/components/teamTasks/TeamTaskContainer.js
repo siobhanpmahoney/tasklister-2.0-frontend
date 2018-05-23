@@ -8,6 +8,7 @@ import { Redirect } from 'react-router-dom'
 import TeamTaskList from './taskListSection/TeamTaskList'
 import TeamTaskNewItem from './taskDetailSection/TeamTaskNewItem'
 import TeamTaskDetail from './taskDetailSection/TeamTaskDetail'
+import SidebarContainer from './taskSidebarSection/SidebarContainer'
 
 class TeamTaskContainer extends React.Component {
   constructor(props) {
@@ -95,6 +96,7 @@ class TeamTaskContainer extends React.Component {
         <div className="header"><h1>Team Tasks</h1></div>
 <div className="team-task-container">
         <div className="section-1">
+          <SidebarContainer selectTaskDetail={this.selectTaskDetail}/>
         </div>
 
         <div className="section-2">
