@@ -7,17 +7,41 @@ class TeamTaskNewItem extends React.Component {
         <form onSubmit={this.props.newTaskSubmit}>
           <h3><label>New Task</label></h3>
 
-          <p><label> Task Title:
+          <p><label><span className="field-name">Task Title:</span>
             <input type="text" name="title" onChange={this.props.newTaskFormListener} />
           </label></p>
 
-          <p><label> Task Description:
+        <p><label><span className="field-name">Task Description:</span>
             <input type="text" name="description" onChange={this.props.newTaskFormListener} />
           </label></p>
 
-          <p><label>Priority:
-            <input type="checkbox" name="priority" onChange={this.props.newTaskFormListener} />
-          </label></p>
+          <p>
+            <label>
+              <span className="field-name">Priority:</span>
+              <input type="checkbox" name="priority" onChange={this.props.newTaskFormListener} />
+          </label>
+        </p>
+
+        <p>
+          <label>
+            <span className="field-name">Relevant Paths</span>
+              <input type="text" name="newTaskPages" onChange={this.props.newTaskRefListener} />
+          </label>
+        </p>
+
+        <p>
+          <label>
+            <span className="field-name">Assign Team</span>
+              <input type="text" name="newTaskUsers" onChange={this.props.newTaskRefListener}  />
+          </label>
+        </p>
+
+        <p>
+          <label>
+            <span className="field-name">Tags</span>
+              <input type="text" name="newTaskTags" onChange={this.props.newTaskRefListener} />
+          </label>
+        </p>
 
           <p><label>Status Summary:
             <select name='status_summary' value={this.props.newTask.status_summary} onChange={this.props.newTaskFormListener}>

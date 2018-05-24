@@ -20,7 +20,13 @@ class TeamTaskContainer extends React.Component {
       taskDetailPages: [],
       taskDetailUsers: [],
       taskDetailTags: [],
-      newTask: {status_summary: ''}
+      newTask: {status_summary: ''},
+      newTaskRef: {
+        newTaskPages: [],
+        newTaskTags: [],
+        newTaskUsers: []
+      },
+
     }
   }
 
@@ -52,12 +58,12 @@ class TeamTaskContainer extends React.Component {
 
   renderTaskDetailSection = () => {
     if (this.state.taskDetail === 'new') {
-      return <TeamTaskNewItem newTaskFormListener={this.newTaskFormListener} newTaskStatusListener={this.newTaskStatusListener} newTaskSubmit={this.newTaskSubmit} newTask = {this.state.newTask} />
+      return <TeamTaskNewItem newTaskFormListener={this.newTaskFormListener}  newTaskStatusListener={this.newTaskStatusListener} newTaskRefListener={this.newTaskRefListener} newTaskSubmit={this.newTaskSubmit} newTask = {this.state.newTask} />
     } else if (!!this.state.taskDetail) {
 
       let selectedTask = this.props.teamTasks.find((t) => t.task._id === this.state.taskDetail._id)
 
-      return <TeamTaskDetail task={this.state.taskDetail} pages={this.state.taskDetailPages} users={this.state.taskDetailUsers} tags={this.state.taskDetailTags} taskEditListener={this.taskEditListener} taskEditSubmit={this.taskEditSubmit}/>
+      return <TeamTaskDetail task={this.state.taskDetail} pages={this.state.taskDetailPages} users={this.state.taskDetailUsers} tags={this.state.taskDetailTags} taskEditListener={this.taskEditListener}  taskEditSubmit={this.taskEditSubmit}/>
     } else {
       return <div className="fillerText">Select a task or create a new one!</div>
     }
@@ -88,19 +94,47 @@ class TeamTaskContainer extends React.Component {
     })
   }
 
+  newTaskRefListener = (event) => {
+    console.log("name", name)
+    console.log("value", value)
+
+    let value = event.target.type === "checkbox" ? event.target.checked : event.target.value
+    let name = event.target.name
+
+    let stateUpdate = this.state.newTaskRef
+    stateUpdate[name][0] = value
+
+    this.setState({
+      newTaskRef: stateUpdate
+    })
+
+    // let currentState = this.state.newTaskRef[name].slice(0)
+    // currentState = [...currentState, value]
+    // let updatedTask = Object.assign({}, this.state.newTaskRef)
+    // updatedTask[name] = currentState
+    // this.setState({
+    //   newTaskRef: currentState
+    // })
+    // console.log("in newTaskRefListener", this.state.newTaskRef)
+  }
+
 
   newTaskSubmit = (event) => {
     event.preventDefault()
+
     let task = this.state.newTask
-    this.props.createNewTask(task)
-    this.setState({
-      newTask: {
-        title: '',
-        description: '',
-        priority: '',
-        status_summary: ''
-      }
-    })
+    let taskPages = this.state.newTaskRef.newTaskPages
+    let taskTags = this.state.newTaskRef.newTaskTags
+    let taskUsers = this.state.newTaskRef.newTaskUsers
+    this.props.createNewTask(task, taskPages, taskTags, taskUsers)
+    // this.setState({
+    //   newTask: {
+    //     title: '',
+    //     description: '',
+    //     priority: '',
+    //     status_summary: ''
+    //   }
+    // })
   }
 
     // new task end
@@ -120,7 +154,6 @@ class TeamTaskContainer extends React.Component {
 
     taskEditSubmit = (event) => {
       event.preventDefault()
-
       this.props.editTask(this.state.taskDetail)
 
     }

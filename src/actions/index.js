@@ -26,7 +26,7 @@ export function loadAllTasks() {
   }
 }
 
-export function createNewTask(taskInfo) {
+export function createNewTask(taskInfo, taskPageInfo, taskTagInfo, taskUserInfo) {
   console.log("in action — createNewTask, taskInfo argument", taskInfo)
   return (dispatch) => {
     fetch(`http://localhost:3000/api/v1/tasks`,
@@ -41,6 +41,9 @@ export function createNewTask(taskInfo) {
         description: taskInfo.description,
         priority: taskInfo.priority,
         status_sumamry: taskInfo.status_summary,
+        rel_pages: taskPageInfo,
+        rel_tags: taskTagInfo,
+        rel_users: taskUserInfo
       })
     })
     .then(response => response.json())
