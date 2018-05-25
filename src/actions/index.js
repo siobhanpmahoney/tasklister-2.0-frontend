@@ -77,6 +77,9 @@ export function editTask(selectedTask) {
           title: selectedTask.title,
           // github_branch: selectedTask.github_branch,
           description: selectedTask.description,
+          priority: selectedTask.priority,
+          status_summary: selectedTask.status_summary
+
         })
       })
       .then(response => response.json())

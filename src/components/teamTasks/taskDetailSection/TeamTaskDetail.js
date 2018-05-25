@@ -6,6 +6,16 @@ import { withRouter } from 'react-router';
 
 class TeamTaskDetail extends React.Component {
 
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      pageAddNewField: false,
+      tagAddNewField: false,
+      userAddNewField: false,
+    }
+  }
+
   renderTagList = () => {
     if (!!this.props.tags) {
       return this.props.tags.map((tag) => {
@@ -37,7 +47,7 @@ class TeamTaskDetail extends React.Component {
           </span><br />
 
           <span className="task-detail-title">
-            {this.props.task.title}
+            {this.props.taskDetail.title}
           </span>
 
 
@@ -49,17 +59,17 @@ class TeamTaskDetail extends React.Component {
             <button onClick={this.props.taskEditSubmit}>Save</button>
           </div>
           <div className="task-detail-details-dashboard">
-            <textarea className="task-detail-description" name="description" value={this.props.task.description} type="contentEditable" onChange={this.props.taskEditListener} />
+            <textarea className="task-detail-description" name="description" value={this.props.taskDetail.description} type="contentEditable" onChange={this.props.taskEditListener} />
 
 
             <div className="task-detail-date-updated">
               <span className="field-name">
                 Updated:
               </span>
-              <textarea name="updated_at" value={this.formattedSavedDate(this.props.task.updated_at)} type="contentEditable" readOnly />
+              <textarea name="updated_at" value={this.formattedSavedDate(this.props.taskDetail.updated_at)} type="contentEditable" readOnly />
             </div>
             <div className="task-detail-date-created">
-              <span className="field-name">Created: </span>{this.formattedSavedDate(this.props.task.created_at)}
+              <span className="field-name">Created: </span>{this.formattedSavedDate(this.props.taskDetail.created_at)}
             </div>
 
             <div className="task-detail-users">
@@ -80,14 +90,20 @@ class TeamTaskDetail extends React.Component {
               </ul>
             </div>
             <div className="task-detail-github-branch">
-              <span className="field-name">GitHub Branch: </span> {this.props.task.github_branch}
+              <span className="field-name">GitHub Branch: </span> {this.props.taskDetail.github_branch}
             </div>
             <div className="task-detail-status-summary">
-              <span className="field-name">Current Status: </span> {this.props.task.status_summary}
+              <span className="field-name">Current Status: </span>
+                <select name='status_summary'  value={this.props.taskDetail.status_summary} onChange={this.props.taskEditListener}>
+                  <option value=''>Select...</option>
+                  <option value="open">Open</option>
+                  <option value="closed">Closed</option>
+                </select>
             </div>
           </div>
 
           <div className="task-detail-details-status-updates">
+
           </div>
 
         </div>
