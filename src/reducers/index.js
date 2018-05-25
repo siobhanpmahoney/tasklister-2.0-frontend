@@ -57,7 +57,6 @@ const teamTasks = (state = {allTasks: [] }, action) => {
             allTasks: savedTasks
           },
         );
-        console.log("in reducer — state after update", state)
 
         return state;
 

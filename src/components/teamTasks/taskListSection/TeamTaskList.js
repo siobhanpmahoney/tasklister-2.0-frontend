@@ -1,6 +1,6 @@
 import React from 'react'
 import TeamTaskItem from './TeamTaskItem'
-import { withRouter } from 'react-router';
+// import { withRouter } from 'react-router';
 
 
 class TeamTaskList extends React.Component {
@@ -10,7 +10,7 @@ class TeamTaskList extends React.Component {
   }
 
   render() {
-    console.log(this.props.tasks[0])
+    console.log("in list render", this.props.tasks[0])
     return (
       <div className="task-list">
 

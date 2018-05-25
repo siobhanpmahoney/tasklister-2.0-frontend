@@ -1,5 +1,5 @@
 import React from 'react'
-import { withRouter } from 'react-router';
+// import { withRouter } from 'react-router';
 
 
 class TeamTaskItem extends React.Component {
@@ -9,7 +9,6 @@ class TeamTaskItem extends React.Component {
   }
 
   renderTaskDetails = (event) => {
-    console.log("in teamTaskItem", this.props)
     this.props.selectTaskDetail(event, this.props.t, this.props.pages, this.props.tags, this.props.users)
   }
 

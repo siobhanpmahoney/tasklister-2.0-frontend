@@ -25,7 +25,7 @@ class TeamTaskDetail extends React.Component {
 
 
   render() {
-    console.log(this.props)
+    console.log("in task item detail", this.props)
 
     return (
       <div className="task-detail-container">
@@ -66,7 +66,7 @@ class TeamTaskDetail extends React.Component {
               <span className="field-name">Responsible Team Members: </span>
               <ul>
                 {this.props.users.map((u) => {
-                  return <li>{u.username}</li>
+                  return <textarea className="task-detail-description"  value={u.username} type="contentEditable" onChange={this.props.taskEditListener} />
                 })}
               </ul>
             </div>

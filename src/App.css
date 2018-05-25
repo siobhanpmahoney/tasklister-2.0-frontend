@@ -205,6 +205,18 @@ body {
   position: relative;
 }
 
+button.add-ref {
+  background: white;
+  border-color: white;
+  color: white;
+}
+
+.add-ref {
+  size: 50%;
+  background-color: white;
+  border: white;
+}
+
 .task-detail-description, .task-detail-date-updated, .task-detail-date-created, .task-detail-users, .task-detail-relevant-pages, .task-detail-github-branch, .task-detail-status-summary, .task-detail-details-status-updates {
   padding: 1em;
   font-size: 95%;

@@ -40,7 +40,7 @@ export function createNewTask(taskInfo, taskPageInfo, taskTagInfo, taskUserInfo)
         title: taskInfo.title,
         description: taskInfo.description,
         priority: taskInfo.priority,
-        status_sumamry: taskInfo.status_summary,
+        status_summary: taskInfo.status_summary,
         rel_pages: taskPageInfo,
         rel_tags: taskTagInfo,
         rel_users: taskUserInfo

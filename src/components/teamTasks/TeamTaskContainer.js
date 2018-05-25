@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as Actions from '../../actions'
 import { withRouter } from 'react-router';
-import { Redirect } from 'react-router-dom'
+// import { Redirect } from 'react-router-dom'
 
 import TeamTaskList from './taskListSection/TeamTaskList'
 import TeamTaskNewItem from './taskDetailSection/TeamTaskNewItem'
@@ -56,7 +56,7 @@ class TeamTaskContainer extends React.Component {
 
   renderTaskDetailSection = () => {
     if (this.state.taskDetail === 'new') {
-      return <TeamTaskNewItem newTaskFormListener={this.newTaskFormListener} newTaskDisplayAddIcon={this.newTaskDisplayAddIcon} newTaskStatusListener={this.newTaskStatusListener} newTaskRefListener={this.newTaskRefListener} newTaskSubmit={this.newTaskSubmit} newTask = {this.state.newTask} />
+      return <TeamTaskNewItem newTaskFormListener={this.newTaskFormListener} newTaskDisplayAddlFields={this.newTaskDisplayAddlFields} newTaskDisplayAddIcon={this.newTaskDisplayAddIcon} newTaskStatusListener={this.newTaskStatusListener} newTaskRefListener={this.newTaskRefListener} newTaskSubmit={this.newTaskSubmit} newTask = {this.state.newTask} newTaskPages={this.state.newTaskRef.newTaskPages} newTaskTags={this.state.newTaskRef.newTaskTags} newTaskUsers={this.state.newTaskRef.newTaskUsers}/>
     } else if (!!this.state.taskDetail) {
 
       let selectedTask = this.props.teamTasks.find((t) => t.task._id === this.state.taskDetail._id)
@@ -89,9 +89,11 @@ class TeamTaskContainer extends React.Component {
     this.setState({
       newTask: newTaskState
     })
+    console.log(this.state.newTask)
   }
 
   newTaskRefListener = (event) => {
+    console.log("in #newTaskRefListener")
     let value = event.target.type === "checkbox" ? event.target.checked : event.target.value
     let name = event.target.name
     let stateUpdate = this.state.newTaskRef
@@ -99,15 +101,47 @@ class TeamTaskContainer extends React.Component {
     this.setState({
       newTaskRef: stateUpdate
     })
+    console.log("state.newTaskRef", this.state.newTaskRef)
   }
 
-  newTaskDisplayAddIcon = (name) => {
-    if (this.state.newTaskRef[name].length < 1) {
+  //listening to add'l values
+
+  newTaskAddlRefListener = (event) => {
+    console.log("in newTaskAddlRefListener")
+    let value = event.target.type === "checkbox" ? event.target.checked : event.target.value
+    let name = event.target.name
+    let stateUpdate = this.state.newTaskRef
+    stateUpdate[name][stateUpdate[name].length-1] = value
+    this.setState({
+      newTaskRef: stateUpdate
+    })
+    console.log("state.newTaskRef", this.state.newTaskRef)
+  }
+
+
+  // displaying button if field already has 1 value
+
+  newTaskDisplayAddIcon = (stateName) => {
+    console.log("in newTaskDisplayAddIcon")
+    if (this.state.newTaskRef[stateName].length < 1) {
       return {display: "none"}
     } else {
+      ("adding add icon")
       return {display:"inline"}
     }
   }
+
+  // rendering additional fields if button clicked
+
+  newTaskDisplayAddlFields = (stateName) => {
+    console.log("button click and displaying fields properly")
+    return this.state.newTaskRef[stateName].map((u, idx) => {
+      return <input placeholder='Team Member #${idx + 1}' type="text" name="newTaskUsers" onChange={this.newTaskRefListener} />
+    })
+  }
+
+
+
 
 
   newTaskSubmit = (event) => {
