@@ -17,10 +17,12 @@ class TeamTaskDetail extends React.Component {
   }
 
   renderTagList = () => {
-    if (!!this.props.tags) {
-      return this.props.tags.map((tag) => {
-        return <span className="ind-tag">
+    if (!!this.props.taskDetailTags) {
+      return this.props.taskDetailTags.map((tag) => {
+        if (!!tag.title) {
+          return <span className="ind-tag">
           <i className="material-icons" style={{fontSize: "12px", top:"3px"}}>label</i> {tag.title}</span>
+        }
       })
     } else {
       return <span className="ind-tag no-display">No Tags</span>
@@ -73,9 +75,13 @@ class TeamTaskDetail extends React.Component {
             </div>
 
             <div className="task-detail-users">
-              <span className="field-name">Responsible Team Members: </span>
+              <span className="field-name">
+                Responsible Team Members:
+              </span> <button className="add ref" onClick={this.props.taskEditAddUserField}>
+                <i className="material-icons add-ref">add_circle_outline</i>
+              </button>
               <ul>
-                {this.props.users.map((u) => {
+                {this.props.taskDetailUsers.map((u) => {
                   return <textarea className="task-detail-description"  value={u.username} type="contentEditable" onChange={this.props.taskEditListener} />
                 })}
               </ul>
@@ -83,22 +89,44 @@ class TeamTaskDetail extends React.Component {
 
             <div className="task-detail-relevant-pages">
               <span className="field-name">Relevant Paths: </span>
+                <button className="add ref" onClick={this.props.taskEditAddPageField}>
+                <i className="material-icons add-ref">add_circle_outline</i>
+              </button>
               <ul>
-                {this.props.pages.map((p)=> {
-                  return <li>{p.path}</li>
+                {this.props.taskDetailPages.map((p) => {
+                  return <textarea className="task-detail-description"  value={p.path} type="contentEditable" onChange={this.props.taskEditListener} />
                 })}
               </ul>
             </div>
-            <div className="task-detail-github-branch">
-              <span className="field-name">GitHub Branch: </span> {this.props.taskDetail.github_branch}
+
+            <div className="task-detail-relevant-tags">
+              <span className="field-name">Tags: </span>
+                <button className="add ref" onClick={this.props.taskEditAddTagField}>
+                <i className="material-icons add-ref">add_circle_outline</i>
+              </button>
+              <ul>
+                {this.props.taskDetailTags.map((t) => {
+                  return <textarea className="task-detail-description"  value={t.title} type="contentEditable" onChange={this.props.taskEditListener} />
+                })}
+              </ul>
             </div>
+
+            <div className="task-detail-github-branch">
+              <span className="field-name">
+                GitHub Branch:
+              </span>
+              {this.props.taskDetail.github_branch}
+            </div>
+
             <div className="task-detail-status-summary">
-              <span className="field-name">Current Status: </span>
-                <select name='status_summary'  value={this.props.taskDetail.status_summary} onChange={this.props.taskEditListener}>
-                  <option value=''>Select...</option>
-                  <option value="open">Open</option>
-                  <option value="closed">Closed</option>
-                </select>
+              <span className="field-name">
+                Current Status:
+              </span>
+              <select name='status_summary'  value={this.props.taskDetail.status_summary} onChange={this.props.taskEditListener}>
+                <option value=''>Select...</option>
+                <option value="open">Open</option>
+                <option value="closed">Closed</option>
+              </select>
             </div>
           </div>
 

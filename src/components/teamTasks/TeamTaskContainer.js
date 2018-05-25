@@ -17,9 +17,9 @@ class TeamTaskContainer extends React.Component {
     this.state = {
       tasksDisplayed: "",
       taskDetail: null,
-      taskDetailPages: [],
-      taskDetailUsers: [],
-      taskDetailTags: [],
+      taskDetailPages: [{}, {path: ""}],
+      taskDetailUsers: [{}, {username: ""}],
+      taskDetailTags: [{}, {title: ""}],
       newTask: {status_summary: ''},
       newTaskRef: {
         newTaskPages: [],
@@ -61,7 +61,7 @@ class TeamTaskContainer extends React.Component {
 
       let selectedTask = this.props.teamTasks.find((t) => t.task._id === this.state.taskDetail._id)
 
-      return <TeamTaskDetail taskDetail={this.state.taskDetail} pages={this.state.taskDetailPages} users={this.state.taskDetailUsers} tags={this.state.taskDetailTags} taskEditListener={this.taskEditListener}  taskEditSubmit={this.taskEditSubmit}/>
+      return <TeamTaskDetail taskDetail={this.state.taskDetail} taskEditAddPageField={this.taskEditAddPageField} taskEditAddTagField={this.taskEditAddTagField} taskDetailPages={this.state.taskDetailPages} taskEditAddUserField = {this.taskEditAddUserField} taskDetailUsers={this.state.taskDetailUsers} taskDetailTags={this.state.taskDetailTags} taskEditListener={this.taskEditListener}  taskEditSubmit={this.taskEditSubmit}/>
     } else {
       return <div className="fillerText">Select a task or create a new one!</div>
     }
@@ -173,6 +173,45 @@ class TeamTaskContainer extends React.Component {
       currentTaskState[name] = value
       this.setState({
         taskDetail: currentTaskState
+      })
+    }
+
+    taskEditAddPageField = () => {
+      let currentPageState = this.state.taskDetailPages.slice(0)
+      console.log(currentPageState)
+      currentPageState = [...currentPageState, { path: '' }]
+      this.setState({
+        taskDetailPages: currentPageState
+      })
+      console.log(this.state.taskDetailPages)
+    }
+
+    taskEditAddTagField = () => {
+      let currentTagState = this.state.taskDetailTags.slice(0)
+      console.log(currentTagState)
+      currentTagState = [...currentTagState, { title: '' }]
+      this.setState({
+        taskDetailTags: currentTagState
+      })
+      console.log(this.state.taskDetailTags)
+    }
+
+    taskEditAddUserField = () => {
+      let currentUserState = this.state.taskDetailUsers.slice(0)
+      currentUserState = [...currentUserState, { username: '' }]
+      this.setState({
+        taskDetailUsers: currentUserState
+      })
+      console.log(this.state.taskDetailUsers)
+    }
+
+    taskEditRefListener = (event) => {
+      let value = event.target.type === "checkbox" ? event.target.checked : event.target.value
+      let name = event.target.name
+      let currentState = Object.assign({}, this.state.taskDetail)
+      currentState[name] = value
+      this.setState({
+        taskDetail: currentState
       })
     }
 
