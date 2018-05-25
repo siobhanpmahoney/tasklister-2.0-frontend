@@ -24,21 +24,21 @@ class TeamTaskNewItem extends React.Component {
 
         <p>
           <label>
-            <span className="field-name">Relevant Paths</span>
+            <div className="field-name">Relevant Paths <button style={this.props.newTaskDisplayAddIcon("newTaskPages")}>Add</button></div>
               <input type="text" name="newTaskPages" onChange={this.props.newTaskRefListener} />
           </label>
         </p>
 
         <p>
           <label>
-            <span className="field-name">Assign Team</span>
+            <div className="field-name">Assign Team</div>
               <input type="text" name="newTaskUsers" onChange={this.props.newTaskRefListener}  />
           </label>
         </p>
 
         <p>
           <label>
-            <span className="field-name">Tags</span>
+            <div className="field-name">Tags</div>
               <input type="text" name="newTaskTags" onChange={this.props.newTaskRefListener} />
           </label>
         </p>

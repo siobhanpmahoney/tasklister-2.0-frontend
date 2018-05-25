@@ -50,15 +50,13 @@ class TeamTaskContainer extends React.Component {
 
   // tasks listed in sidebar end
 
-
-
   // task rendered in detail section begin
 
     // task render begin
 
   renderTaskDetailSection = () => {
     if (this.state.taskDetail === 'new') {
-      return <TeamTaskNewItem newTaskFormListener={this.newTaskFormListener}  newTaskStatusListener={this.newTaskStatusListener} newTaskRefListener={this.newTaskRefListener} newTaskSubmit={this.newTaskSubmit} newTask = {this.state.newTask} />
+      return <TeamTaskNewItem newTaskFormListener={this.newTaskFormListener} newTaskDisplayAddIcon={this.newTaskDisplayAddIcon} newTaskStatusListener={this.newTaskStatusListener} newTaskRefListener={this.newTaskRefListener} newTaskSubmit={this.newTaskSubmit} newTask = {this.state.newTask} />
     } else if (!!this.state.taskDetail) {
 
       let selectedTask = this.props.teamTasks.find((t) => t.task._id === this.state.taskDetail._id)
@@ -71,7 +69,6 @@ class TeamTaskContainer extends React.Component {
 
   selectTaskDetail = (event, tsk, tskPages, tskTags, tskUsers) => {
     event.preventDefault()
-    console.log("in TTC#selectTaskDetail arguments: ",  tsk, tskPages, tskTags, tskUsers)
     this.setState({
       taskDetail: tsk,
       taskDetailPages: tskPages,
@@ -95,27 +92,21 @@ class TeamTaskContainer extends React.Component {
   }
 
   newTaskRefListener = (event) => {
-    console.log("name", name)
-    console.log("value", value)
-
     let value = event.target.type === "checkbox" ? event.target.checked : event.target.value
     let name = event.target.name
-
     let stateUpdate = this.state.newTaskRef
     stateUpdate[name][0] = value
-
     this.setState({
       newTaskRef: stateUpdate
     })
+  }
 
-    // let currentState = this.state.newTaskRef[name].slice(0)
-    // currentState = [...currentState, value]
-    // let updatedTask = Object.assign({}, this.state.newTaskRef)
-    // updatedTask[name] = currentState
-    // this.setState({
-    //   newTaskRef: currentState
-    // })
-    // console.log("in newTaskRefListener", this.state.newTaskRef)
+  newTaskDisplayAddIcon = (name) => {
+    if (this.state.newTaskRef[name].length < 1) {
+      return {display: "none"}
+    } else {
+      return {display:"inline"}
+    }
   }
 
 
@@ -149,7 +140,6 @@ class TeamTaskContainer extends React.Component {
       this.setState({
         taskDetail: currentTaskState
       })
-      console.log(this.state.taskDetail)
     }
 
     taskEditSubmit = (event) => {
