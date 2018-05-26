@@ -93,9 +93,14 @@ class TeamTaskDetail extends React.Component {
                   <i className="material-icons add-ref">add_circle_outline</i>
                 </button>
                 <ul>
-                  {this.props.taskDetailPages.map((p) => {
-                    return <textarea className="task-detail-description" name="taskDetailPages" value={p.path} type="contentEditable" onChange={this.props.taskEditAddlRefListener} />
-                  })}
+                  {this.props.taskDetailPages.map((p, idx) => {
+                    return !!p._id ? (
+                      <textarea key={p._id} name="taskDetailTags" className="path" value={p.path} type="contentEditable"  />
+                    ) : (
+                      <textarea key={idx} name="taskDetailPages" className="path"  type="contentEditable" onChange={this.props.taskEditAddlRefListener} />
+                    )
+
+                })}
                 </ul>
               </div>
 

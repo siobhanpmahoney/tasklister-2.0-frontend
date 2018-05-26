@@ -57,7 +57,7 @@ export function createNewTask(taskInfo, taskPageInfo, taskTagInfo, taskUserInfo)
   }
 }
 
-export function editTask(selectedTask) {
+export function editTask(selectedTask, selectedTaskPages, selectedTaskTags) {
   let url = "http://localhost:3000/api/v1/tasks/" + selectedTask._id["$oid"]
   console.log("in action")
   console.log("in action, testing url", url)
@@ -78,8 +78,9 @@ export function editTask(selectedTask) {
           // github_branch: selectedTask.github_branch,
           description: selectedTask.description,
           priority: selectedTask.priority,
-          status_summary: selectedTask.status_summary
-
+          status_summary: selectedTask.status_summary,
+          rel_pages: selectedTaskPages,
+          rel_tags: selectedTaskTags
         })
       })
       .then(response => response.json())

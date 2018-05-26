@@ -89,11 +89,9 @@ class TeamTaskContainer extends React.Component {
     this.setState({
       newTask: newTaskState
     })
-    console.log(this.state.newTask)
   }
 
   newTaskRefListener = (event) => {
-    console.log("in #newTaskRefListener")
     let value = event.target.type === "checkbox" ? event.target.checked : event.target.value
     let name = event.target.name
     let stateUpdate = this.state.newTaskRef
@@ -101,13 +99,11 @@ class TeamTaskContainer extends React.Component {
     this.setState({
       newTaskRef: stateUpdate
     })
-    console.log("state.newTaskRef", this.state.newTaskRef)
   }
 
   //listening to add'l values
 
   newTaskAddlRefListener = (event) => {
-    console.log("in newTaskAddlRefListener")
     let value = event.target.type === "checkbox" ? event.target.checked : event.target.value
     let name = event.target.name
     let stateUpdate = this.state.newTaskRef
@@ -115,14 +111,13 @@ class TeamTaskContainer extends React.Component {
     this.setState({
       newTaskRef: stateUpdate
     })
-    console.log("state.newTaskRef", this.state.newTaskRef)
+
   }
 
 
   // displaying button if field already has 1 value
 
   newTaskDisplayAddIcon = (stateName) => {
-    console.log("in newTaskDisplayAddIcon")
     if (this.state.newTaskRef[stateName].length < 1) {
       return {display: "none"}
     } else {
@@ -134,7 +129,7 @@ class TeamTaskContainer extends React.Component {
   // rendering additional fields if button clicked
 
   newTaskDisplayAddlFields = (stateName) => {
-    console.log("button click and displaying fields properly")
+
     return this.state.newTaskRef[stateName].map((u, idx) => {
       return <input placeholder='Team Member #${idx + 1}' type="text" name="newTaskUsers" onChange={this.newTaskRefListener} />
     })
@@ -178,7 +173,6 @@ class TeamTaskContainer extends React.Component {
 
     taskEditAddPageField = () => {
       let currentPageState = this.state.taskDetailPages.slice(0)
-      console.log(currentPageState)
       currentPageState = [...currentPageState, { path: '' }]
       this.setState({
         taskDetailPages: currentPageState
@@ -187,7 +181,6 @@ class TeamTaskContainer extends React.Component {
 
     taskEditAddTagField = () => {
       let currentTagState = this.state.taskDetailTags.slice(0)
-      console.log(currentTagState)
       currentTagState = [...currentTagState, { title: '' }]
       this.setState({
         taskDetailTags: currentTagState
@@ -206,25 +199,26 @@ class TeamTaskContainer extends React.Component {
 
       console.log("in taskEditAddlRefListener")
       console.log(event.target.value)
-      // let value = event.target.type === "checkbox" ? event.target.checked : event.target.value
-      // let name = event.target.name
-      // let keyName = event.target.className
-      // let kV = {}
-      // kV[keyName] = value
-      // console.log("kV", kV)
-      //
-      // const currentRef = this.state[name].map((ref) => {
-      //   return ref
-      // })
-      // this.setState({
-      //   name: [...currentRef, kV]
-      // })
-      // console.log(this.state)
+      let value = event.target.type === "checkbox" ? event.target.checked : event.target.value
+      let name = event.target.name
+      let keyName = event.target.className
+      let kV = {}
+      kV[keyName] = value
+      console.log("kV", kV)
+
+      const currentRef = this.state[name].slice(0)
+      currentRef[currentRef.length - 1][keyName] = value
+      console.log("updated currentRef", currentRef)
+      this.setState({
+        name: currentRef
+      })
     }
 
     taskEditSubmit = (event) => {
       event.preventDefault()
-      this.props.editTask(this.state.taskDetail)
+      let relPages = this.state.taskDetailPages
+      let relTags = this.state.taskDetailTags
+      this.props.editTask(this.state.taskDetail, relPages, relTags)
 
     }
 
