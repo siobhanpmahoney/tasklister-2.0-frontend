@@ -61,7 +61,7 @@ class TeamTaskContainer extends React.Component {
 
       let selectedTask = this.props.teamTasks.find((t) => t.task._id === this.state.taskDetail._id)
 
-      return <TeamTaskDetail taskDetail={this.state.taskDetail} taskEditAddPageField={this.taskEditAddPageField} taskEditAddTagField={this.taskEditAddTagField} taskDetailPages={this.state.taskDetailPages} taskEditAddUserField = {this.taskEditAddUserField} taskDetailUsers={this.state.taskDetailUsers} taskDetailTags={this.state.taskDetailTags} taskEditListener={this.taskEditListener}  taskEditSubmit={this.taskEditSubmit}/>
+      return <TeamTaskDetail taskEditAddlRefListener={this.taskEditAddlRefListener} taskDetail={this.state.taskDetail}  taskEditAddPageField={this.taskEditAddPageField} taskEditAddTagField={this.taskEditAddTagField} taskDetailPages={this.state.taskDetailPages} taskEditAddUserField = {this.taskEditAddUserField} taskDetailUsers={this.state.taskDetailUsers} taskDetailTags={this.state.taskDetailTags} taskEditListener={this.taskEditListener}  taskEditSubmit={this.taskEditSubmit}/>
     } else {
       return <div className="fillerText">Select a task or create a new one!</div>
     }
@@ -183,7 +183,6 @@ class TeamTaskContainer extends React.Component {
       this.setState({
         taskDetailPages: currentPageState
       })
-      console.log(this.state.taskDetailPages)
     }
 
     taskEditAddTagField = () => {
@@ -193,7 +192,6 @@ class TeamTaskContainer extends React.Component {
       this.setState({
         taskDetailTags: currentTagState
       })
-      console.log(this.state.taskDetailTags)
     }
 
     taskEditAddUserField = () => {
@@ -202,17 +200,26 @@ class TeamTaskContainer extends React.Component {
       this.setState({
         taskDetailUsers: currentUserState
       })
-      console.log(this.state.taskDetailUsers)
     }
 
-    taskEditRefListener = (event) => {
-      let value = event.target.type === "checkbox" ? event.target.checked : event.target.value
-      let name = event.target.name
-      let currentState = Object.assign({}, this.state.taskDetail)
-      currentState[name] = value
-      this.setState({
-        taskDetail: currentState
-      })
+    taskEditAddlRefListener = (event) => {
+
+      console.log("in taskEditAddlRefListener")
+      console.log(event.target.value)
+      // let value = event.target.type === "checkbox" ? event.target.checked : event.target.value
+      // let name = event.target.name
+      // let keyName = event.target.className
+      // let kV = {}
+      // kV[keyName] = value
+      // console.log("kV", kV)
+      //
+      // const currentRef = this.state[name].map((ref) => {
+      //   return ref
+      // })
+      // this.setState({
+      //   name: [...currentRef, kV]
+      // })
+      // console.log(this.state)
     }
 
     taskEditSubmit = (event) => {

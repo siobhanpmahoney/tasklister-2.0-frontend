@@ -10,7 +10,6 @@ class TeamTaskList extends React.Component {
   }
 
   render() {
-    console.log("in list render", this.props.tasks[0])
     return (
       <div className="task-list">
 

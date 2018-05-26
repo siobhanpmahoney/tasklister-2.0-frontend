@@ -21,92 +21,97 @@ class TeamTaskDetail extends React.Component {
       return this.props.taskDetailTags.map((tag) => {
         if (!!tag.title) {
           return <span className="ind-tag">
-          <i className="material-icons" style={{fontSize: "12px", top:"3px"}}>label</i> {tag.title}</span>
-        }
-      })
-    } else {
-      return <span className="ind-tag no-display">No Tags</span>
+            <i className="material-icons" style={{fontSize: "12px", top:"3px"}}>label</i> {tag.title}</span>
+          }
+        })
+      } else {
+        return <span className="ind-tag no-display">No Tags</span>
+      }
     }
-  }
 
-  formattedSavedDate = (dateArg) => {
-    let dateSaved = new Date(dateArg)
-    return dateSaved.toLocaleDateString()
-  }
-
+    formattedSavedDate = (dateArg) => {
+      let dateSaved = new Date(dateArg)
+      return dateSaved.toLocaleDateString()
+    }
 
 
-  render() {
-    console.log("in task item detail", this.props)
 
-    return (
-      <div className="task-detail-container">
+    render() {
+      console.log("in task item detail", this.props)
 
-        <div className="task-detail-header">
+      return (
+        <div className="task-detail-container">
 
-          <span className="task-detail-tags">
-            {this.renderTagList()}
-          </span><br />
+          <div className="task-detail-header">
 
-          <span className="task-detail-title">
-            {this.props.taskDetail.title}
-          </span>
+            <span className="task-detail-tags">
+              {this.renderTagList()}
+            </span><br />
 
-
-        </div>
+            <span className="task-detail-title">
+              {this.props.taskDetail.title}
+            </span>
 
 
-        <div className="task-detail-detais">
-          <div className="task-detail-edit-submit-button">
-            <button onClick={this.props.taskEditSubmit}>Save</button>
           </div>
-          <div className="task-detail-details-dashboard">
-            <textarea className="task-detail-description" name="description" value={this.props.taskDetail.description} type="contentEditable" onChange={this.props.taskEditListener} />
 
 
-            <div className="task-detail-date-updated">
-              <span className="field-name">
-                Updated:
-              </span>
-              <textarea name="updated_at" value={this.formattedSavedDate(this.props.taskDetail.updated_at)} type="contentEditable" readOnly />
+          <div className="task-detail-detais">
+            <div className="task-detail-edit-submit-button">
+              <button onClick={this.props.taskEditSubmit}>Save</button>
             </div>
-            <div className="task-detail-date-created">
-              <span className="field-name">Created: </span>{this.formattedSavedDate(this.props.taskDetail.created_at)}
-            </div>
+            <div className="task-detail-details-dashboard">
+              <textarea className="task-detail-description" name="description" value={this.props.taskDetail.description} type="contentEditable" onChange={this.props.taskEditListener} />
 
-            <div className="task-detail-users">
-              <span className="field-name">
-                Responsible Team Members:
-              </span> <button className="add ref" onClick={this.props.taskEditAddUserField}>
-                <i className="material-icons add-ref">add_circle_outline</i>
-              </button>
-              <ul>
-                {this.props.taskDetailUsers.map((u) => {
-                  return <textarea className="task-detail-description"  value={u.username} type="contentEditable" onChange={this.props.taskEditListener} />
-                })}
-              </ul>
-            </div>
 
-            <div className="task-detail-relevant-pages">
-              <span className="field-name">Relevant Paths: </span>
+              <div className="task-detail-date-updated">
+                <span className="field-name">
+                  Updated:
+                </span>
+                <textarea name="updated_at" value={this.formattedSavedDate(this.props.taskDetail.updated_at)} type="contentEditable" readOnly />
+              </div>
+              <div className="task-detail-date-created">
+                <span className="field-name">Created: </span>{this.formattedSavedDate(this.props.taskDetail.created_at)}
+                </div>
+
+                <div className="task-detail-users">
+                  <span className="field-name">
+                    Responsible Team Members:
+                  </span> <button className="add ref" onClick={this.props.taskEditAddUserField}>
+                  <i className="material-icons add-ref">add_circle_outline</i>
+                </button>
+                <ul>
+                  {this.props.taskDetailUsers.map((u) => {
+                    return <textarea className="task-detail-description"  value={u.username} type="contentEditable" onChange={this.props.taskEditListener} />
+                  })}
+                </ul>
+              </div>
+
+              <div className="task-detail-relevant-pages">
+                <span className="field-name">Relevant Paths: </span>
                 <button className="add ref" onClick={this.props.taskEditAddPageField}>
-                <i className="material-icons add-ref">add_circle_outline</i>
-              </button>
-              <ul>
-                {this.props.taskDetailPages.map((p) => {
-                  return <textarea className="task-detail-description"  value={p.path} type="contentEditable" onChange={this.props.taskEditListener} />
-                })}
-              </ul>
-            </div>
+                  <i className="material-icons add-ref">add_circle_outline</i>
+                </button>
+                <ul>
+                  {this.props.taskDetailPages.map((p) => {
+                    return <textarea className="task-detail-description" name="taskDetailPages" value={p.path} type="contentEditable" onChange={this.props.taskEditAddlRefListener} />
+                  })}
+                </ul>
+              </div>
 
-            <div className="task-detail-relevant-tags">
-              <span className="field-name">Tags: </span>
+              <div className="task-detail-relevant-tags">
+                <span className="field-name">Tags: </span>
                 <button className="add ref" onClick={this.props.taskEditAddTagField}>
-                <i className="material-icons add-ref">add_circle_outline</i>
-              </button>
-              <ul>
-                {this.props.taskDetailTags.map((t) => {
-                  return <textarea className="task-detail-description"  value={t.title} type="contentEditable" onChange={this.props.taskEditListener} />
+                  <i className="material-icons add-ref">add_circle_outline</i>
+                </button>
+                <ul>
+                  {this.props.taskDetailTags.map((t, idx) => {
+                    return !!t._id ? (
+                      <textarea key={t._id} name="taskDetailTags" className="title" value={t.title} type="contentEditable"  />
+                    ) : (
+                      <textarea key={idx} name="taskDetailTags" className="title"  type="contentEditable" onChange={this.props.taskEditAddlRefListener} />
+                    )
+
                 })}
               </ul>
             </div>
