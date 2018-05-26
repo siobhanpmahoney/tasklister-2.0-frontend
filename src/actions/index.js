@@ -2,6 +2,7 @@ export const CURRENT_USER = 'CURRENT_USER'
 export const ALL_TASKS = 'ALL_TASKS'
 export const ADD_NEW_TASK = 'ADD_NEW_TASK'
 export const EDIT_TASK = 'EDIT_TASK'
+export const EDIT_TASK_DELETE_PAGE = 'EDIT_TASK_DELETE_PAGE'
 
 
 export function loadCurrentUser(user) {
@@ -27,7 +28,6 @@ export function loadAllTasks() {
 }
 
 export function createNewTask(taskInfo, taskPageInfo, taskTagInfo, taskUserInfo) {
-  console.log("in action — createNewTask, taskInfo argument", taskInfo)
   return (dispatch) => {
     fetch(`http://localhost:3000/api/v1/tasks`,
     {
@@ -59,12 +59,6 @@ export function createNewTask(taskInfo, taskPageInfo, taskTagInfo, taskUserInfo)
 
 export function editTask(selectedTask, selectedTaskPages, selectedTaskTags) {
   let url = "http://localhost:3000/api/v1/tasks/" + selectedTask._id["$oid"]
-  console.log("in action")
-  console.log("in action, testing url", url)
-  console.log("in action, testing selectedTask", selectedTask)
-  console.log("in action, testing selectedTask.title", selectedTask.title)
-  console.log("in action, testing selectedTask.description", selectedTask.description)
-
   return (dispatch) => {
     return fetch(url,
       {
@@ -88,5 +82,25 @@ export function editTask(selectedTask, selectedTaskPages, selectedTaskTags) {
         type: EDIT_TASK,
         editedTask: json
       }))
+  }
+}
+
+export function editTaskDeletePage(relTask, relPage) {
+  console.log("in action")
+  console.log("action arguments")
+  console.log("relTask", relTask)
+  console.log("relPage", relPage)
+  let url = "http://localhost:3000/api/v1/tasks/" + relTask._id["$oid"] + "/pages/" + relPage._id["$oid"]
+  return (dispatch) => {
+    return fetch(url, {
+      method: 'DELETE'
+    })
+    .then(response => response.json())
+    .then(json => dispatch({
+      type: EDIT_TASK_DELETE_PAGE,
+      payload: json,
+      taskid: relTask._id["$oid"],
+      pageid: relPage._id["$oid"]
+    }))
   }
 }

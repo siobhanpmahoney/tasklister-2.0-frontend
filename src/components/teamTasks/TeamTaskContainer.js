@@ -61,7 +61,7 @@ class TeamTaskContainer extends React.Component {
 
       let selectedTask = this.props.teamTasks.find((t) => t.task._id === this.state.taskDetail._id)
 
-      return <TeamTaskDetail taskEditAddlRefListener={this.taskEditAddlRefListener} taskDetail={this.state.taskDetail}  taskEditAddPageField={this.taskEditAddPageField} taskEditAddTagField={this.taskEditAddTagField} taskDetailPages={this.state.taskDetailPages} taskEditAddUserField = {this.taskEditAddUserField} taskDetailUsers={this.state.taskDetailUsers} taskDetailTags={this.state.taskDetailTags} taskEditListener={this.taskEditListener}  taskEditSubmit={this.taskEditSubmit}/>
+      return <TeamTaskDetail editTaskDeletePage = {this.props.editTaskDeletePage} taskEditAddlRefListener={this.taskEditAddlRefListener} taskDetail={this.state.taskDetail}  taskEditAddPageField={this.taskEditAddPageField} taskEditAddTagField={this.taskEditAddTagField} taskDetailPages={this.state.taskDetailPages} taskEditAddUserField = {this.taskEditAddUserField} taskDetailUsers={this.state.taskDetailUsers} taskDetailTags={this.state.taskDetailTags} taskEditListener={this.taskEditListener}  taskEditSubmit={this.taskEditSubmit}/>
     } else {
       return <div className="fillerText">Select a task or create a new one!</div>
     }
@@ -219,8 +219,7 @@ class TeamTaskContainer extends React.Component {
       let relPages = this.state.taskDetailPages
       let relTags = this.state.taskDetailTags
       this.props.editTask(this.state.taskDetail, relPages, relTags)
-
-    }
+}
 
 
     // edit task end

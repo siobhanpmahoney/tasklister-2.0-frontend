@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { CURRENT_USER, ALL_TASKS, ADD_NEW_TASK, EDIT_TASK } from '../actions'
+import { CURRENT_USER, ALL_TASKS, ADD_NEW_TASK, EDIT_TASK, EDIT_TASK_DELETE_PAGE } from '../actions'
 
 const user = (state = {currentUser: null, userTasks: [] }, action) => {
   switch(action.type) {
@@ -30,36 +30,65 @@ const teamTasks = (state = {allTasks: [] }, action) => {
     );
 
     case ADD_NEW_TASK:
-      let allTasksState = state.allTasks.slice(0)
-      state = Object.assign({},
-        state,
-        {
-          allTasks: [...allTasksState, action.newTask]
-        });
-        return state;
+    let allTasksState = state.allTasks.slice(0)
+    state = Object.assign({},
+      state,
+      {
+        allTasks: [...allTasksState, action.newTask]
+      });
+      return state;
 
 
-    case EDIT_TASK:
-      let updatedTask = state.allTasks.find((t) => {
-        return t.task._id["$oid"] == action.editedTask.task._id["$oid"]
-      })
-
-      let currentTasksState = state.allTasks.slice(0)
-
-      const savedTasks = [
-        ...currentTasksState.slice(0, currentTasksState.indexOf(updatedTask)),
-        {task: action.editedTask.task, tags: action.editedTask.tags, users: action.editedTask.users, pages: action.editedTask.pages},
-        ...currentTasksState.slice(currentTasksState.indexOf(updatedTask) + 1)
-      ];
-      state = Object.assign({},
-        state,
+      case EDIT_TASK:
+        let updatedTask = state.allTasks.find((t) => {
+          return t.task._id["$oid"] == action.editedTask.task._id["$oid"]
+        })
+        let currentTasksState = state.allTasks.slice(0)
+        const savedTasks = [
+          ...currentTasksState.slice(0, currentTasksState.indexOf(updatedTask)),
+          {task: action.editedTask.task, tags: action.editedTask.tags, users: action.editedTask.users, pages: action.editedTask.pages},
+          ...currentTasksState.slice(currentTasksState.indexOf(updatedTask) + 1)
+        ];
+        state = Object.assign({},
+          state,
           {
             allTasks: savedTasks
           },
         );
-
         return state;
 
+      case EDIT_TASK_DELETE_PAGE:
+        console.log("return from fetch request")
+        console.log(action.payload)
+        // relevant task
+        let rT = state.allTasks.find((t) => t.task._id["$oid"] == action.taskid)
+
+        console.log("relevant task", rT)
+
+        // up-to-date page list
+        let updatedPageList = rT.pages.filter((p) => p._id["$oid"] != action.pageid)
+        console.log("updated page list")
+        console.log(updatedPageList)
+
+        let allTasksCopy = state.allTasks.slice(0)
+
+        const savedTasks1 = [
+          ...allTasksCopy.slice(0, allTasksCopy.indexOf(rT)),
+          {task: rT.task, tags: rT.tags, users: rT.users, pages: updatedPageList},
+          ...allTasksCopy.slice(allTasksCopy.indexOf(rT) + 1)
+        ];
+
+        console.log("state after update")
+
+        console.log(savedTasks1)
+
+        state = Object.assign({},
+          state,
+          {
+            allTasks: savedTasks1
+          },
+        );
+        return state;
 
 
       default:

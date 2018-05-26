@@ -21,7 +21,7 @@ class TeamTaskDetail extends React.Component {
       return this.props.taskDetailTags.map((tag) => {
         if (!!tag.title) {
           return <span className="ind-tag">
-            <i className="material-icons" style={{fontSize: "12px", top:"3px"}}>label</i> {tag.title}</span>
+            <i className="material-icons" key = {tag.title} style={{fontSize: "12px", top:"3px"}}>label</i> {tag.title}</span>
           }
         })
       } else {
@@ -37,7 +37,13 @@ class TeamTaskDetail extends React.Component {
 
 
     render() {
-      console.log("in task item detail", this.props)
+      console.log("in task item detail", this.props.taskDetail._id["$oid"])
+
+      const relT = this.props.teamTasks.find((t) => t.task._id["$oid"] == this.props.taskDetail._id["$oid"])
+
+      console.log( this.props.teamTasks[0].task._id["$oid"])
+      console.log(this.props.taskDetail._id["$oid"])
+      console.log(relT)
 
       return (
         <div className="task-detail-container">
@@ -82,7 +88,7 @@ class TeamTaskDetail extends React.Component {
                 </button>
                 <ul>
                   {this.props.taskDetailUsers.map((u) => {
-                    return <textarea className="task-detail-description"  value={u.username} type="contentEditable" onChange={this.props.taskEditListener} />
+                    return <textarea className="task-detail-description"  value={u.username} type="contentEditable" key={u._id["$oid"]} onChange={this.props.taskEditListener} />
                   })}
                 </ul>
               </div>
@@ -93,9 +99,11 @@ class TeamTaskDetail extends React.Component {
                   <i className="material-icons add-ref">add_circle_outline</i>
                 </button>
                 <ul>
-                  {this.props.taskDetailPages.map((p, idx) => {
+                  {relT.pages.map((p, idx) => {
                     return !!p._id ? (
-                      <textarea key={p._id} name="taskDetailTags" className="path" value={p.path} type="contentEditable"  />
+                      <li key={p._id["$oid"]} name="taskDetailTags" className="path">
+                        {p.path} <button onClick={()=>this.props.editTaskDeletePage(this.props.taskDetail, p)}> x </button>
+                      </li>
                     ) : (
                       <textarea key={idx} name="taskDetailPages" className="path"  type="contentEditable" onChange={this.props.taskEditAddlRefListener} />
                     )
@@ -110,9 +118,11 @@ class TeamTaskDetail extends React.Component {
                   <i className="material-icons add-ref">add_circle_outline</i>
                 </button>
                 <ul>
-                  {this.props.taskDetailTags.map((t, idx) => {
+                  {relT.tags.map((t, idx) => {
                     return !!t._id ? (
-                      <textarea key={t._id} name="taskDetailTags" className="title" value={t.title} type="contentEditable"  />
+                      <li key={t._id} name="taskDetailTags" className="title">
+                        {t.title}
+                      </li>
                     ) : (
                       <textarea key={idx} name="taskDetailTags" className="title"  type="contentEditable" onChange={this.props.taskEditAddlRefListener} />
                     )

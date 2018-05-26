@@ -14,7 +14,7 @@ class TeamTaskList extends React.Component {
       <div className="task-list">
 
         {this.props.tasks.map((t) => {
-          return<TeamTaskItem t={t.task} pages={t.pages} users={t.users} tags={t.tags} selectTaskDetail={this.props.selectTaskDetail}/>
+          return<TeamTaskItem t={t.task} pages={t.pages} users={t.users} tags={t.tags} key={t.task._id["$oid"].toString()} selectTaskDetail={this.props.selectTaskDetail}/>
         })}
       </div>
     )
