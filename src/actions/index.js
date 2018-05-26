@@ -86,6 +86,7 @@ export function editTask(selectedTask, selectedTaskPages, selectedTaskTags) {
 }
 
 export function editTaskDeletePage(relTask, relPage) {
+  
   console.log("in action")
   console.log("action arguments")
   console.log("relTask", relTask)

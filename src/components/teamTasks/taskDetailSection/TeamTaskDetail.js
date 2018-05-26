@@ -10,10 +10,15 @@ class TeamTaskDetail extends React.Component {
     super(props)
 
     this.state = {
-      pageAddNewField: false,
-      tagAddNewField: false,
-      userAddNewField: false,
+      taskRendered: null,
+      taskRenderedPages: [],
+      taskRenderedTags: [],
+      taskRenderedUsers: []
     }
+  }
+
+  componentDidMount() {
+    console.log(this.props)
   }
 
   renderTagList = () => {
@@ -34,9 +39,20 @@ class TeamTaskDetail extends React.Component {
       return dateSaved.toLocaleDateString()
     }
 
+    taskEditAddPageField = () => {
+      let currentPageState = this.state.taskRenderedPages.slice(0)
+      currentPageState = [...currentPageState, { path: '' }]
+      this.setState({
+        taskRenderedPages: currentPageState
+      })
+    }
+
+
+
 
 
     render() {
+      console.log(this.state)
       console.log("in task item detail", this.props.taskDetail._id["$oid"])
 
       const relT = this.props.teamTasks.find((t) => t.task._id["$oid"] == this.props.taskDetail._id["$oid"])
@@ -63,6 +79,8 @@ class TeamTaskDetail extends React.Component {
 
 
           <div className="task-detail-detais">
+
+
             <div className="task-detail-edit-submit-button">
               <button onClick={this.props.taskEditSubmit}>Save</button>
             </div>
@@ -79,6 +97,11 @@ class TeamTaskDetail extends React.Component {
               <div className="task-detail-date-created">
                 <span className="field-name">Created: </span>{this.formattedSavedDate(this.props.taskDetail.created_at)}
                 </div>
+
+
+
+
+
 
                 <div className="task-detail-users">
                   <span className="field-name">
@@ -99,8 +122,8 @@ class TeamTaskDetail extends React.Component {
                   <i className="material-icons add-ref">add_circle_outline</i>
                 </button>
                 <ul>
-                  {relT.pages.map((p, idx) => {
-                    return !!p._id ? (
+                  {this.props.taskDetailPages.map((p, idx) => {
+                    return !!p.path ? (
                       <li key={p._id["$oid"]} name="taskDetailTags" className="path">
                         {p.path} <button onClick={()=>this.props.editTaskDeletePage(this.props.taskDetail, p)}> x </button>
                       </li>
@@ -109,6 +132,7 @@ class TeamTaskDetail extends React.Component {
                     )
 
                 })}
+
                 </ul>
               </div>
 

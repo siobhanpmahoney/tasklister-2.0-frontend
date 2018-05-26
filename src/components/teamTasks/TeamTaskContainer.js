@@ -172,6 +172,8 @@ class TeamTaskContainer extends React.Component {
     }
 
     taskEditAddPageField = () => {
+      console.log("in add field function")
+      debugger
       let currentPageState = this.state.taskDetailPages.slice(0)
       currentPageState = [...currentPageState, { path: '' }]
       this.setState({
@@ -219,6 +221,9 @@ class TeamTaskContainer extends React.Component {
       let relPages = this.state.taskDetailPages
       let relTags = this.state.taskDetailTags
       this.props.editTask(this.state.taskDetail, relPages, relTags)
+      let relTask = this.props.teamTasks.find((t) => t.task._id["$oid"] == this.state.taskDetail._id["$oid"])
+      this.selectTaskDetail(event, relTask.task, relTask.pages, relTask.tags, relTask.users)
+
 }
 
 
