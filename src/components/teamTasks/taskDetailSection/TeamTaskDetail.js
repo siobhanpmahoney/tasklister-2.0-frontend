@@ -90,7 +90,7 @@ class TeamTaskDetail extends React.Component {
                 <span className="field-name">
                   Updated:
                 </span>
-                <textarea name="updated_at" value={this.formattedSavedDate(this.props.taskDetail.updated_at)} type="contentEditable" readOnly />
+                <span name="updated_at">{this.formattedSavedDate(this.props.taskDetail.updated_at)}</span>
               </div>
               <div className="task-detail-date-created">
                 <span className="field-name">Created: </span>{this.formattedSavedDate(this.props.taskDetail.created_at)}

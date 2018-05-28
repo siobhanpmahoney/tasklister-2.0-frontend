@@ -4,6 +4,7 @@ export const ADD_NEW_TASK = 'ADD_NEW_TASK'
 export const EDIT_TASK = 'EDIT_TASK'
 export const EDIT_TASK_DELETE_PAGE = 'EDIT_TASK_DELETE_PAGE'
 export const EDIT_TASK_DELETE_TAG = 'EDIT_TASK_DELETE_TAG'
+export const ALL_PAGES = 'ALL_PAGES'
 
 
 export function loadCurrentUser(user) {
@@ -24,6 +25,17 @@ export function loadAllTasks() {
     .then(json => dispatch({
       type: ALL_TASKS,
       tasks: json
+    }))
+  }
+}
+
+export function loadAllPages() {
+  return (dispatch) => {
+    fetch('http://localhost:3000/api/v1/pages')
+    .then(response => response.json())
+    .then(json => dispatch({
+      type: ALL_PAGES,
+      pages: json
     }))
   }
 }

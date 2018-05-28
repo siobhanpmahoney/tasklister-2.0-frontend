@@ -3,6 +3,7 @@ import {BrowserRouter as Router, Route, withRouter} from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import './App.css';
+import './stylesheets/sidebar.css'
 import './web-fonts.css'
 import registerServiceWorker from './registerServiceWorker';
 
@@ -73,6 +74,7 @@ class App extends Component {
 
             }); this.props.loadCurrentUser(this.state.auth.currentUser)
             this.props.loadAllTasks()
+            this.props.loadAllPages()
           }
 
           else {
@@ -149,6 +151,7 @@ function mapStateToProps(state, props) {
   return {
     user: state.user.currentUser,
     userTasks: state.user.userTasks,
+    teamPages: state.teamPages.allPages,
     teamTasks: state.teamTasks.allTasks
 
   }

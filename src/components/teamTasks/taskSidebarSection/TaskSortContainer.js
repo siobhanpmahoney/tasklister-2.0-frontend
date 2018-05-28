@@ -1,6 +1,6 @@
 import React from 'react'
 
-class TaskSort extends React.Component {
+class TaskSortContainer extends React.Component {
   render() {
     return (
       <div></div>
@@ -8,4 +8,4 @@ class TaskSort extends React.Component {
   }
 }
 
-export default TaskSort
+export default TaskSortContainer

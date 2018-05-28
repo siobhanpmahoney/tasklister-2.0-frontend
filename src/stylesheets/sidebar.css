@@ -1,0 +1,31 @@
+.sidebar-container {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+
+.sidebar-section {
+  padding: 1.2em 0.2em;
+  margin: 0.75em 0.2em;
+}
+
+.sidebar-heading {
+  font-size: 115%;
+  color: #f6f8fe;
+  width: 100%;
+  border-bottom: #e4f6f6 1px solid;
+}
+
+.filter-option {
+  padding: 0.5em 0.2em;
+  margin: 0.5em 0.2em;
+}
+
+.filter-option-title {
+  color: white;
+}
+
+.filter-path-options {
+
+
+}
