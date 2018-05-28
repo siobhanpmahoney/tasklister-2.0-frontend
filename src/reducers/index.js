@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { CURRENT_USER, ALL_TASKS, ADD_NEW_TASK, EDIT_TASK, EDIT_TASK_DELETE_PAGE } from '../actions'
+import { CURRENT_USER, ALL_TASKS, ADD_NEW_TASK, EDIT_TASK, EDIT_TASK_DELETE_PAGE, EDIT_TASK_DELETE_TAG } from '../actions'
 
 const user = (state = {currentUser: null, userTasks: [] }, action) => {
   switch(action.type) {
@@ -58,30 +58,16 @@ const teamTasks = (state = {allTasks: [] }, action) => {
         return state;
 
       case EDIT_TASK_DELETE_PAGE:
-        console.log("return from fetch request")
-        console.log(action.payload)
         // relevant task
         let rT = state.allTasks.find((t) => t.task._id["$oid"] == action.taskid)
-
-        console.log("relevant task", rT)
-
         // up-to-date page list
         let updatedPageList = rT.pages.filter((p) => p._id["$oid"] != action.pageid)
-        console.log("updated page list")
-        console.log(updatedPageList)
-
         let allTasksCopy = state.allTasks.slice(0)
-
         const savedTasks1 = [
           ...allTasksCopy.slice(0, allTasksCopy.indexOf(rT)),
           {task: rT.task, tags: rT.tags, users: rT.users, pages: updatedPageList},
           ...allTasksCopy.slice(allTasksCopy.indexOf(rT) + 1)
         ];
-
-        console.log("state after update")
-
-        console.log(savedTasks1)
-
         state = Object.assign({},
           state,
           {
@@ -89,6 +75,25 @@ const teamTasks = (state = {allTasks: [] }, action) => {
           },
         );
         return state;
+
+      case EDIT_TASK_DELETE_TAG:
+          // relevant task
+          let relTask = state.allTasks.find((t) => t.task._id["$oid"] == action.taskid)
+          // up-to-date tag list
+          let updatedTagList = relTask.tags.filter((p) => p._id["$oid"] != action.tagid)
+          let taskStateCopy = state.allTasks.slice(0)
+          const savedTasks2 = [
+            ...taskStateCopy.slice(0, taskStateCopy.indexOf(relTask)),
+            {task: relTask.task, pages: relTask.pages, users: relTask.users, tags: updatedTagList},
+            ...taskStateCopy.slice(taskStateCopy.indexOf(relTask) + 1)
+          ];
+          state = Object.assign({},
+            state,
+            {
+              allTasks: savedTasks2
+            },
+          );
+          return state;
 
 
       default:

@@ -63,7 +63,7 @@ class TeamTaskContainer extends React.Component {
 
       let selectedTask = this.props.teamTasks.find((t) => t.task._id === this.state.taskDetail._id)
 
-      return <TeamTaskDetail editTaskDeletePage = {this.props.editTaskDeletePage} taskEditAddlRefListener={this.taskEditAddlRefListener} taskDetail={this.state.taskDetail} taskDetailUsers={this.state.taskDetailUsers} taskDetailTags={this.state.taskDetailTags} taskEditAddPageField={this.taskEditAddPageField} taskEditAddTagField={this.taskEditAddTagField} taskDetailPages={this.state.taskDetailPages} taskEditAddUserField = {this.taskEditAddUserField}  taskEditListener={this.taskEditListener}  taskEditSubmit={this.taskEditSubmit}/>
+      return <TeamTaskDetail editTaskDeletePageReload={this.editTaskDeletePageReload} taskEditAddlRefListener={this.taskEditAddlRefListener} taskDetail={this.state.taskDetail} taskDetailUsers={this.state.taskDetailUsers} taskDetailTags={this.state.taskDetailTags} taskEditAddPageField={this.taskEditAddPageField} taskEditAddTagField={this.taskEditAddTagField} taskDetailPages={this.state.taskDetailPages} taskEditAddUserField = {this.taskEditAddUserField}  taskEditListener={this.taskEditListener}  taskEditSubmit={this.taskEditSubmit}/>
     } else {
       return <div className="fillerText">Select a task or create a new one!</div>
     }
@@ -217,6 +217,17 @@ class TeamTaskContainer extends React.Component {
         name: currentRef
       })
     }
+
+    editTaskDeletePageReload = (task, page) => {
+      this.props.editTaskDeletePage(task, page)
+      let currentPageState = this.state.taskDetailPages.slice(0)
+      let updatedPageState = [...currentPageState.slice(0, currentPageState.indexOf(page)),... currentPageState.slice(currentPageState.indexOf(page)+1)]
+      console.log(updatedPageState)
+      this.setState({
+        taskDetailPages: updatedPageState
+      })
+    }
+
 
     taskEditSubmit = (event) => {
       event.preventDefault()

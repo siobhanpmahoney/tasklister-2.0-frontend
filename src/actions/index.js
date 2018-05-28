@@ -3,6 +3,7 @@ export const ALL_TASKS = 'ALL_TASKS'
 export const ADD_NEW_TASK = 'ADD_NEW_TASK'
 export const EDIT_TASK = 'EDIT_TASK'
 export const EDIT_TASK_DELETE_PAGE = 'EDIT_TASK_DELETE_PAGE'
+export const EDIT_TASK_DELETE_TAG = 'EDIT_TASK_DELETE_TAG'
 
 
 export function loadCurrentUser(user) {
@@ -86,11 +87,6 @@ export function editTask(selectedTask, selectedTaskPages, selectedTaskTags) {
 }
 
 export function editTaskDeletePage(relTask, relPage) {
-  
-  console.log("in action")
-  console.log("action arguments")
-  console.log("relTask", relTask)
-  console.log("relPage", relPage)
   let url = "http://localhost:3000/api/v1/tasks/" + relTask._id["$oid"] + "/pages/" + relPage._id["$oid"]
   return (dispatch) => {
     return fetch(url, {
@@ -102,6 +98,23 @@ export function editTaskDeletePage(relTask, relPage) {
       payload: json,
       taskid: relTask._id["$oid"],
       pageid: relPage._id["$oid"]
+    }))
+  }
+}
+
+export function editTaskDeleteTag(relTask, relTag) {
+  debugger
+  let url = "http://localhost:3000/api/v1/tasks/" + relTask._id["$oid"] + "/tags/" + relTag._id["$oid"]
+  return (dispatch) => {
+    return fetch(url, {
+      method: 'DELETE'
+    })
+    .then(response => response.json())
+    .then(json => dispatch({
+      type: EDIT_TASK_DELETE_TAG,
+      payload: json,
+      taskid: relTask._id["$oid"],
+      tagid: relTag._id["$oid"]
     }))
   }
 }

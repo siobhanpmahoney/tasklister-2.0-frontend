@@ -123,7 +123,7 @@ class TeamTaskDetail extends React.Component {
                   {this.props.taskDetailPages.map((p, idx) => {
                     return !!p.path ? (
                       <li key={p.path} name="taskDetailTags" className="path">
-                        {p.path} <button onClick={()=>this.props.editTaskDeletePage(this.props.taskDetail, p)}> x </button>
+                        {p.path} <button onClick={()=>this.props.editTaskDeletePageReload(this.props.taskDetail, p)}> x </button>
                       </li>
                     ) : (
                       <textarea key={idx} name="taskDetailPages" className="path"  type="contentEditable" onChange={this.props.taskEditAddlRefListener} />
@@ -141,17 +141,18 @@ class TeamTaskDetail extends React.Component {
                 </button>
                 <ul>
                   {this.props.taskDetailTags.map((t, idx) => {
-                    return !!t._id ? (
-                      <li key={t._id} name="taskDetailTags" className="title">
-                        {t.title}
+                    return !!t.title ? (
+                      <li key={t.title} name="taskDetailTags" className="title">
+                        {t.title} <button onClick={()=>this.props.editTaskDeleteTag(this.props.taskDetail, t)}> x </button>
                       </li>
                     ) : (
                       <textarea key={idx} name="taskDetailTags" className="title"  type="contentEditable" onChange={this.props.taskEditAddlRefListener} />
                     )
 
                 })}
-              </ul>
-            </div>
+
+                </ul>
+              </div>
 
             <div className="task-detail-github-branch">
               <span className="field-name">
