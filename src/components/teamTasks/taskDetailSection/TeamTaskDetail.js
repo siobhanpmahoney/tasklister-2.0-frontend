@@ -143,7 +143,7 @@ class TeamTaskDetail extends React.Component {
                   {this.props.taskDetailTags.map((t, idx) => {
                     return !!t.title ? (
                       <li key={t.title} name="taskDetailTags" className="title">
-                        {t.title} <button onClick={()=>this.props.editTaskDeleteTag(this.props.taskDetail, t)}> x </button>
+                        {t.title} <button onClick={()=>this.props.editTaskDeleteTagReload(this.props.taskDetail, t)}> x </button>
                       </li>
                     ) : (
                       <textarea key={idx} name="taskDetailTags" className="title"  type="contentEditable" onChange={this.props.taskEditAddlRefListener} />
