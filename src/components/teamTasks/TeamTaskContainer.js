@@ -36,6 +36,8 @@ class TeamTaskContainer extends React.Component {
     })
   }
 
+
+
   // tasks listed in sidebar begin
 
   renderTasks = () => {
@@ -61,7 +63,7 @@ class TeamTaskContainer extends React.Component {
 
       let selectedTask = this.props.teamTasks.find((t) => t.task._id === this.state.taskDetail._id)
 
-      return <TeamTaskDetail editTaskDeletePage = {this.props.editTaskDeletePage} taskEditAddlRefListener={this.taskEditAddlRefListener} taskDetail={this.state.taskDetail}  taskEditAddPageField={this.taskEditAddPageField} taskEditAddTagField={this.taskEditAddTagField} taskDetailPages={this.state.taskDetailPages} taskEditAddUserField = {this.taskEditAddUserField} taskDetailUsers={this.state.taskDetailUsers} taskDetailTags={this.state.taskDetailTags} taskEditListener={this.taskEditListener}  taskEditSubmit={this.taskEditSubmit}/>
+      return <TeamTaskDetail editTaskDeletePage = {this.props.editTaskDeletePage} taskEditAddlRefListener={this.taskEditAddlRefListener} taskDetail={this.state.taskDetail} taskDetailUsers={this.state.taskDetailUsers} taskDetailTags={this.state.taskDetailTags} taskEditAddPageField={this.taskEditAddPageField} taskEditAddTagField={this.taskEditAddTagField} taskDetailPages={this.state.taskDetailPages} taskEditAddUserField = {this.taskEditAddUserField}  taskEditListener={this.taskEditListener}  taskEditSubmit={this.taskEditSubmit}/>
     } else {
       return <div className="fillerText">Select a task or create a new one!</div>
     }
@@ -173,7 +175,7 @@ class TeamTaskContainer extends React.Component {
 
     taskEditAddPageField = () => {
       console.log("in add field function")
-      debugger
+
       let currentPageState = this.state.taskDetailPages.slice(0)
       currentPageState = [...currentPageState, { path: '' }]
       this.setState({
@@ -222,7 +224,9 @@ class TeamTaskContainer extends React.Component {
       let relTags = this.state.taskDetailTags
       this.props.editTask(this.state.taskDetail, relPages, relTags)
       let relTask = this.props.teamTasks.find((t) => t.task._id["$oid"] == this.state.taskDetail._id["$oid"])
-      this.selectTaskDetail(event, relTask.task, relTask.pages, relTask.tags, relTask.users)
+      console.log(relTask)
+      debugger
+      this.selectTaskDetail(event, this.state.taskDetail, relPages, relTags, this.state.taskDetailUsers)
 
 }
 

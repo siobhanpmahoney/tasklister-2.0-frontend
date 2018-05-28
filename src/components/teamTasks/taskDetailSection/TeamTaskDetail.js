@@ -21,6 +21,8 @@ class TeamTaskDetail extends React.Component {
     console.log(this.props)
   }
 
+
+
   renderTagList = () => {
     if (!!this.props.taskDetailTags) {
       return this.props.taskDetailTags.map((tag) => {
@@ -55,11 +57,7 @@ class TeamTaskDetail extends React.Component {
       console.log(this.state)
       console.log("in task item detail", this.props.taskDetail._id["$oid"])
 
-      const relT = this.props.teamTasks.find((t) => t.task._id["$oid"] == this.props.taskDetail._id["$oid"])
 
-      console.log( this.props.teamTasks[0].task._id["$oid"])
-      console.log(this.props.taskDetail._id["$oid"])
-      console.log(relT)
 
       return (
         <div className="task-detail-container">
@@ -124,7 +122,7 @@ class TeamTaskDetail extends React.Component {
                 <ul>
                   {this.props.taskDetailPages.map((p, idx) => {
                     return !!p.path ? (
-                      <li key={p._id["$oid"]} name="taskDetailTags" className="path">
+                      <li key={p.path} name="taskDetailTags" className="path">
                         {p.path} <button onClick={()=>this.props.editTaskDeletePage(this.props.taskDetail, p)}> x </button>
                       </li>
                     ) : (
@@ -142,7 +140,7 @@ class TeamTaskDetail extends React.Component {
                   <i className="material-icons add-ref">add_circle_outline</i>
                 </button>
                 <ul>
-                  {relT.tags.map((t, idx) => {
+                  {this.props.taskDetailTags.map((t, idx) => {
                     return !!t._id ? (
                       <li key={t._id} name="taskDetailTags" className="title">
                         {t.title}
