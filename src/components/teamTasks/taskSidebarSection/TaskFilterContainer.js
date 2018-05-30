@@ -12,7 +12,14 @@ class TaskFilterContainer extends React.Component {
     })
   }
 
+  tagList = () => {
+    return this.props.teamTags.filter((tag) => {
+      return tag.task_ids.length > 0
+    })
+  }
+
   render() {
+    console.log(this.tagList())
     return (
       <div className="sidebar-filter-container">
         <div className="filter-option">
@@ -20,7 +27,7 @@ class TaskFilterContainer extends React.Component {
           <span className="filter-option-title">
             Task Title & Description
           </span>
-          <input type="text" />
+          <input type="text" onChange={this.props.textFilterListener} />
 
         </div>
 
@@ -70,6 +77,15 @@ class TaskFilterContainer extends React.Component {
           <span className="filter-option-title">
             Tags
           </span>
+          <div className="filter-tag-options">
+          {this.tagList().map((t) => {
+            return <div>
+              <label>
+                <input type="checkbox" value={t.title} />
+                </label>{t.title}<br />
+              </div>
+          })}
+          </div>
         </div>
 
         <div className="filter-button">
@@ -87,6 +103,7 @@ function mapStateToProps(state, props) {
     user: state.user.currentUser,
     userTasks: state.user.userTasks,
     teamPages: state.teamPages.allPages,
+    teamTags: state.teamTags.allTags,
     teamTasks: state.teamTasks.allTasks
   }
 }

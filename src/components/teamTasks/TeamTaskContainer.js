@@ -15,7 +15,15 @@ class TeamTaskContainer extends React.Component {
     super(props)
 
     this.state = {
-      tasksDisplayed: "",
+      tasksDisplayed: null,
+      filterSelection: {
+        textFilter: "",
+        priorityFilter: false,
+        statusFilter: [],
+        pageFilter: [],
+        teamFilter: [],
+        tagFilter: []
+      },
       taskDetail: null,
       taskDetailPages: [{}, {path: ""}],
       taskDetailUsers: [{}, {username: ""}],
@@ -31,8 +39,10 @@ class TeamTaskContainer extends React.Component {
   }
 
   componentDidMount() {
+    let allTasks = this.props.teamTasks
+    // console.log(allTasks)
     this.setState({
-      tasksDisplayed: "all"
+      tasksDisplayed: allTasks
     })
   }
 
@@ -41,14 +51,38 @@ class TeamTaskContainer extends React.Component {
   // tasks listed in sidebar begin
 
   renderTasks = () => {
-    if (this.state.tasksDisplayed === "all") {
-       return this.tasksToList(this.props.teamTasks)
+    if (this.state.tasksDisplayed == null) {
+      return <div>Loading...</div>
+    } else {
+      return this.tasksToList(this.state.tasksDisplayed)
     }
+
   }
 
   tasksToList = (t) => {
+    console.log(this.state.tasksDisplayed)
     return <TeamTaskList tasks={t} selectTaskDetail={this.selectTaskDetail}/>
   }
+
+  // filter listeners begin
+
+  textFilterListener = (event) => {
+    event.preventDefault()
+    let v = event.target.value
+    console.log(v)
+    let current = this.state.tasksDisplayed
+    console.log("current", current[0].task.title.includes(v))
+    debugger
+    let filtered = current.filter((t) => {
+      return t.task.title.includes(v) || t.task.description.includes(v)
+    })
+    this.setState({
+      tasksDisplayed: filtered
+    })
+    console.log(this.state.tasksDisplayed)
+  }
+
+  //filter listeners end
 
   // tasks listed in sidebar end
 
@@ -174,8 +208,6 @@ class TeamTaskContainer extends React.Component {
     }
 
     taskEditAddPageField = () => {
-      console.log("in add field function")
-
       let currentPageState = this.state.taskDetailPages.slice(0)
       currentPageState = [...currentPageState, { path: '' }]
       this.setState({
@@ -200,19 +232,15 @@ class TeamTaskContainer extends React.Component {
     }
 
     taskEditAddlRefListener = (event) => {
-
-      console.log("in taskEditAddlRefListener")
-      console.log(event.target.value)
       let value = event.target.type === "checkbox" ? event.target.checked : event.target.value
       let name = event.target.name
       let keyName = event.target.className
       let kV = {}
       kV[keyName] = value
-      console.log("kV", kV)
 
       const currentRef = this.state[name].slice(0)
       currentRef[currentRef.length - 1][keyName] = value
-      console.log("updated currentRef", currentRef)
+
       this.setState({
         name: currentRef
       })
@@ -225,7 +253,7 @@ class TeamTaskContainer extends React.Component {
       }
       let currentPageState = this.state.taskDetailPages.slice(0)
       let updatedPageState = [...currentPageState.slice(0, currentPageState.indexOf(page)),... currentPageState.slice(currentPageState.indexOf(page)+1)]
-      console.log(updatedPageState)
+      // console.log(updatedPageState)
       this.setState({
         taskDetailPages: updatedPageState
       })
@@ -238,7 +266,7 @@ class TeamTaskContainer extends React.Component {
       }
       let currentTagState = this.state.taskDetailTags.slice(0)
       let updatedTagState = [...currentTagState.slice(0, currentTagState.indexOf(tag)),... currentTagState.slice(currentTagState.indexOf(tag)+1)]
-      console.log(updatedTagState)
+      // console.log(updatedTagState)
       this.setState({
         taskDetailTags: updatedTagState
       })
@@ -251,8 +279,8 @@ class TeamTaskContainer extends React.Component {
       let relTags = this.state.taskDetailTags
       this.props.editTask(this.state.taskDetail, relPages, relTags)
       let relTask = this.props.teamTasks.find((t) => t.task._id["$oid"] == this.state.taskDetail._id["$oid"])
-      console.log(relTask)
-      debugger
+      // console.log(relTask)
+      // debugger
       this.selectTaskDetail(event, this.state.taskDetail, relPages, relTags, this.state.taskDetailUsers)
 
 }
@@ -268,7 +296,7 @@ class TeamTaskContainer extends React.Component {
         <div className="header"><h1>Team Tasks</h1></div>
 <div className="team-task-container">
         <div className="section-1">
-          <SidebarContainer selectTaskDetail={this.selectTaskDetail}/>
+          <SidebarContainer textFilterListener={this.textFilterListener} selectTaskDetail={this.selectTaskDetail}/>
         </div>
 
         <div className="section-2">
@@ -288,6 +316,8 @@ function mapStateToProps(state, props) {
   return {
     user: state.user.currentUser,
     userTasks: state.user.userTasks,
+    teamPages: state.teamPages.allPages,
+    teamTags: state.teamTags.allTags,
     teamTasks: state.teamTasks.allTasks
   }
 }

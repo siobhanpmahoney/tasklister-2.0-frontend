@@ -5,6 +5,7 @@ export const EDIT_TASK = 'EDIT_TASK'
 export const EDIT_TASK_DELETE_PAGE = 'EDIT_TASK_DELETE_PAGE'
 export const EDIT_TASK_DELETE_TAG = 'EDIT_TASK_DELETE_TAG'
 export const ALL_PAGES = 'ALL_PAGES'
+export const ALL_TAGS = 'ALL_TAGS'
 
 
 export function loadCurrentUser(user) {
@@ -36,6 +37,17 @@ export function loadAllPages() {
     .then(json => dispatch({
       type: ALL_PAGES,
       pages: json
+    }))
+  }
+}
+
+export function loadAllTags() {
+  return (dispatch) => {
+    fetch('http://localhost:3000/api/v1/tags')
+    .then(response => response.json())
+    .then(json => dispatch({
+      type: ALL_TAGS,
+      tags: json
     }))
   }
 }

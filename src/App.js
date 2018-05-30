@@ -75,6 +75,7 @@ class App extends Component {
             }); this.props.loadCurrentUser(this.state.auth.currentUser)
             this.props.loadAllTasks()
             this.props.loadAllPages()
+            this.props.loadAllTags()
           }
 
           else {
@@ -152,6 +153,7 @@ function mapStateToProps(state, props) {
     user: state.user.currentUser,
     userTasks: state.user.userTasks,
     teamPages: state.teamPages.allPages,
+    teamTags: state.teamTags.allTags,
     teamTasks: state.teamTasks.allTasks
 
   }

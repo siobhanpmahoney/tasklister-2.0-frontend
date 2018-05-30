@@ -23,7 +23,7 @@ class SidebarContainer extends React.Component {
             <summary><span className="sidebar-heading">
             Filter
           </span></summary>
-        <TaskFilterContainer />
+        <TaskFilterContainer textFilterListener={this.props.textFilterListener}/>
           </details>
         </div>
 
