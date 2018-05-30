@@ -44,10 +44,10 @@ class TaskFilterContainer extends React.Component {
 
             <div className="filter-status-options">
               <label> Open
-                <input type="checkbox" name="status_summary" value="open" />
+                <input type="checkbox" name="status_summary" value="open" onChange={this.props.statusFilterListener} />
               </label><br />
               <label> Closed
-                <input type="checkbox" name="status_summary" value="closed" />
+                <input type="checkbox" name="status_summary" value="closed" onChange={this.props.statusFilterListener} />
               </label>
             </div>
         </div>
@@ -60,7 +60,7 @@ class TaskFilterContainer extends React.Component {
           {this.pageList().map((p) => {
             return <div>
               <label>
-                <input type="checkbox" value={p.path} />
+                <input type="checkbox" value={p.path} onChange={this.props.pageFilterListener} />
                 </label>{p.path}<br />
               </div>
           })}
@@ -81,7 +81,7 @@ class TaskFilterContainer extends React.Component {
           {this.tagList().map((t) => {
             return <div>
               <label>
-                <input type="checkbox" value={t.title} />
+                <input type="checkbox" value={t.title} onChange={this.props.tagFilterListener} />
                 </label>{t.title}<br />
               </div>
           })}

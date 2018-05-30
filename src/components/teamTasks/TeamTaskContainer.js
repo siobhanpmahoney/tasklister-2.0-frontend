@@ -15,7 +15,7 @@ class TeamTaskContainer extends React.Component {
     super(props)
 
     this.state = {
-      tasksDisplayed: null,
+      tasksDisplayed: [],
       filterSelection: {
         textFilter: "",
         priorityFilter: false,
@@ -39,7 +39,7 @@ class TeamTaskContainer extends React.Component {
   }
 
   componentDidMount() {
-    let allTasks = this.props.teamTasks
+    let allTasks = this.props.teamTasks.slice(0)
     // console.log(allTasks)
     this.setState({
       tasksDisplayed: allTasks
@@ -50,18 +50,36 @@ class TeamTaskContainer extends React.Component {
 
   // tasks listed in sidebar begin
 
-  renderTasks = () => {
-    if (this.state.tasksDisplayed == null) {
-      return <div>Loading...</div>
-    } else {
-      return this.tasksToList(this.state.tasksDisplayed)
-    }
-
+  tasksToList = () => {
+    let current = this.props.teamTasks.slice(0)
+    // if (!!this.state.filterSelection.textFilter) {
+    //   let textInput = this.state.filterSelection.textFilter
+    //   let filtered = current.filter((t) => {
+    //     return t.task.description.includes(textInput) || t.task.title.includes(textInput)
+    //   })
+    //   this.setState({
+    //     tasksDisplayed:filtered
+    //   })
+    //   }
+      if (this.state.filterSelection.statusFilter.length == 0) {
+        this.setState({
+          tasksDisplayed: current
+        })
+      }
+      else if (this.state.filterSelection.statusFilter.length > 0) {
+        console.log(this.state.filterSelection.statusFilter)
+        let filteredStatus = current.slice(0).filter((t) => {
+          return this.state.filterSelection.statusFilter.includes(t.task.status_summary)
+        })
+        this.setState({
+          tasksDisplayed: filteredStatus
+        })
+      }
   }
 
-  tasksToList = (t) => {
+  renderTasks = () => {
     console.log(this.state.tasksDisplayed)
-    return <TeamTaskList tasks={t} selectTaskDetail={this.selectTaskDetail}/>
+    return <TeamTaskList tasks={this.state.tasksDisplayed.slice(0)} selectTaskDetail={this.selectTaskDetail}/>
   }
 
   // filter listeners begin
@@ -69,18 +87,85 @@ class TeamTaskContainer extends React.Component {
   textFilterListener = (event) => {
     event.preventDefault()
     let v = event.target.value
-    console.log(v)
+
     let current = this.state.tasksDisplayed
-    console.log("current", current[0].task.title.includes(v))
-    debugger
+
     let filtered = current.filter((t) => {
       return t.task.title.includes(v) || t.task.description.includes(v)
     })
     this.setState({
       tasksDisplayed: filtered
     })
-    console.log(this.state.tasksDisplayed)
+
   }
+
+
+
+  priorityFilterListener = (event) => {
+    if (event.target.checked) {
+      this.setState({
+        filterSelection: {
+          priorityFilter: true
+        }
+      })
+    } else {
+      this.setState({
+        priorityFilter: false
+      })
+    }
+  }
+
+  statusFilterListener = (event) => {
+    let currentStatusFilters = this.state.filterSelection.statusFilter.slice(0)
+    if (event.target.checked) {
+      currentStatusFilters.push(event.target.value)
+
+    } else {
+      currentStatusFilters.splice(currentStatusFilters.indexOf(event.target.value), 1)
+    }
+    this.setState({
+      filterSelection: {
+        statusFilter: currentStatusFilters
+      }
+    }, this.tasksToList)
+    console.log("inside listener", this.state.filterSelection.statusFilter)
+
+  }
+
+  pageFilterListener = (event) => {
+    let currentPageFilters = this.state.filterSelection.pageFilter.slice(0)
+    if (event.target.checked) {
+      currentPageFilters.push(event.target.value)
+    } else {
+      currentPageFilters.splice(currentPageFilters.indexOf(event.target.value), 1)
+    }
+    this.setState({
+      filterSelection: {
+        pageFilter: currentPageFilters
+      }
+    }, this.tasksToList)
+  }
+
+  teamFilterListener = (event) => {
+
+  }
+
+  tagFilterListener = (event) => {
+    let currentTagFilters = this.state.filterSelection.tagFilter.slice(0)
+    if (event.target.checked) {
+      currentTagFilters.push(event.target.value)
+    } else {
+      currentTagFilters.splice(currentTagFilters.indexOf(event.target.value), 1)
+    }
+    this.setState({
+      filterSelection: {
+        tagFilter: currentTagFilters
+      }
+    })
+    console.log(this.state.filterSelection.tagFilter)
+  }
+
+
 
   //filter listeners end
 
@@ -291,12 +376,14 @@ class TeamTaskContainer extends React.Component {
   // task listed in detail section end
 
   render() {
+    console.log("in render", this.state)
+    debugger
     return (
       <div>
         <div className="header"><h1>Team Tasks</h1></div>
 <div className="team-task-container">
         <div className="section-1">
-          <SidebarContainer textFilterListener={this.textFilterListener} selectTaskDetail={this.selectTaskDetail}/>
+          <SidebarContainer textFilterListener={this.textFilterListener} priorityFilterListener = {this.PriorityFilterListener} statusFilterListener = {this.statusFilterListener} pageFilterListener = {this.pageFilterListener} teamFilterListener = {this.teamFilterListener} tagFilterListener = {this.tagFilterListener} selectTaskDetail={this.selectTaskDetail}/>
         </div>
 
         <div className="section-2">

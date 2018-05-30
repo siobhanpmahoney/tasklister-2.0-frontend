@@ -23,7 +23,7 @@ class SidebarContainer extends React.Component {
             <summary><span className="sidebar-heading">
             Filter
           </span></summary>
-        <TaskFilterContainer textFilterListener={this.props.textFilterListener}/>
+        <TaskFilterContainer textFilterListener={this.props.textFilterListener} priorityFilterListener = {this.props.PriorityFilterListener} statusFilterListener = {this.props.statusFilterListener} pageFilterListener = {this.props.pageFilterListener} teamFilterListener = {this.props.teamFilterListener} tagFilterListener = {this.props.tagFilterListener}/>
           </details>
         </div>
 
