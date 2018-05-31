@@ -204,7 +204,7 @@ class TeamTaskContainer extends React.Component {
       taskDetailPages: tskPages,
       taskDetailTags: tskTags,
       taskDetailUsers: tskUsers
-    })
+    }, this.tasksToList)
   }
 
   // task render end
@@ -292,7 +292,7 @@ class TeamTaskContainer extends React.Component {
   // edit task begin
 
   taskEditListener = (event) => {
-    
+
     let value = event.target.type === "checkbox" ? event.target.checked : event.target.value
     let name = event.target.name
     let currentTaskState = Object.assign({}, this.state.taskDetail)
