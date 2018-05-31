@@ -64,7 +64,13 @@ class TeamTaskContainer extends React.Component {
     //       tasksDisplayed: current
     //     })
     //   } else if
-
+      if (this.state.textFilter === "") {
+        taskProps = taskProps
+      } else {
+        taskProps = taskProps.filter((t) => {
+          return t.task.title.includes(this.state.textFilter) || t.task.description.includes(this.state.textFilter)
+        })
+      }
       if (this.state.statusFilter.length > 0) {
         taskProps = taskProps.filter((t) => {
           return this.state.statusFilter.includes(t.task.status_summary)
@@ -77,6 +83,15 @@ class TeamTaskContainer extends React.Component {
         taskProps = taskProps.filter((task) => {
           return task.pages.find((page) => {
             return this.state.pageFilter.includes(page.path)
+          })
+        })
+      }
+      if (this.state.tagFilter.length === 0) {
+        taskProps = taskProps
+      } else if (this.state.tagFilter.length > 0) {
+        taskProps = taskProps.filter((task) => {
+          return task.tags.find((tag) => {
+            return this.state.tagFilter.includes(tag.title)
           })
         })
       }
@@ -104,7 +119,7 @@ class TeamTaskContainer extends React.Component {
     this.setState({
 
         textFilter: v
-    })
+    }, this.tasksToList)
 
   }
 
@@ -154,7 +169,7 @@ class TeamTaskContainer extends React.Component {
   }
 
   tagFilterListener = (event) => {
-    let currentTagFilters = this.state.tagFilter.slice(0)
+    let currentTagFilters = this.state.tagFilter
     if (event.target.checked) {
       currentTagFilters.push(event.target.value)
     } else {
@@ -162,7 +177,7 @@ class TeamTaskContainer extends React.Component {
     }
     this.setState({
         tagFilter: currentTagFilters
-    })
+    }, this.tasksToList)
   }
 
 

@@ -52,12 +52,7 @@ class TeamTaskDetail extends React.Component {
 
 
 
-
     render() {
-      console.log(this.state)
-      console.log("in task item detail", this.props.taskDetail._id["$oid"])
-
-
 
       return (
         <div className="task-detail-container">
@@ -75,15 +70,22 @@ class TeamTaskDetail extends React.Component {
 
           </div>
 
-
           <div className="task-detail-detais">
-
 
             <div className="task-detail-edit-submit-button">
               <button onClick={this.props.taskEditSubmit}>Save</button>
             </div>
             <div className="task-detail-details-dashboard">
-              <textarea className="task-detail-description" name="description" value={this.props.taskDetail.description} type="contentEditable" onChange={this.props.taskEditListener} />
+
+
+
+
+
+
+
+
+
+              <textarea className="task-detail-description" name="description" value={this.props.taskDetail.description} type="contentEditable" contentEditable={true} onChange={this.props.taskEditListener} />
 
 
               <div className="task-detail-date-updated">

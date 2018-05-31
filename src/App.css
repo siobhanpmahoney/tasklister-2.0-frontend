@@ -228,6 +228,43 @@ button.add-ref {
   padding-right: 6px;
 }
 
+/* .task-detail-details-dashboard {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  height: 100%;
+} */
+
+.task-detail-details-dashboard {
+  height: 100%;
+  position: relative;
+}
+
+
+
+textarea {
+  /* margin: 0.25em;
+  width: 100%;
+  resize: none; */
+  /* box-sizing: border-box; */
+  border: pink solid 1px;
+  box-sizing: border-box;
+  min-height: 25px;
+  margin: 0.25em;
+  width: 100%;
+  resize: none;
+  overflow: hidden;
+   align-self: stretch;
+   white-space: pre-wrap;
+}
+
+.task-detail-description {
+
+  /* box-sizing: border-box; */
+
+
+}
+
 
 
 /*
