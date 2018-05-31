@@ -22,6 +22,7 @@ class TeamTaskContainer extends React.Component {
       pageFilter: [],
       teamFilter: [],
       tagFilter: [],
+      userFilter: [],
       taskDetail: null,
       taskDetailPages: [{}, {path: ""}],
       taskDetailUsers: [{}, {username: ""}],
@@ -50,20 +51,6 @@ class TeamTaskContainer extends React.Component {
 
   tasksToList = () => {
     let taskProps = this.props.teamTasks.slice(0)
-    // if (!!this.state.textFilter) {
-    //   let textInput = this.state.textFilter
-    //   let filtered = current.filter((t) => {
-    //     return t.task.description.includes(textInput) || t.task.title.includes(textInput)
-    //   })
-    //   this.setState({
-    //     tasksDisplayed:filtered
-    //   })
-    //   }
-    // if (this.state.statusFilter.length == 0) {
-    //     this.setState({
-    //       tasksDisplayed: current
-    //     })
-    //   } else if
     if (this.state.textFilter === "") {
       taskProps = taskProps
     } else {
@@ -83,7 +70,6 @@ class TeamTaskContainer extends React.Component {
         return this.state.statusFilter.includes(t.task.status_summary)
       })
     }
-
     if (this.state.pageFilter.length === 0) {
       taskProps = taskProps
     } else if (this.state.pageFilter.length > 0) {
@@ -99,6 +85,15 @@ class TeamTaskContainer extends React.Component {
       taskProps = taskProps.filter((task) => {
         return task.tags.find((tag) => {
           return this.state.tagFilter.includes(tag.title)
+        })
+      })
+    }
+    if (this.state.userFilter.length === 0) {
+      taskProps = taskProps
+    } else if (this.state.userFilter.length > 0) {
+      taskProps = taskProps.filter((task) => {
+        return task.users.find((user) => {
+          return this.state.userFilter.includes(user.username)
         })
       })
     }
@@ -158,8 +153,16 @@ class TeamTaskContainer extends React.Component {
     }, this.tasksToList)
   }
 
-  teamFilterListener = (event) => {
-
+  userFilterListener = (event) => {
+    let currentUserFilters = this.state.userFilter
+    if (event.target.checked) {
+      currentUserFilters.push(event.target.value)
+    } else {
+      currentUserFilters.splice(currentUserFilters.indexOf(event.target.value), 1)
+    }
+    this.setState({
+      userFilter: currentUserFilters
+    }, this.tasksToList)
   }
 
   tagFilterListener = (event) => {
@@ -395,7 +398,7 @@ class TeamTaskContainer extends React.Component {
         <div className="header"><h1>Team Tasks</h1></div>
         <div className="team-task-container">
           <div className="section-1">
-            <SidebarContainer textFilterListener={this.textFilterListener} priorityFilterListener = {this.PriorityFilterListener} statusFilterListener = {this.statusFilterListener} pageFilterListener = {this.pageFilterListener} teamFilterListener = {this.teamFilterListener} tagFilterListener = {this.tagFilterListener} selectTaskDetail={this.selectTaskDetail}/>
+            <SidebarContainer textFilterListener={this.textFilterListener} priorityFilterListener = {this.PriorityFilterListener} statusFilterListener = {this.statusFilterListener} pageFilterListener = {this.pageFilterListener} userFilterListener = {this.userFilterListener} tagFilterListener = {this.tagFilterListener} selectTaskDetail={this.selectTaskDetail}/>
           </div>
 
           <div className="section-2">
@@ -417,7 +420,8 @@ function mapStateToProps(state, props) {
     userTasks: state.user.userTasks,
     teamPages: state.teamPages.allPages,
     teamTags: state.teamTags.allTags,
-    teamTasks: state.teamTasks.allTasks
+    teamTasks: state.teamTasks.allTasks,
+    teamUsers: state.teamUsers.allUsers
   }
 }
 

@@ -18,8 +18,14 @@ class TaskFilterContainer extends React.Component {
     })
   }
 
+  userList = () => {
+    return this.props.teamUsers.map((user) => {
+      return user
+    })
+  }
+
   render() {
-    console.log(this.tagList())
+    console.log(this.userList())
     return (
       <div className="sidebar-filter-container">
         <div className="filter-option">
@@ -50,6 +56,21 @@ class TaskFilterContainer extends React.Component {
                 <input type="checkbox" name="status_summary" value="closed" onChange={this.props.statusFilterListener} />
               </label>
             </div>
+        </div>
+
+        <div className="filter-option">
+          <span className="filter-option-title">
+            Team
+          </span>
+          <div className="filter-user-options">
+          {this.userList().map((u) => {
+            return <div>
+              <label>
+                <input type="checkbox" key={u._id["$oid"]} value={u.username} onChange={this.props.userFilterListener} />
+                </label>{u.username}<br />
+              </div>
+          })}
+          </div>
         </div>
 
         <div className="filter-option">
@@ -104,7 +125,8 @@ function mapStateToProps(state, props) {
     userTasks: state.user.userTasks,
     teamPages: state.teamPages.allPages,
     teamTags: state.teamTags.allTags,
-    teamTasks: state.teamTasks.allTasks
+    teamTasks: state.teamTasks.allTasks,
+    teamUsers: state.teamUsers.allUsers
   }
 }
 

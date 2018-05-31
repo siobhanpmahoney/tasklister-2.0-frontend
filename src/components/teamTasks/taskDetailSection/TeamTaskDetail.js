@@ -192,7 +192,8 @@ function mapStateToProps(state, props) {
     userTasks: state.user.userTasks,
     teamPages: state.teamPages.allPages,
     teamTags: state.teamTags.allTags,
-    teamTasks: state.teamTasks.allTasks
+    teamTasks: state.teamTasks.allTasks,
+    teamUsers: state.teamUsers.allUsers
   }
 }
 

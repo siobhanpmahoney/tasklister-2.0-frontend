@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { CURRENT_USER, ALL_TASKS, ADD_NEW_TASK, EDIT_TASK, EDIT_TASK_DELETE_PAGE, EDIT_TASK_DELETE_TAG, ALL_PAGES, ALL_TAGS } from '../actions'
+import { CURRENT_USER, ALL_TASKS, ADD_NEW_TASK, EDIT_TASK, EDIT_TASK_DELETE_PAGE, EDIT_TASK_DELETE_TAG, ALL_PAGES, ALL_TAGS, ALL_USERS } from '../actions'
 
 const user = (state = {currentUser: null, userTasks: [] }, action) => {
   switch(action.type) {
@@ -43,6 +43,24 @@ const teamTags= (state = {allTags: [] }, action) => {
         state,
         {
           allTags: action.tags
+        }
+      );
+      // console.log(state)
+      return state;
+
+    default:
+      return state;
+  }
+}
+
+const teamUsers = (state = {allUsers: [] }, action) => {
+  switch(action.type) {
+    case ALL_USERS:
+      // console.log(action.tags)
+      state = Object.assign({},
+        state,
+        {
+          allUsers: action.users
         }
       );
       // console.log(state)
@@ -136,7 +154,7 @@ const teamTasks = (state = {allTasks: [] }, action) => {
   }
 
   const rootReducer = combineReducers({
-    user, teamPages, teamTags, teamTasks
+    user, teamPages, teamTags, teamTasks, teamUsers
     // ,[ANOTHER REDUCER], [ANOTHER REDUCER] ....
   });
 

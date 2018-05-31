@@ -48,7 +48,10 @@ function mapStateToProps(state, props) {
   return {
     user: state.user.currentUser,
     userTasks: state.user.userTasks,
-    teamTasks: state.teamTasks.allTasks
+    teamPages: state.teamPages.allPages,
+    teamTags: state.teamTags.allTags,
+    teamTasks: state.teamTasks.allTasks,
+    teamUsers: state.teamUsers.allUsers
   }
 }
 
