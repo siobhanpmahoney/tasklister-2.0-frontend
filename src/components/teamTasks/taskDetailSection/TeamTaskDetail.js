@@ -49,6 +49,10 @@ class TeamTaskDetail extends React.Component {
       })
     }
 
+    priorityCheck = () => {
+      return this.props.taskDetail.priority
+    }
+
 
 
 
@@ -67,7 +71,6 @@ class TeamTaskDetail extends React.Component {
               {this.props.taskDetail.title}
             </span>
 
-
           </div>
 
           <div className="task-detail-detais">
@@ -76,13 +79,6 @@ class TeamTaskDetail extends React.Component {
               <button onClick={this.props.taskEditSubmit}>Save</button>
             </div>
             <div className="task-detail-details-dashboard">
-
-
-
-
-
-
-
 
 
               <textarea className="task-detail-description" name="description" value={this.props.taskDetail.description} type="contentEditable" contentEditable={true} onChange={this.props.taskEditListener} />
@@ -98,10 +94,12 @@ class TeamTaskDetail extends React.Component {
                 <span className="field-name">Created: </span>{this.formattedSavedDate(this.props.taskDetail.created_at)}
                 </div>
 
-
-
-
-
+                <div className="task-detail-priority">
+                  <span className="field-name">
+                    Priority
+                    <input type="checkbox" name="priority" checked={this.priorityCheck()} onChange={this.props.taskEditListener} />
+                  </span>
+                </div>
 
                 <div className="task-detail-users">
                   <span className="field-name">

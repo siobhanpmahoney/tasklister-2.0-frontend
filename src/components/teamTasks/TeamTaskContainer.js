@@ -64,40 +64,47 @@ class TeamTaskContainer extends React.Component {
     //       tasksDisplayed: current
     //     })
     //   } else if
-      if (this.state.textFilter === "") {
-        taskProps = taskProps
-      } else {
-        taskProps = taskProps.filter((t) => {
-          return t.task.title.includes(this.state.textFilter) || t.task.description.includes(this.state.textFilter)
-        })
-      }
-      if (this.state.statusFilter.length > 0) {
-        taskProps = taskProps.filter((t) => {
-          return this.state.statusFilter.includes(t.task.status_summary)
-        })
-      }
-
-      if (this.state.pageFilter.length === 0) {
-        taskProps = taskProps
-      } else if (this.state.pageFilter.length > 0) {
-        taskProps = taskProps.filter((task) => {
-          return task.pages.find((page) => {
-            return this.state.pageFilter.includes(page.path)
-          })
-        })
-      }
-      if (this.state.tagFilter.length === 0) {
-        taskProps = taskProps
-      } else if (this.state.tagFilter.length > 0) {
-        taskProps = taskProps.filter((task) => {
-          return task.tags.find((tag) => {
-            return this.state.tagFilter.includes(tag.title)
-          })
-        })
-      }
-      this.setState({
-        tasksDisplayed: taskProps
+    if (this.state.textFilter === "") {
+      taskProps = taskProps
+    } else {
+      taskProps = taskProps.filter((t) => {
+        return t.task.title.includes(this.state.textFilter) || t.task.description.includes(this.state.textFilter)
       })
+    }
+    if (!this.state.priorityFilter) {
+      taskProps = taskProps
+    } else {
+      taskProps = taskProps.filter((t) => {
+        return t.task.priority
+      })
+    }
+    if (this.state.statusFilter.length > 0) {
+      taskProps = taskProps.filter((t) => {
+        return this.state.statusFilter.includes(t.task.status_summary)
+      })
+    }
+
+    if (this.state.pageFilter.length === 0) {
+      taskProps = taskProps
+    } else if (this.state.pageFilter.length > 0) {
+      taskProps = taskProps.filter((task) => {
+        return task.pages.find((page) => {
+          return this.state.pageFilter.includes(page.path)
+        })
+      })
+    }
+    if (this.state.tagFilter.length === 0) {
+      taskProps = taskProps
+    } else if (this.state.tagFilter.length > 0) {
+      taskProps = taskProps.filter((task) => {
+        return task.tags.find((tag) => {
+          return this.state.tagFilter.includes(tag.title)
+        })
+      })
+    }
+    this.setState({
+      tasksDisplayed: taskProps
+    })
   }
 
   renderTasks = () => {
@@ -108,34 +115,22 @@ class TeamTaskContainer extends React.Component {
   // filter listeners begin
 
   textFilterListener = (event) => {
-    // event.preventDefault()
     let v = event.target.value
-    //
-    // let current = this.state.tasksDisplayed
-    //
-    // let filtered = current.filter((t) => {
-    //   return t.task.title.includes(v) || t.task.description.includes(v)
-    // })
     this.setState({
-
-        textFilter: v
+      textFilter: v
     }, this.tasksToList)
-
   }
-
 
 
   priorityFilterListener = (event) => {
     if (event.target.checked) {
       this.setState({
-
-          priorityFilter: true
-
-      })
+        priorityFilter: true
+      }, this.tasksToList)
     } else {
       this.setState({
         priorityFilter: false
-      })
+      }, this.tasksToList)
     }
   }
 
@@ -143,12 +138,11 @@ class TeamTaskContainer extends React.Component {
     let currentStatusFilters = this.state.statusFilter
     if (event.target.checked) {
       currentStatusFilters.push(event.target.value)
-
     } else {
       currentStatusFilters.splice(currentStatusFilters.indexOf(event.target.value), 1)
     }
     this.setState({
-        statusFilter: currentStatusFilters
+      statusFilter: currentStatusFilters
     }, this.tasksToList)
   }
 
@@ -160,7 +154,7 @@ class TeamTaskContainer extends React.Component {
       currentPageFilters.splice(currentPageFilters.indexOf(event.target.value), 1)
     }
     this.setState({
-        pageFilter: currentPageFilters
+      pageFilter: currentPageFilters
     }, this.tasksToList)
   }
 
@@ -176,7 +170,7 @@ class TeamTaskContainer extends React.Component {
       currentTagFilters.splice(currentTagFilters.indexOf(event.target.value), 1)
     }
     this.setState({
-        tagFilter: currentTagFilters
+      tagFilter: currentTagFilters
     }, this.tasksToList)
   }
 
@@ -188,7 +182,7 @@ class TeamTaskContainer extends React.Component {
 
   // task rendered in detail section begin
 
-    // task render begin
+  // task render begin
 
   renderTaskDetailSection = () => {
     if (this.state.taskDetail === 'new') {
@@ -213,9 +207,9 @@ class TeamTaskContainer extends React.Component {
     })
   }
 
-    // task render end
+  // task render end
 
-    // new task begin
+  // new task begin
 
   newTaskFormListener = (event) => {
     let value = event.target.type === "checkbox" ? event.target.checked : event.target.value
@@ -293,100 +287,104 @@ class TeamTaskContainer extends React.Component {
     // })
   }
 
-    // new task end
+  // new task end
 
-    // edit task begin
+  // edit task begin
 
-    taskEditListener = (event) => {
-      let value = event.target.type === "checkbox" ? event.target.checked : event.target.value
-      let name = event.target.name
-      let currentTaskState = Object.assign({}, this.state.taskDetail)
-      currentTaskState[name] = value
-      this.setState({
-        taskDetail: currentTaskState
-      })
+  taskEditListener = (event) => {
+    
+    let value = event.target.type === "checkbox" ? event.target.checked : event.target.value
+    let name = event.target.name
+    let currentTaskState = Object.assign({}, this.state.taskDetail)
+    currentTaskState[name] = value
+    this.setState({
+      taskDetail: currentTaskState
+
+    }, console.log("in taskDetail after state update", this.state.taskDetail))
+  }
+
+  taskEditAddPageField = () => {
+    let currentPageState = this.state.taskDetailPages.slice(0)
+    currentPageState = [...currentPageState, { path: '' }]
+    this.setState({
+      taskDetailPages: currentPageState
+    })
+  }
+
+  taskEditAddTagField = () => {
+    let currentTagState = this.state.taskDetailTags.slice(0)
+    currentTagState = [...currentTagState, { title: '' }]
+    this.setState({
+      taskDetailTags: currentTagState
+    })
+  }
+
+  taskEditAddUserField = () => {
+    let currentUserState = this.state.taskDetailUsers.slice(0)
+    currentUserState = [...currentUserState, { username: '' }]
+    this.setState({
+      taskDetailUsers: currentUserState
+    })
+  }
+
+  taskEditAddlRefListener = (event) => {
+    let value = event.target.type === "checkbox" ? event.target.checked : event.target.value
+    let name = event.target.name
+    let keyName = event.target.className
+    let kV = {}
+    kV[keyName] = value
+
+    const currentRef = this.state[name].slice(0)
+    currentRef[currentRef.length - 1][keyName] = value
+
+    this.setState({
+      name: currentRef
+    })
+  }
+
+  editTaskDeletePageReload = (task, page) => {
+    let t = task
+    if (!!page._id) {
+      this.props.editTaskDeletePage(task, page)
     }
+    let currentPageState = this.state.taskDetailPages.slice(0)
+    let updatedPageState = [...currentPageState.slice(0, currentPageState.indexOf(page)),... currentPageState.slice(currentPageState.indexOf(page)+1)]
+    // console.log(updatedPageState)
+    this.setState({
+      taskDetailPages: updatedPageState
+    })
+  }
 
-    taskEditAddPageField = () => {
-      let currentPageState = this.state.taskDetailPages.slice(0)
-      currentPageState = [...currentPageState, { path: '' }]
-      this.setState({
-        taskDetailPages: currentPageState
-      })
+  editTaskDeleteTagReload = (task, tag) => {
+    let t = task
+    if (!!tag._id) {
+      this.props.editTaskDeleteTag(task, tag)
     }
-
-    taskEditAddTagField = () => {
-      let currentTagState = this.state.taskDetailTags.slice(0)
-      currentTagState = [...currentTagState, { title: '' }]
-      this.setState({
-        taskDetailTags: currentTagState
-      })
-    }
-
-    taskEditAddUserField = () => {
-      let currentUserState = this.state.taskDetailUsers.slice(0)
-      currentUserState = [...currentUserState, { username: '' }]
-      this.setState({
-        taskDetailUsers: currentUserState
-      })
-    }
-
-    taskEditAddlRefListener = (event) => {
-      let value = event.target.type === "checkbox" ? event.target.checked : event.target.value
-      let name = event.target.name
-      let keyName = event.target.className
-      let kV = {}
-      kV[keyName] = value
-
-      const currentRef = this.state[name].slice(0)
-      currentRef[currentRef.length - 1][keyName] = value
-
-      this.setState({
-        name: currentRef
-      })
-    }
-
-    editTaskDeletePageReload = (task, page) => {
-      let t = task
-      if (!!page._id) {
-        this.props.editTaskDeletePage(task, page)
-      }
-      let currentPageState = this.state.taskDetailPages.slice(0)
-      let updatedPageState = [...currentPageState.slice(0, currentPageState.indexOf(page)),... currentPageState.slice(currentPageState.indexOf(page)+1)]
-      // console.log(updatedPageState)
-      this.setState({
-        taskDetailPages: updatedPageState
-      })
-    }
-
-    editTaskDeleteTagReload = (task, tag) => {
-      let t = task
-      if (!!tag._id) {
-        this.props.editTaskDeleteTag(task, tag)
-      }
-      let currentTagState = this.state.taskDetailTags.slice(0)
-      let updatedTagState = [...currentTagState.slice(0, currentTagState.indexOf(tag)),... currentTagState.slice(currentTagState.indexOf(tag)+1)]
-      // console.log(updatedTagState)
-      this.setState({
-        taskDetailTags: updatedTagState
-      })
-    }
+    let currentTagState = this.state.taskDetailTags.slice(0)
+    let updatedTagState = [...currentTagState.slice(0, currentTagState.indexOf(tag)),... currentTagState.slice(currentTagState.indexOf(tag)+1)]
+    // console.log(updatedTagState)
+    this.setState({
+      taskDetailTags: updatedTagState
+    })
+  }
 
 
-    taskEditSubmit = (event) => {
-      event.preventDefault()
-      let relPages = this.state.taskDetailPages
-      let relTags = this.state.taskDetailTags
-      this.props.editTask(this.state.taskDetail, relPages, relTags)
-      let relTask = this.props.teamTasks.find((t) => t.task._id["$oid"] == this.state.taskDetail._id["$oid"])
-      // console.log(relTask)
-      // debugger
-      this.selectTaskDetail(event, this.state.taskDetail, relPages, relTags, this.state.taskDetailUsers)
+  taskEditSubmit = (event) => {
+    event.preventDefault()
+    let relPages = this.state.taskDetailPages
+    let relTags = this.state.taskDetailTags
+    console.log(this.state.taskDetail)
+    this.props.editTask(this.state.taskDetail, relPages, relTags)
+    let relTask = this.props.teamTasks.find((t) => t.task._id["$oid"] == this.state.taskDetail._id["$oid"])
+    // console.log(relTask)
+    // debugger
+    console.log("adter submit", relTask)
+    this.selectTaskDetail(event, this.state.taskDetail, relPages, relTags, this.state.taskDetailUsers)
 
-}
+  }
 
 
-    // edit task end
+  // edit task end
 
   // task listed in detail section end
 
@@ -395,19 +393,19 @@ class TeamTaskContainer extends React.Component {
     return (
       <div>
         <div className="header"><h1>Team Tasks</h1></div>
-<div className="team-task-container">
-        <div className="section-1">
-          <SidebarContainer textFilterListener={this.textFilterListener} priorityFilterListener = {this.PriorityFilterListener} statusFilterListener = {this.statusFilterListener} pageFilterListener = {this.pageFilterListener} teamFilterListener = {this.teamFilterListener} tagFilterListener = {this.tagFilterListener} selectTaskDetail={this.selectTaskDetail}/>
-        </div>
+        <div className="team-task-container">
+          <div className="section-1">
+            <SidebarContainer textFilterListener={this.textFilterListener} priorityFilterListener = {this.PriorityFilterListener} statusFilterListener = {this.statusFilterListener} pageFilterListener = {this.pageFilterListener} teamFilterListener = {this.teamFilterListener} tagFilterListener = {this.tagFilterListener} selectTaskDetail={this.selectTaskDetail}/>
+          </div>
 
-        <div className="section-2">
-          {this.renderTasks()}
-        </div>
+          <div className="section-2">
+            {this.renderTasks()}
+          </div>
 
-        <div className="section-3">
-          {this.renderTaskDetailSection()}
+          <div className="section-3">
+            {this.renderTaskDetailSection()}
+          </div>
         </div>
-</div>
       </div>
     )
   }
