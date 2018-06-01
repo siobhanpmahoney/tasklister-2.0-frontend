@@ -5,6 +5,7 @@ export const EDIT_TASK = 'EDIT_TASK'
 export const EDIT_TASK_DELETE_PAGE = 'EDIT_TASK_DELETE_PAGE'
 export const EDIT_TASK_DELETE_TAG = 'EDIT_TASK_DELETE_TAG'
 export const EDIT_TASK_DELETE_USER = 'EDIT_TASK_DELETE_USER'
+export const DELETE_TASK = 'DELETE_TASK'
 export const ALL_PAGES = 'ALL_PAGES'
 export const ALL_TAGS = 'ALL_TAGS'
 export const ALL_USERS = 'ALL_USERS'
@@ -172,6 +173,20 @@ export function editTaskDeleteUser(relTask, relUser) {
       payload: json,
       taskid: relTask._id["$oid"],
       userid: relUser._id["$oid"]
+    }))
+  }
+}
+
+export function deleteTask(relTask) {
+  let url = "http://localhost:3000/api/v1/tasks/" + relTask._id["$oid"]
+  return(dispatch) => {
+    return fetch(url, {
+      method: 'DELETE'
+    })
+    .then(response => response.json())
+    .then(json => dispatch({
+      type: DELETE_TASK,
+      updatedTaskList: json
     }))
   }
 }

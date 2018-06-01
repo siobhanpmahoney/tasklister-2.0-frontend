@@ -47,7 +47,9 @@ class TeamTaskContainer extends React.Component {
   // tasks listed in sidebar begin
 
   tasksToList = () => {
+    console.log("in tasksToList")
     let taskProps = this.props.teamTasks.slice(0)
+
     if (this.state.textFilter === "") {
       taskProps = taskProps
     } else {
@@ -96,7 +98,7 @@ class TeamTaskContainer extends React.Component {
     }
     this.setState({
       tasksDisplayed: taskProps
-    })
+    }, console.log(this.state.tasksDisplayed))
   }
 
   renderTasks = () => {
@@ -191,8 +193,9 @@ class TeamTaskContainer extends React.Component {
 
       let selectedTask = this.props.teamTasks.find((t) => t.task._id === this.state.taskDetail._id)
 
-      return <TeamTaskDetail editTaskDeletePageReload={this.editTaskDeletePageReload} editTaskDeleteTagReload={this.editTaskDeleteTagReload} taskEditAddlRefListener={this.taskEditAddlRefListener} taskEditUserPageListener={this.taskEditUserPageListener} taskDetail={this.state.taskDetail} taskDetailUsers={this.state.taskDetailUsers} taskDetailTags={this.state.taskDetailTags} taskEditAddPageField={this.taskEditAddPageField} taskEditAddTagField={this.taskEditAddTagField} taskDetailPages={this.state.taskDetailPages} taskEditAddUserField = {this.taskEditAddUserField}  taskEditListener={this.taskEditListener}  taskEditSubmit={this.taskEditSubmit}/>
+      return <TeamTaskDetail editTaskDeletePageReload={this.editTaskDeletePageReload} editTaskDeleteTagReload={this.editTaskDeleteTagReload} taskEditAddlRefListener={this.taskEditAddlRefListener} taskEditUserPageListener={this.taskEditUserPageListener} taskDetail={this.state.taskDetail} taskDetailUsers={this.state.taskDetailUsers} taskDetailTags={this.state.taskDetailTags} taskEditAddPageField={this.taskEditAddPageField} taskEditAddTagField={this.taskEditAddTagField} taskDetailPages={this.state.taskDetailPages} taskEditAddUserField = {this.taskEditAddUserField}  taskEditListener={this.taskEditListener} taskEditSubmit={this.taskEditSubmit} deleteAndReload={this.deleteAndReload}/>
     } else {
+
       return <div className="fillerText">Select a task or create a new one!</div>
     }
   }
@@ -459,6 +462,17 @@ class TeamTaskContainer extends React.Component {
 
 
   // edit task end
+
+  // delete task
+
+  deleteAndReload = (t) => {
+    ;
+    this.setState({
+      taskDetail: null
+    }, () => this.props.deleteTask(t), this.props.loadAllTasks(), this.tasksToList)
+  }
+
+  //
 
   // task listed in detail section end
 

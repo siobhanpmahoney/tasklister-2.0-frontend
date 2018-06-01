@@ -69,13 +69,19 @@ class TeamTaskDetail extends React.Component {
 
           <div className="task-detail-header">
 
-            <span className="task-detail-tags">
-              {this.renderTagList()}
-            </span><br />
+            <div className="task-detail-delete-button">
+              <button onClick={() => this.props.deleteAndReload(this.props.taskDetail)}>Delete</button>
+            </div><br />
 
-            <span className="task-detail-title">
-              {this.props.taskDetail.title}
-            </span>
+            <div className="task-detail-title">
+                {this.props.taskDetail.title}
+              </div>
+
+            <div className="task-detail-tags">
+              {this.renderTagList()}
+            </div>
+
+
 
           </div>
 

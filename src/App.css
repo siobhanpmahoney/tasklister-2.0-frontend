@@ -222,26 +222,40 @@ will-change: overflow;
   margin: 0.25em 0 0.75em 0.25em;
   min-height: min-content;
   display: flex;
-  justify-content: space-between;
-  align-content: stretch;
+  /* justify-content: space-between; */
+  align-content: flex-start;
   wrap: wrap;
   position: relative;
-  flex-direction: row;
+  flex-direction: column;
   width: 100%;
-  align-items: center;
+  align-items: baseline;
 }
 
 .task-detail-title {
   font-family: "Old Standard TT";
   font-size: 24px;
   display: inline;
+  order: 3;
+  align-self: baseline;
+  align-content: flex-end;
+}
+
+.task-detail-delete-button {
+  display: inline;
+  align-self: baseline;
+  /* flex-direction: row; */
   order: 1;
+  /* float: right; */
+  /* text-align: right; */
+  float:left;
+  padding: 0.1em 0.1em 0.1em 0.5em;
+  margin-right: 0.5em;
 
 }
 
 .task-detail-tags {
-  display: inline-flex;
-  flex-direction: column;
+  display: inline;
+  /* flex-direction: column; */
   order: 2;
   /* float: right; */
   /* text-align: right; */

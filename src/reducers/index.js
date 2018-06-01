@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { CURRENT_USER, ALL_TASKS, ADD_NEW_TASK, EDIT_TASK, EDIT_TASK_DELETE_PAGE, EDIT_TASK_DELETE_TAG, EDIT_TASK_DELETE_USER, ALL_PAGES, ALL_TAGS, ALL_USERS } from '../actions'
+import { CURRENT_USER, ALL_TASKS, ADD_NEW_TASK, EDIT_TASK, EDIT_TASK_DELETE_PAGE, EDIT_TASK_DELETE_TAG, EDIT_TASK_DELETE_USER, DELETE_TASK, ALL_PAGES, ALL_TAGS, ALL_USERS } from '../actions'
 
 const user = (state = {currentUser: null, userTasks: [] }, action) => {
   switch(action.type) {
@@ -168,6 +168,16 @@ const teamTasks = (state = {allTasks: [] }, action) => {
                 },
               );
               return state;
+
+          case DELETE_TASK:
+            console.log(action.updatedTaskList)
+            state = Object.assign({},
+            state,
+            {
+              allTasks: action.updatedTaskList
+            }
+          );
+            return state;
 
       default:
         return state;
