@@ -47,9 +47,19 @@ class TaskFilterContainer extends React.Component {
                 Status
               </span>
 
+
+    
+
+
             <div className="filter-status-options">
-              <label> Open
-                <input type="checkbox" name="status_summary" value="open" onChange={this.props.statusFilterListener} />
+              <label> New
+                <input type="checkbox" name="status_summary" value="new" onChange={this.props.statusFilterListener} />
+              </label><br />
+            <label> In Progress
+                <input type="checkbox" name="status_summary" value="in progress" onChange={this.props.statusFilterListener} />
+              </label>
+              <label> Under Review
+                <input type="checkbox" name="status_summary" value="under review" onChange={this.props.statusFilterListener} />
               </label><br />
               <label> Closed
                 <input type="checkbox" name="status_summary" value="closed" onChange={this.props.statusFilterListener} />

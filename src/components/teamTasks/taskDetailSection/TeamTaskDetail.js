@@ -173,7 +173,9 @@ class TeamTaskDetail extends React.Component {
               </span>
               <select name='status_summary'  value={this.props.taskDetail.status_summary} onChange={this.props.taskEditListener}>
                 <option value=''>Select...</option>
-                <option value="open">Open</option>
+                <option value="new">New</option>
+                <option value="in progress">In Progress</option>
+                <option value="under review">Under Review</option>
                 <option value="closed">Closed</option>
               </select>
             </div>
