@@ -42,18 +42,21 @@ html, body {
 
   height: 100%;
   position: relative;
-  margin: -0.5em;
+  margin: -0.25em;
+
 }
 
 html {
-  width: 96%;
+  width: 100%;
 }
 
 body {
-  width: 97%;
+  width: 100%;
   padding: 0.5em;
   font-family: "SamoSans-Regular";
-  overflow-x: hidden;
+  /* overflow-x: hidden; */
+  background-size: cover;
+
 }
 
 .header, .header-logo, .header-nav, .header-cell {
@@ -97,34 +100,87 @@ body {
 }
 
 .team-task-container {
-  display: flex;
+  /* display: flex;
   wrap: nowrap;
   width: 100%;
-  justify-content: flex-start;
+  position: relative;
+  height: 100%; */
+  display: flex;
+  overflow: hidden;
+height: 100vh;
+/* margin-top: -100px;
+padding-top: 100px; */
+position: absolute;
+width: 100%;
+backface-visibility: hidden;
+will-change: overflow;
 }
 
+.section1 .section2 .section3 {
+  /* overflow-y: auto;
+  height: auto;
+  padding: .5rem; */
+}
+/*
+.team-task-container  > * {
+  flex: 1 1 auto;
+  overflow: scroll;
+  flex-direction: column;
+
+  width: 100%;
+} */
+
 .section-1 {
-  flex-basis: 22%;
+  flex-basis: 18%;
   text-align: left;
   background-color: #2C3A51;
-  width: 100%;
   padding: 0.25em;
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: auto;
+  padding: .5rem;
 }
 
 .section-2 {
-  flex-basis: 38%;
+  flex-basis: 34%;
   text-align: left;
   padding: 0.25em;
+  position: relative;
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: auto;
+  padding: .5rem;
+}
+
+.task-list {
+  overflow-y: auto;
+  overflow-x: hidden;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  /* min-height: min-content; */
+  /* display: flex; */
+  /* flex-direction: column; */
+  /* overflow-y: auto; */
+  /* vertical-align: baseline; */
 }
 
 .section-3 {
-  flex-basis: 38%;
+  flex-basis: 42%;
   text-align: left;
+  align-items: stretch;
   padding: 0.25em;
-  width: 100%;
   border-left: #f6f7fb solid 2px;
-  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  overflow-x: hidden;
+  flex: 1;
+  margin-right: -0.25em;
+  /* overflow-y: auto; */
+  height: auto;
+  padding: .5rem;
 }
 
 .task-list-item {
@@ -133,6 +189,7 @@ body {
   border-bottom: #f6f7fb solid 2px;
   min-height: 40px;
 }
+
 
 .task-list-item-title, .task-list-item-tags-section {
   display: inline;
@@ -149,23 +206,28 @@ body {
 
 .task-detail-container {
   position: relative;
-  width: 104%;
+  width: 100%;
   display: flex;
+  flex-grow: 1;
+  flex-shrink: 1;
   flex-direction: column;
-  justify-content: stretch;
+  justify-content: flex-start;
   align-content: stretch;
+  align-self: stretch;
 }
 
 .task-detail-header {
   border-bottom: #f6f7fb solid 2px;
-  padding: 0.5em 0 0.5em 0.5em;
-  margin: 0.25em 0 0.25em 0.25em;
+  padding: 0.5em 0 0.75em 0.5em;
+  margin: 0.25em 0 0.75em 0.25em;
+  min-height: min-content;
   display: flex;
   justify-content: space-between;
+  align-content: stretch;
   wrap: wrap;
   position: relative;
   flex-direction: row;
-  width: 105%;
+  width: 100%;
   align-items: center;
 }
 
@@ -178,13 +240,15 @@ body {
 }
 
 .task-detail-tags {
-  display: inline;
+  display: inline-flex;
+  flex-direction: column;
   order: 2;
   /* float: right; */
   /* text-align: right; */
   margin-left: auto;
   float:right;
   padding: 0.1em 0.1em 0.1em 0.5em;
+  margin-right: 0.5em;
 
 }
 
@@ -254,7 +318,7 @@ textarea {
   width: 100%;
   resize: none;
   overflow: hidden;
-   align-self: stretch;
+
    white-space: pre-wrap;
 }
 
