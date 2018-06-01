@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { CURRENT_USER, ALL_TASKS, ADD_NEW_TASK, EDIT_TASK, EDIT_TASK_DELETE_PAGE, EDIT_TASK_DELETE_TAG, ALL_PAGES, ALL_TAGS, ALL_USERS } from '../actions'
+import { CURRENT_USER, ALL_TASKS, ADD_NEW_TASK, EDIT_TASK, EDIT_TASK_DELETE_PAGE, EDIT_TASK_DELETE_TAG, EDIT_TASK_DELETE_USER, ALL_PAGES, ALL_TAGS, ALL_USERS } from '../actions'
 
 const user = (state = {currentUser: null, userTasks: [] }, action) => {
   switch(action.type) {
@@ -149,6 +149,25 @@ const teamTasks = (state = {allTasks: [] }, action) => {
           );
           return state;
 
+
+          case EDIT_TASK_DELETE_USER:
+              // relevant task
+              let relTask2 = state.allTasks.find((t) => t.task._id["$oid"] == action.taskid)
+              // up-to-date tag list
+              let updatedUserList = relTask2.users.filter((p) => p._id["$oid"] != action.userid)
+              let taskStateCopyU = state.allTasks.slice(0)
+              const savedTasks3 = [
+                ...taskStateCopyU.slice(0, taskStateCopyU.indexOf(relTask2)),
+                {task: relTask2.task, pages: relTask2.pages, users: relTask2.users, users: updatedUserList},
+                ...taskStateCopyU.slice(taskStateCopyU.indexOf(relTask2) + 1)
+              ];
+              state = Object.assign({},
+                state,
+                {
+                  allTasks: savedTasks3
+                },
+              );
+              return state;
 
       default:
         return state;

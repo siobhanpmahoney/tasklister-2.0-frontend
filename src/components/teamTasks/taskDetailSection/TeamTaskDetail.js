@@ -53,6 +53,12 @@ class TeamTaskDetail extends React.Component {
       return this.props.taskDetail.priority
     }
 
+    userCheck = (u) => {
+      return !!this.props.taskDetailUsers.find((user) => {
+        return user.username === u.username
+      })
+    }
+
 
 
 
@@ -104,14 +110,14 @@ class TeamTaskDetail extends React.Component {
                 <div className="task-detail-users">
                   <span className="field-name">
                     Responsible Team Members:
-                  </span> <button className="add ref" onClick={this.props.taskEditAddUserField}>
-                  <i className="material-icons add-ref">add_circle_outline</i>
-                </button>
-                <ul>
-                  {this.props.taskDetailUsers.map((u) => {
-                    return <textarea className="task-detail-description"  value={u.username} type="contentEditable" key={u._id["$oid"]} onChange={this.props.taskEditListener} />
+                  </span>
+
+                  {this.props.teamUsers.map((u) => {
+                    return <label>{u.username}
+                      <input type="checkbox" checked ={this.userCheck(u)} key={u._id["$oid"]} name="taskDetailUsers" className="username" value={u.username}   onChange={this.props.taskEditUserPageListener} />
+                    </label>
                   })}
-                </ul>
+
               </div>
 
               <div className="task-detail-relevant-pages">

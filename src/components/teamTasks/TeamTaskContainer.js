@@ -25,7 +25,7 @@ class TeamTaskContainer extends React.Component {
       userFilter: [],
       taskDetail: null,
       taskDetailPages:[{path: ""}],
-      taskDetailUsers: [{}, {username: ""}],
+      taskDetailUsers: [{username: ""}],
       taskDetailTags: [{}, {title: ""}],
       newTask: {status_summary: ''},
       newTaskPages: [{path: ""}],
@@ -191,7 +191,7 @@ class TeamTaskContainer extends React.Component {
 
       let selectedTask = this.props.teamTasks.find((t) => t.task._id === this.state.taskDetail._id)
 
-      return <TeamTaskDetail editTaskDeletePageReload={this.editTaskDeletePageReload} editTaskDeleteTagReload={this.editTaskDeleteTagReload} taskEditAddlRefListener={this.taskEditAddlRefListener} taskDetail={this.state.taskDetail} taskDetailUsers={this.state.taskDetailUsers} taskDetailTags={this.state.taskDetailTags} taskEditAddPageField={this.taskEditAddPageField} taskEditAddTagField={this.taskEditAddTagField} taskDetailPages={this.state.taskDetailPages} taskEditAddUserField = {this.taskEditAddUserField}  taskEditListener={this.taskEditListener}  taskEditSubmit={this.taskEditSubmit}/>
+      return <TeamTaskDetail editTaskDeletePageReload={this.editTaskDeletePageReload} editTaskDeleteTagReload={this.editTaskDeleteTagReload} taskEditAddlRefListener={this.taskEditAddlRefListener} taskEditUserPageListener={this.taskEditUserPageListener} taskDetail={this.state.taskDetail} taskDetailUsers={this.state.taskDetailUsers} taskDetailTags={this.state.taskDetailTags} taskEditAddPageField={this.taskEditAddPageField} taskEditAddTagField={this.taskEditAddTagField} taskDetailPages={this.state.taskDetailPages} taskEditAddUserField = {this.taskEditAddUserField}  taskEditListener={this.taskEditListener}  taskEditSubmit={this.taskEditSubmit}/>
     } else {
       return <div className="fillerText">Select a task or create a new one!</div>
     }
@@ -319,13 +319,6 @@ class TeamTaskContainer extends React.Component {
 
 
 
-
-
-
-
-
-
-
   newTaskSubmit = (event) => {
     event.preventDefault()
     let task = this.state.newTask
@@ -343,7 +336,6 @@ class TeamTaskContainer extends React.Component {
       console.log("not in props yet")
     }
   }
-
 
 
   // new task end
@@ -383,6 +375,29 @@ class TeamTaskContainer extends React.Component {
     currentUserState = [...currentUserState, { username: '' }]
     this.setState({
       taskDetailUsers: currentUserState
+    })
+  }
+
+
+
+  taskEditUserPageListener = (event) => {
+    let value = event.target.value
+    let userState = this.state.taskDetailUsers.slice(0)
+    if (event.target.checked) {
+      let addUser = {}
+      addUser["username"] = value
+      userState = [...userState, addUser]
+    } else {
+      let user = this.state.taskDetailUsers.find((u) => {
+        return u.username == value
+      })
+      if (!!user._id) {
+        this.props.editTaskDeleteUser(this.state.taskDetail, user)
+      }
+      userState.splice(userState.indexOf(value), 1)
+    }
+    this.setState({
+      taskDetailUsers: userState
     })
   }
 
@@ -426,12 +441,15 @@ class TeamTaskContainer extends React.Component {
   }
 
 
+
+
   taskEditSubmit = (event) => {
     event.preventDefault()
     let relPages = this.state.taskDetailPages
     let relTags = this.state.taskDetailTags
+    let relUsers = this.state.taskDetailUsers
 
-    this.props.editTask(this.state.taskDetail, relPages, relTags)
+    this.props.editTask(this.state.taskDetail, relPages, relTags, relUsers)
     let relTask = this.props.teamTasks.find((t) => t.task._id["$oid"] == this.state.taskDetail._id["$oid"])
     // console.log(relTask)
     // debugger

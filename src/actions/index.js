@@ -4,6 +4,7 @@ export const ADD_NEW_TASK = 'ADD_NEW_TASK'
 export const EDIT_TASK = 'EDIT_TASK'
 export const EDIT_TASK_DELETE_PAGE = 'EDIT_TASK_DELETE_PAGE'
 export const EDIT_TASK_DELETE_TAG = 'EDIT_TASK_DELETE_TAG'
+export const EDIT_TASK_DELETE_USER = 'EDIT_TASK_DELETE_USER'
 export const ALL_PAGES = 'ALL_PAGES'
 export const ALL_TAGS = 'ALL_TAGS'
 export const ALL_USERS = 'ALL_USERS'
@@ -98,7 +99,7 @@ export function createNewTask(taskInfo, taskPageInfo, taskTagInfo, taskUserInfo)
   }
 }
 
-export function editTask(selectedTask, selectedTaskPages, selectedTaskTags) {
+export function editTask(selectedTask, selectedTaskPages, selectedTaskTags, selectedTaskUsers) {
   let url = "http://localhost:3000/api/v1/tasks/" + selectedTask._id["$oid"]
   return (dispatch) => {
     return fetch(url,
@@ -115,7 +116,8 @@ export function editTask(selectedTask, selectedTaskPages, selectedTaskTags) {
           priority: selectedTask.priority,
           status_summary: selectedTask.status_summary,
           rel_pages: selectedTaskPages,
-          rel_tags: selectedTaskTags
+          rel_tags: selectedTaskTags,
+          rel_users: selectedTaskUsers
         })
       })
       .then(response => response.json())
@@ -143,7 +145,6 @@ export function editTaskDeletePage(relTask, relPage) {
 }
 
 export function editTaskDeleteTag(relTask, relTag) {
-  debugger
   let url = "http://localhost:3000/api/v1/tasks/" + relTask._id["$oid"] + "/tags/" + relTag._id["$oid"]
   return (dispatch) => {
     return fetch(url, {
@@ -155,6 +156,22 @@ export function editTaskDeleteTag(relTask, relTag) {
       payload: json,
       taskid: relTask._id["$oid"],
       tagid: relTag._id["$oid"]
+    }))
+  }
+}
+
+export function editTaskDeleteUser(relTask, relUser) {
+  let url = "http://localhost:3000/api/v1/tasks/" + relTask._id["$oid"] + "/users/" + relUser._id["$oid"]
+  return (dispatch) => {
+    return fetch(url, {
+      method: 'DELETE'
+    })
+    .then(response => response.json())
+    .then(json => dispatch({
+      type: EDIT_TASK_DELETE_USER,
+      payload: json,
+      taskid: relTask._id["$oid"],
+      userid: relUser._id["$oid"]
     }))
   }
 }

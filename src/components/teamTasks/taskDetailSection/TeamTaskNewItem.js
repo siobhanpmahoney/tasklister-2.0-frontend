@@ -85,7 +85,7 @@ class TeamTaskNewItem extends React.Component {
       </button>
       <ul>
         {this.props.newTaskTags.map((t, idx) => {
-          return t.title !== "" ? (
+          return !!t.title ? (
             <li key={t.title} name="newTaskTags" className="title">
               {t.title} <button onClick={()=>this.props.newTaskDeleteTagReload(this.props.newTask, t)}> x </button>
           </li>
