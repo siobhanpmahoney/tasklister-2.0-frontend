@@ -28,11 +28,10 @@ class TeamTaskContainer extends React.Component {
       taskDetailUsers: [{}, {username: ""}],
       taskDetailTags: [{}, {title: ""}],
       newTask: {status_summary: ''},
-      newTaskRef: {
-        newTaskPages: [],
-        newTaskTags: [],
-        newTaskUsers: []
-      },
+      newTaskPages: [{}],
+      newTaskTags: [{}],
+      newTaskUsers: [{}]
+
 
     }
   }
@@ -189,7 +188,7 @@ class TeamTaskContainer extends React.Component {
 
   renderTaskDetailSection = () => {
     if (this.state.taskDetail === 'new') {
-      return <TeamTaskNewItem newTaskFormListener={this.newTaskFormListener} newTaskDisplayAddlFields={this.newTaskDisplayAddlFields} newTaskDisplayAddIcon={this.newTaskDisplayAddIcon} newTaskStatusListener={this.newTaskStatusListener} newTaskRefListener={this.newTaskRefListener} newTaskSubmit={this.newTaskSubmit} newTask = {this.state.newTask} newTaskPages={this.state.newTaskRef.newTaskPages} newTaskTags={this.state.newTaskRef.newTaskTags} newTaskUsers={this.state.newTaskRef.newTaskUsers}/>
+      return <TeamTaskNewItem newTaskFormListener={this.newTaskFormListener} newTaskDisplayAddlFields={this.newTaskDisplayAddlFields} newTaskDisplayAddIcon={this.newTaskDisplayAddIcon} newTaskStatusListener={this.newTaskStatusListener} newTaskRefListener={this.newTaskRefListener} newTaskSubmit={this.newTaskSubmit} newTask = {this.state.newTask} newTaskPages={this.state.newTaskPages} newTaskTags={this.state.newTaskTags} newTaskUsers={this.state.newTaskUsers}/>
     } else if (!!this.state.taskDetail) {
 
       let selectedTask = this.props.teamTasks.find((t) => t.task._id === this.state.taskDetail._id)
@@ -225,13 +224,24 @@ class TeamTaskContainer extends React.Component {
   }
 
   newTaskRefListener = (event) => {
-    let value = event.target.type === "checkbox" ? event.target.checked : event.target.value
-    let name = event.target.name
-    let stateUpdate = this.state.newTaskRef
-    stateUpdate[name][0] = value
-    this.setState({
-      newTaskRef: stateUpdate
-    })
+      let value = event.target.type === "checkbox" ? event.target.checked : event.target.value
+      let name = event.target.name
+      let keyName = event.target.className
+      let kV = {}
+      kV[keyName] = value
+      const currentRef = this.state[name].slice(0)
+      currentRef[0][keyName] = value
+      this.setState({
+        name: currentRef
+      }, console.log("after state update", this.state))
+
+    //
+    // let value = event.target.type === "checkbox" ? event.target.checked : event.target.value
+    // let name = event.target.name
+    // let stateUpdate = this.state[name][0] = value
+    // this.setState({
+    //   newTaskRef: stateUpdate
+    // })
   }
 
   //listening to add'l values
@@ -239,31 +249,30 @@ class TeamTaskContainer extends React.Component {
   newTaskAddlRefListener = (event) => {
     let value = event.target.type === "checkbox" ? event.target.checked : event.target.value
     let name = event.target.name
-    let stateUpdate = this.state.newTaskRef
-    stateUpdate[name][stateUpdate[name].length-1] = value
-    this.setState({
-      newTaskRef: stateUpdate
-    })
+    let stateUpdate = this.state.stateUpdate[name][stateUpdate[name].length-1] = value
+    // this.setState({
+    //   newTaskRef: stateUpdate
+    // })
 
   }
 
 
   // displaying button if field already has 1 value
 
-  newTaskDisplayAddIcon = (stateName) => {
-    if (this.state.newTaskRef[stateName].length < 1) {
-      return {display: "none"}
-    } else {
-      ("adding add icon")
-      return {display:"inline"}
-    }
-  }
+  // newTaskDisplayAddIcon = (stateName) => {
+  //   if (this.state.stateName.length < 1) {
+  //     return {display: "none"}
+  //   } else {
+  //     ("adding add icon")
+  //     return {display:"inline"}
+  //   }
+  // }
 
   // rendering additional fields if button clicked
 
   newTaskDisplayAddlFields = (stateName) => {
 
-    return this.state.newTaskRef[stateName].map((u, idx) => {
+    return this.state.stateName.map((u, idx) => {
       return <input placeholder='Team Member #${idx + 1}' type="text" name="newTaskUsers" onChange={this.newTaskRefListener} />
     })
   }
@@ -272,14 +281,25 @@ class TeamTaskContainer extends React.Component {
 
 
 
+
   newTaskSubmit = (event) => {
     event.preventDefault()
-
     let task = this.state.newTask
-    let taskPages = this.state.newTaskRef.newTaskPages
-    let taskTags = this.state.newTaskRef.newTaskTags
-    let taskUsers = this.state.newTaskRef.newTaskUsers
+    let taskPages = this.state.newTaskPages
+    let taskTags = this.state.newTaskTags
+    let taskUsers = this.state.newTaskUsers
+
     this.props.createNewTask(task, taskPages, taskTags, taskUsers)
+    if (this.props.teamTasks.find((t) => t.task.title == this.state.newTask.title)) {
+      const relTask = this.props.teamTasks.find((t) => t.task.title == this.state.newTask.title)
+      this.setState({
+        taskDetail: null
+      }, this.tasksToList)
+    } else {
+      console.log("not in props yet")
+    }
+
+
     // this.setState({
     //   newTask: {
     //     title: '',
@@ -342,7 +362,7 @@ class TeamTaskContainer extends React.Component {
 
     this.setState({
       name: currentRef
-    })
+    }, console.log("after edit"), this.state)
   }
 
   editTaskDeletePageReload = (task, page) => {
@@ -381,7 +401,6 @@ class TeamTaskContainer extends React.Component {
     let relTask = this.props.teamTasks.find((t) => t.task._id["$oid"] == this.state.taskDetail._id["$oid"])
     // console.log(relTask)
     // debugger
-    console.log("adter submit", relTask)
     this.selectTaskDetail(event, this.state.taskDetail, relPages, relTags, this.state.taskDetailUsers)
 
   }

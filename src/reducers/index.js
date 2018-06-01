@@ -82,7 +82,9 @@ const teamTasks = (state = {allTasks: [] }, action) => {
     );
 
     case ADD_NEW_TASK:
-    let allTasksState = state.allTasks.slice(0)
+      console.log("in REDUCER")
+      console.log(action.newTask)
+      let allTasksState = state.allTasks.slice(0)
     state = Object.assign({},
       state,
       {

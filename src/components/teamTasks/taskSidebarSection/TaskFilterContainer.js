@@ -25,7 +25,6 @@ class TaskFilterContainer extends React.Component {
   }
 
   render() {
-    console.log(this.userList())
     return (
       <div className="sidebar-filter-container">
         <div className="filter-option">

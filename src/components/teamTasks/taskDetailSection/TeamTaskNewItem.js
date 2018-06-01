@@ -1,4 +1,9 @@
+
 import React from 'react'
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import * as Actions from '../../../actions'
+import { withRouter } from 'react-router';
 
 class TeamTaskNewItem extends React.Component {
   render() {
@@ -8,11 +13,11 @@ class TeamTaskNewItem extends React.Component {
           <h3><label>New Task</label></h3>
 
           <div><label><span className="field-name">Task Title:</span>
-            <input type="text" name="title" onChange={this.props.newTaskFormListener} />
+            <textarea name="title" onChange={this.props.newTaskFormListener} />
           </label></div>
 
         <div><label><span className="field-name">Task Description:</span>
-            <input type="text" name="description" onChange={this.props.newTaskFormListener} />
+            <textarea name="description" onChange={this.props.newTaskFormListener} />
           </label></div>
 
         <div>
@@ -25,19 +30,16 @@ class TeamTaskNewItem extends React.Component {
         <div>
           <label>
             <div className="field-name">Relevant Paths
-              <button className="add ref" style={this.props.newTaskDisplayAddIcon("newTaskPages")} onClick={()=>this.props.newTaskDisplayAddlFields("newTaskPages")}>
-                <i className="material-icons add-ref">add_circle_outline</i>
-              </button></div>
-              <input type="text" name="newTaskPages" onChange={this.props.newTaskRefListener} />
+            </div>
+            <textarea name="newTaskPages" className="path" onChange={this.props.newTaskRefListener} />
           </label>
         </div>
 
         <div>
           <label>
-            <div className="field-name">Assign Team
-              <button className="add ref" style={this.props.newTaskDisplayAddIcon("newTaskUsers")} onClick={()=>this.props.newTaskDisplayAddlFields("newTaskUsers")}>
-                <i className="material-icons add-ref">add_circle_outline</i></button></div>
-              <input type="text" name="newTaskUsers" onChange={this.props.newTaskRefListener}  />
+            <div className="field-name">Assign Team</div>
+
+              <textarea name="newTaskUsers" className="username" onChange={this.props.newTaskRefListener}  />
 
           </label>
         </div>
@@ -45,11 +47,9 @@ class TeamTaskNewItem extends React.Component {
         <div>
           <label>
             <div className="field-name">Tags
-              <button className="add ref" style={this.props.newTaskDisplayAddIcon("newTaskTags")} onClick={()=>this.props.newTaskDisplayAddlFields("newTaskTags")}>
-                <i className="material-icons add-ref">add_circle_outline</i>
-              </button>
+
             </div>
-              <input type="text" name="newTaskTags" onChange={this.props.newTaskRefListener} />
+              <textarea name="newTaskTags" className="title" onChange={this.props.newTaskRefListener} />
           </label>
         </div>
 
@@ -68,4 +68,19 @@ class TeamTaskNewItem extends React.Component {
   }
 }
 
-export default TeamTaskNewItem
+function mapStateToProps(state, props) {
+  return {
+    user: state.user.currentUser,
+    userTasks: state.user.userTasks,
+    teamPages: state.teamPages.allPages,
+    teamTags: state.teamTags.allTags,
+    teamTasks: state.teamTasks.allTasks,
+    teamUsers: state.teamUsers.allUsers
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(Actions, dispatch);
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(TeamTaskNewItem));

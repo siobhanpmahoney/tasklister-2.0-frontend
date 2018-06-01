@@ -63,8 +63,12 @@ export function loadAllUsers() {
     }))
   }
 }
-
 export function createNewTask(taskInfo, taskPageInfo, taskTagInfo, taskUserInfo) {
+  console.log("Action: Create_Task")
+  console.log("taskInfo", taskInfo)
+  console.log("taskPageInfo", taskPageInfo)
+  console.log("taskTagInfo", taskTagInfo)
+  console.log("taskUserInfo", taskUserInfo)
   return (dispatch) => {
     fetch(`http://localhost:3000/api/v1/tasks`,
     {
