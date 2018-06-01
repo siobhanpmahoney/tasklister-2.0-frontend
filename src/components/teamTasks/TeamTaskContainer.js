@@ -24,15 +24,13 @@ class TeamTaskContainer extends React.Component {
       tagFilter: [],
       userFilter: [],
       taskDetail: null,
-      taskDetailPages: [{}, {path: ""}],
+      taskDetailPages:[{path: ""}],
       taskDetailUsers: [{}, {username: ""}],
       taskDetailTags: [{}, {title: ""}],
       newTask: {status_summary: ''},
-      newTaskPages: [{}],
-      newTaskTags: [{}],
-      newTaskUsers: [{}]
-
-
+      newTaskPages: [{path: ""}],
+      newTaskTags: [{title: ""}],
+      newTaskUsers: [{username: ""}]
     }
   }
 
@@ -188,7 +186,7 @@ class TeamTaskContainer extends React.Component {
 
   renderTaskDetailSection = () => {
     if (this.state.taskDetail === 'new') {
-      return <TeamTaskNewItem newTaskFormListener={this.newTaskFormListener} newTaskDisplayAddlFields={this.newTaskDisplayAddlFields} newTaskDisplayAddIcon={this.newTaskDisplayAddIcon} newTaskStatusListener={this.newTaskStatusListener} newTaskRefListener={this.newTaskRefListener} newTaskSubmit={this.newTaskSubmit} newTask = {this.state.newTask} newTaskPages={this.state.newTaskPages} newTaskTags={this.state.newTaskTags} newTaskUsers={this.state.newTaskUsers}/>
+      return <TeamTaskNewItem newTaskDeletePageReload={this.newTaskDeletePageReload} newTaskDeleteTagReload={this.newTaskDeleteTagReload} newTaskDeleteUserReload={this.newTaskDeleteUserReload} newTaskFormListener={this.newTaskFormListener} newTaskAddPageField={this.newTaskAddPageField} newTaskAddTagField={this.newTaskAddTagField} newTaskAddUserField={this.newTaskAddUserField} newTaskDisplayAddlFields={this.newTaskDisplayAddlFields} newTaskDisplayAddIcon={this.newTaskDisplayAddIcon} newTaskStatusListener={this.newTaskStatusListener} newTaskRefListener={this.newTaskRefListener} newTaskAddlRefListener = {this.newTaskAddlRefListener} newTaskSubmit={this.newTaskSubmit} newTask = {this.state.newTask} newTaskPages={this.state.newTaskPages} newTaskTags={this.state.newTaskTags} newTaskUsers={this.state.newTaskUsers}/>
     } else if (!!this.state.taskDetail) {
 
       let selectedTask = this.props.teamTasks.find((t) => t.task._id === this.state.taskDetail._id)
@@ -225,23 +223,22 @@ class TeamTaskContainer extends React.Component {
 
   newTaskRefListener = (event) => {
       let value = event.target.type === "checkbox" ? event.target.checked : event.target.value
+
       let name = event.target.name
+
       let keyName = event.target.className
+      console.log(keyName)
       let kV = {}
       kV[keyName] = value
+      console.log(kV)
       const currentRef = this.state[name].slice(0)
-      currentRef[0][keyName] = value
+      console.log(currentRef)
+      currentRef[currentRef.length-1][keyName] = value
+        console.log(currentRef)
       this.setState({
         name: currentRef
       }, console.log("after state update", this.state))
 
-    //
-    // let value = event.target.type === "checkbox" ? event.target.checked : event.target.value
-    // let name = event.target.name
-    // let stateUpdate = this.state[name][0] = value
-    // this.setState({
-    //   newTaskRef: stateUpdate
-    // })
   }
 
   //listening to add'l values
@@ -249,33 +246,80 @@ class TeamTaskContainer extends React.Component {
   newTaskAddlRefListener = (event) => {
     let value = event.target.type === "checkbox" ? event.target.checked : event.target.value
     let name = event.target.name
-    let stateUpdate = this.state.stateUpdate[name][stateUpdate[name].length-1] = value
-    // this.setState({
-    //   newTaskRef: stateUpdate
-    // })
-
-  }
-
-
-  // displaying button if field already has 1 value
-
-  // newTaskDisplayAddIcon = (stateName) => {
-  //   if (this.state.stateName.length < 1) {
-  //     return {display: "none"}
-  //   } else {
-  //     ("adding add icon")
-  //     return {display:"inline"}
-  //   }
-  // }
-
-  // rendering additional fields if button clicked
-
-  newTaskDisplayAddlFields = (stateName) => {
-
-    return this.state.stateName.map((u, idx) => {
-      return <input placeholder='Team Member #${idx + 1}' type="text" name="newTaskUsers" onChange={this.newTaskRefListener} />
+    let keyName = event.target.className
+    let kV = {}
+    kV[keyName] = value
+    const currentRef = this.state[name].slice(0)
+    currentRef[currentRef.length - 1][keyName] = value
+    this.setState({
+      name: currentRef
     })
   }
+
+  newTaskAddPageField = (event) => {
+    event.preventDefault()
+    let currentPageState = this.state.newTaskPages.slice(0)
+    currentPageState = [...currentPageState, { path: '' }]
+    this.setState({
+      newTaskPages: currentPageState
+    })
+  }
+
+  newTaskAddTagField = (event) => {
+    event.preventDefault()
+    let currentTagState = this.state.newTaskTags.slice(0)
+    currentTagState = [...currentTagState, { title: '' }]
+    this.setState({
+      newTaskTags: currentTagState
+    })
+  }
+
+  newTaskAddUserField = (event) => {
+    event.preventDefault()
+    let currentUserState = this.state.newTaskUsers.slice(0)
+    currentUserState = [...currentUserState, { username: '' }]
+    this.setState({
+      newTaskUsers: currentUserState
+    })
+  }
+
+  // new task — event handler for deleting ref fields  [begin]
+
+  newTaskDeletePageReload = (task, page) => {
+    let t = task
+    let currentPageState = this.state.newTaskPages.slice(0)
+    let updatedPageState = [...currentPageState.slice(0, currentPageState.indexOf(page)),... currentPageState.slice(currentPageState.indexOf(page)+1)]
+    // console.log(updatedPageState)
+    this.setState({
+      newTaskPages: updatedPageState
+    })
+  }
+
+  newTaskDeleteTagReload = (task, tag) => {
+    let t = task
+    let currentTagState = this.state.newTaskTags.slice(0)
+    let updatedTagState = [...currentTagState.slice(0, currentTagState.indexOf(tag)),... currentTagState.slice(currentTagState.indexOf(tag)+1)]
+    // console.log(updatedTagState)
+    this.setState({
+      newTaskTags: updatedTagState
+    })
+  }
+
+  newTaskDeleteUserReload = (task, user) => {
+    let t = task
+    let currentUserState = this.state.newTaskUsers.slice(0)
+    let updatedUserState = [...currentUserState.slice(0, currentUserState.indexOf(user)),... currentUserState.slice(currentUserState.indexOf(user)+1)]
+    // console.log(updatedUserState)
+    this.setState({
+      newTaskUsers: updatedUserState
+    })
+  }
+
+  // new task — event handler for deleting ref fields  [end]
+
+
+
+
 
 
 
@@ -298,17 +342,9 @@ class TeamTaskContainer extends React.Component {
     } else {
       console.log("not in props yet")
     }
-
-
-    // this.setState({
-    //   newTask: {
-    //     title: '',
-    //     description: '',
-    //     priority: '',
-    //     status_summary: ''
-    //   }
-    // })
   }
+
+
 
   // new task end
 
@@ -356,13 +392,11 @@ class TeamTaskContainer extends React.Component {
     let keyName = event.target.className
     let kV = {}
     kV[keyName] = value
-
     const currentRef = this.state[name].slice(0)
     currentRef[currentRef.length - 1][keyName] = value
-
     this.setState({
       name: currentRef
-    }, console.log("after edit"), this.state)
+    })
   }
 
   editTaskDeletePageReload = (task, page) => {
@@ -396,7 +430,7 @@ class TeamTaskContainer extends React.Component {
     event.preventDefault()
     let relPages = this.state.taskDetailPages
     let relTags = this.state.taskDetailTags
-    console.log(this.state.taskDetail)
+
     this.props.editTask(this.state.taskDetail, relPages, relTags)
     let relTask = this.props.teamTasks.find((t) => t.task._id["$oid"] == this.state.taskDetail._id["$oid"])
     // console.log(relTask)
@@ -411,7 +445,6 @@ class TeamTaskContainer extends React.Component {
   // task listed in detail section end
 
   render() {
-
     return (
       <div>
         <div className="header"><h1>Team Tasks</h1></div>
