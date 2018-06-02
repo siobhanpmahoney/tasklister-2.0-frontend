@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import './App.css';
 import './stylesheets/sidebar.css'
+import './stylesheets/taskdetail.css'
 import './web-fonts.css'
 import registerServiceWorker from './registerServiceWorker';
 

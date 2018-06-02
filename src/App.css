@@ -10,7 +10,7 @@ grey: #f6f7fb
 
 .App {
   text-align: center;
-  margin: 1em;
+  margin: 0em;
   font-family: "SamoSans-Regular";
 }
 
@@ -42,7 +42,8 @@ html, body {
 
   height: 100%;
   position: relative;
-  margin: -0.25em;
+  margin: 0em;
+
 
 }
 
@@ -56,7 +57,6 @@ body {
   font-family: "SamoSans-Regular";
   /* overflow-x: hidden; */
   background-size: cover;
-
 }
 
 .header, .header-logo, .header-nav, .header-cell {
@@ -107,7 +107,7 @@ body {
   height: 100%; */
   display: flex;
   overflow: hidden;
-height: 100vh;
+  height: 100vh;
 /* margin-top: -100px;
 padding-top: 100px; */
 position: absolute;
@@ -167,7 +167,7 @@ will-change: overflow;
 }
 
 .section-3 {
-  flex-basis: 42%;
+  flex-basis: 46%;
   text-align: left;
   align-items: stretch;
   padding: 0.25em;
@@ -177,7 +177,6 @@ will-change: overflow;
   overflow-y: auto;
   overflow-x: hidden;
   flex: 1;
-  margin-right: -0.25em;
   /* overflow-y: auto; */
   height: auto;
   padding: .5rem;
@@ -203,156 +202,3 @@ will-change: overflow;
   float:right;
 
 }
-
-.task-detail-container {
-  position: relative;
-  width: 100%;
-  display: flex;
-  flex-grow: 1;
-  flex-shrink: 1;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-content: stretch;
-  align-self: stretch;
-}
-
-.task-detail-header {
-  border-bottom: #f6f7fb solid 2px;
-  padding: 0.5em 0 0.75em 0.5em;
-  margin: 0.25em 0 0.75em 0.25em;
-  min-height: min-content;
-  display: flex;
-  /* justify-content: space-between; */
-  align-content: flex-start;
-  wrap: wrap;
-  position: relative;
-  flex-direction: column;
-  width: 100%;
-  align-items: baseline;
-}
-
-.task-detail-title {
-  font-family: "Old Standard TT";
-  font-size: 24px;
-  display: inline;
-  order: 3;
-  align-self: baseline;
-  align-content: flex-end;
-}
-
-.task-detail-delete-button {
-  display: inline;
-  align-self: baseline;
-  /* flex-direction: row; */
-  order: 1;
-  /* float: right; */
-  /* text-align: right; */
-  float:left;
-  padding: 0.1em 0.1em 0.1em 0.5em;
-  margin-right: 0.5em;
-
-}
-
-.task-detail-tags {
-  display: inline;
-  /* flex-direction: column; */
-  order: 2;
-  /* float: right; */
-  /* text-align: right; */
-  margin-left: auto;
-  float:right;
-  padding: 0.1em 0.1em 0.1em 0.5em;
-  margin-right: 0.5em;
-
-}
-
-.ind-tag {
-  /* display: inline; */
-  float:right;
-  display: inline;
-  font-size: 12px;
-  background-color: #e4f6f6;
-  color: #43cac2;
-  padding: 3px 3px;
-  border-radius: 3px;
-
-
-}
-
-.material-icons {
-  position: relative;
-}
-
-button.add-ref {
-  background: white;
-  border-color: white;
-  color: white;
-}
-
-.add-ref {
-  size: 50%;
-  background-color: white;
-  border: white;
-}
-
-.task-detail-description, .task-detail-date-updated, .task-detail-date-created, .task-detail-users, .task-detail-relevant-pages, .task-detail-github-branch, .task-detail-status-summary, .task-detail-details-status-updates {
-  padding: 1em;
-  font-size: 95%;
-}
-
-.field-name {
-  font-family:"Khula";
-  font-weight: bold;
-  padding-right: 6px;
-}
-
-/* .task-detail-details-dashboard {
-  display: flex;
-  flex-wrap: wrap;
-  align-content: center;
-  height: 100%;
-} */
-
-.task-detail-details-dashboard {
-  height: 100%;
-  position: relative;
-}
-
-
-
-textarea {
-  /* margin: 0.25em;
-  width: 100%;
-  resize: none; */
-  /* box-sizing: border-box; */
-  border: pink solid 1px;
-  box-sizing: border-box;
-  min-height: 25px;
-  margin: 0.25em;
-  width: 100%;
-  resize: none;
-  overflow: hidden;
-
-   white-space: pre-wrap;
-}
-
-.task-detail-description {
-
-  /* box-sizing: border-box; */
-
-
-}
-
-
-
-/*
-.table-header-row. .table-row {
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-  padding: 1em;
-  width: 100%;
-  justify-content: stretch;
-  align-items: stretch;
-  align-content: flex-start;
-} */
