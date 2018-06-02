@@ -70,7 +70,7 @@ class TeamTaskDetail extends React.Component {
           <div className="task-detail-header">
 
             <div className="task-detail-delete-button">
-              <button onClick={() => this.props.deleteAndReload(this.props.taskDetail)}>Delete</button>
+              <button onClick={this.props.deleteAndReload}>Delete</button>
             </div><br />
 
             <div className="task-detail-title">

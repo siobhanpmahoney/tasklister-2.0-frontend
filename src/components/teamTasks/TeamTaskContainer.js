@@ -465,12 +465,26 @@ class TeamTaskContainer extends React.Component {
 
   // delete task
 
-  deleteAndReload = (t) => {
-    ;
-    this.setState({
-      taskDetail: null
-    }, () => this.props.deleteTask(t), this.props.loadAllTasks(), this.tasksToList)
+  abstractedDelete = (t) => {
+    console.log("in abstracted delete")
+    console.log(this.state.taskDetail.task)
+    this.props.deleteTask(this.state.taskDetail.task)
   }
+
+  deleteAndReload = (event) => {
+    event.preventDefault()
+    let selectedTask = Object.assign({}, this.state.taskDetail)
+    let displayedTasks = this.state.tasksDisplayed.slice(0)
+    let findTask = displayedTasks.find((t) => {
+      return t.task._id["$oid"] == selectedTask._id["$oid"]})
+    this.props.deleteTask(selectedTask)
+    displayedTasks.splice(displayedTasks.indexOf(findTask), 1)
+    this.setState({
+      taskDetail: null,
+      tasksDisplayed: displayedTasks
+    })
+  }
+
 
   //
 
