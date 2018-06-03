@@ -6,6 +6,20 @@ import { withRouter } from 'react-router';
 
 class TaskFilterContainer extends React.Component {
 
+  componentDidMount() {
+    if (this.props) {
+      console.log(this.props)
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.teamTasks != this.props.teamTasks || prevProps.teamPages != this.props.teamPages || prevProps.teamTags != this.props.teamTags) {
+      this.setState({
+        tasksDisplayed: this.props.teamTasks.slice(0)
+      })
+    }
+  }
+
   pageList = () => {
     return this.props.teamPages.filter((page) => {
       return page.task_ids.length > 0
@@ -48,7 +62,7 @@ class TaskFilterContainer extends React.Component {
               </span>
 
 
-    
+
 
 
             <div className="filter-status-options">

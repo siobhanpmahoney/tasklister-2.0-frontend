@@ -42,18 +42,13 @@ class TeamTaskContainer extends React.Component {
     }, this.tasksToList)
   }
 
-  // shouldComponentUpdate(newProps, newState) {
-  //   console.log("shouldComponentUpdate: Should component update?");
-  //   this.props.teamTasks !== newProps.teamTasks
-  // }
-
-
   componentDidUpdate(prevProps, prevState) {
-    if (prevProps.teamTasks != this.props.teamTasks) {
+    if (prevProps.teamTasks != this.props.teamTasks || prevProps.teamPages != this.props.teamPages || prevProps.teamTags != this.props.teamTags) {
       this.setState({
         tasksDisplayed: this.props.teamTasks.slice(0)
       })
     }
+
   }
 
   // tasks listed in sidebar begin
