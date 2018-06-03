@@ -32,6 +32,13 @@ store.subscribe(throttle(() => {
   saveState(store.getState())
 }, 1000));
 
+
+
+
+
+
+
+
 // store.subscribe(() => {
 //   saveState(store.getState())
 // });

@@ -30,25 +30,33 @@ class TeamTaskContainer extends React.Component {
       newTask: {status_summary: ''},
       newTaskPages: [{path: ""}],
       newTaskTags: [{title: ""}],
-      newTaskUsers: [{username: ""}]
+      newTaskUsers: []
     }
   }
 
   componentDidMount() {
+    console.log("in mount")
+
     let allTasks = this.props.teamTasks.slice(0)
+    console.log(allTasks)
     // console.log(allTasks)
     this.setState({
-      tasksDisplayed: allTasks
-    })
+      tasksDisplayed: allTasks,
+      taskDetail: null
+    }, this.tasksToList)
   }
 
 
 
   // tasks listed in sidebar begin
 
+
+  allTasks = () => {
+    return this.props.teamTasks.slice()
+  }
+
   tasksToList = () => {
-    console.log("in tasksToList")
-    let taskProps = this.props.teamTasks.slice(0)
+    let taskProps = this.props.teamTasks.slice()
 
     if (this.state.textFilter === "") {
       taskProps = taskProps
@@ -188,14 +196,14 @@ class TeamTaskContainer extends React.Component {
 
   renderTaskDetailSection = () => {
     if (this.state.taskDetail === 'new') {
-      return <TeamTaskNewItem newTaskDeletePageReload={this.newTaskDeletePageReload} newTaskDeleteTagReload={this.newTaskDeleteTagReload} newTaskDeleteUserReload={this.newTaskDeleteUserReload} newTaskFormListener={this.newTaskFormListener} newTaskAddPageField={this.newTaskAddPageField} newTaskAddTagField={this.newTaskAddTagField} newTaskAddUserField={this.newTaskAddUserField} newTaskDisplayAddlFields={this.newTaskDisplayAddlFields} newTaskDisplayAddIcon={this.newTaskDisplayAddIcon} newTaskStatusListener={this.newTaskStatusListener} newTaskRefListener={this.newTaskRefListener} newTaskAddlRefListener = {this.newTaskAddlRefListener} newTaskSubmit={this.newTaskSubmit} newTask = {this.state.newTask} newTaskPages={this.state.newTaskPages} newTaskTags={this.state.newTaskTags} newTaskUsers={this.state.newTaskUsers}/>
+      return <TeamTaskNewItem newTaskDeletePageReload={this.newTaskDeletePageReload} newTaskDeleteTagReload={this.newTaskDeleteTagReload} newTaskDeleteUserReload={this.newTaskDeleteUserReload} newTaskFormListener={this.newTaskFormListener} newTaskAddPageField={this.newTaskAddPageField} newTaskAddTagField={this.newTaskAddTagField} newTaskAddUserField={this.newTaskAddUserField} newTaskDisplayAddlFields={this.newTaskDisplayAddlFields} newTaskDisplayAddIcon={this.newTaskDisplayAddIcon} newTaskStatusListener={this.newTaskStatusListener} newTaskRefListener={this.newTaskRefListener} newTaskUserPageListener={this.newTaskUserPageListener} newTaskAddlRefListener = {this.newTaskAddlRefListener} newTaskSubmit={this.newTaskSubmit} newTask = {this.state.newTask} newTaskPages={this.state.newTaskPages} newTaskTags={this.state.newTaskTags} newTaskUsers={this.state.newTaskUsers}/>
     } else if (!!this.state.taskDetail) {
 
       let selectedTask = this.props.teamTasks.find((t) => t.task._id === this.state.taskDetail._id)
 
       return <TeamTaskDetail editTaskDeletePageReload={this.editTaskDeletePageReload} editTaskDeleteTagReload={this.editTaskDeleteTagReload} taskEditAddlRefListener={this.taskEditAddlRefListener} taskEditUserPageListener={this.taskEditUserPageListener} taskDetail={this.state.taskDetail} taskDetailUsers={this.state.taskDetailUsers} taskDetailTags={this.state.taskDetailTags} taskEditAddPageField={this.taskEditAddPageField} taskEditAddTagField={this.taskEditAddTagField} taskDetailPages={this.state.taskDetailPages} taskEditAddUserField = {this.taskEditAddUserField}  taskEditListener={this.taskEditListener} taskEditSubmit={this.taskEditSubmit} deleteAndReload={this.deleteAndReload}/>
     } else {
-
+      this.tasksToList
       return <div className="fillerText">Select a task or create a new one!</div>
     }
   }
@@ -259,6 +267,32 @@ class TeamTaskContainer extends React.Component {
     })
   }
 
+  newTaskUserPageListener = (event) => {
+    let value = event.target.value
+    console.log(value)
+    let userState = this.state.newTaskUsers.slice(0)
+    console.log(userState)
+    console.log(event.target.checked)
+
+    if (event.target.checked) {
+      let addUser = {}
+      addUser["username"] = value
+
+      userState = [...userState, addUser]
+
+    } else {
+      let user = this.state.newTaskUsers.find((u) => {
+        return u.username == value
+      })
+      console.log(user)
+      userState.splice(userState.indexOf(value), 1)
+    }
+    console.log(userState)
+    this.setState({
+      newTaskUsers: userState
+    })
+  }
+
   newTaskAddPageField = (event) => {
     event.preventDefault()
     let currentPageState = this.state.newTaskPages.slice(0)
@@ -277,14 +311,6 @@ class TeamTaskContainer extends React.Component {
     })
   }
 
-  newTaskAddUserField = (event) => {
-    event.preventDefault()
-    let currentUserState = this.state.newTaskUsers.slice(0)
-    currentUserState = [...currentUserState, { username: '' }]
-    this.setState({
-      newTaskUsers: currentUserState
-    })
-  }
 
   // new task — event handler for deleting ref fields  [begin]
 
@@ -321,23 +347,27 @@ class TeamTaskContainer extends React.Component {
   // new task — event handler for deleting ref fields  [end]
 
 
-
   newTaskSubmit = (event) => {
     event.preventDefault()
+    // console.log(this.props.teamTasks)
     let task = this.state.newTask
-    let taskPages = this.state.newTaskPages
-    let taskTags = this.state.newTaskTags
-    let taskUsers = this.state.newTaskUsers
-
+    let taskPages = this.state.newTaskPages.slice(0)
+    let taskTags = this.state.newTaskTags.slice(0)
+    let taskUsers = this.state.newTaskUsers.slice(0)
+    console.log(taskUsers)
+    
     this.props.createNewTask(task, taskPages, taskTags, taskUsers)
-    if (this.props.teamTasks.find((t) => t.task.title == this.state.newTask.title)) {
-      const relTask = this.props.teamTasks.find((t) => t.task.title == this.state.newTask.title)
-      this.setState({
-        taskDetail: null
-      }, this.tasksToList)
-    } else {
-      console.log("not in props yet")
-    }
+    this.setState({
+      taskDetail: null,
+      taskDetailPages:[{path: ""}],
+      taskDetailUsers: [{username: ""}],
+      taskDetailTags: [{}, {title: ""}],
+      newTask: {status_summary: ''},
+      newTaskPages: [{path: ""}],
+      newTaskTags: [{title: ""}],
+      newTaskUsers: [{username: ""}]
+    }, this.tasksToList)
+
   }
 
 

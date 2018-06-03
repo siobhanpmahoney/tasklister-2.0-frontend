@@ -85,11 +85,13 @@ const teamTasks = (state = {allTasks: [] }, action) => {
       console.log("in REDUCER")
       console.log(action.newTask)
       let allTasksState = state.allTasks.slice(0)
+      console.log(allTasksState)
     state = Object.assign({},
       state,
       {
         allTasks: [...allTasksState, action.newTask]
       });
+      console.log("after state update", state)
       return state;
 
 

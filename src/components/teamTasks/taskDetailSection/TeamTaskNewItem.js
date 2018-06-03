@@ -6,6 +6,13 @@ import * as Actions from '../../../actions'
 import { withRouter } from 'react-router';
 
 class TeamTaskNewItem extends React.Component {
+
+  userCheck = (u) => {
+    return !!this.props.newTaskUsers.find((user) => {
+      return user.username === u.username
+    })
+  }
+
   render() {
     return (
       <div className="newTaskForm">
@@ -58,19 +65,11 @@ class TeamTaskNewItem extends React.Component {
         <button className="add ref" onClick={this.props.newTaskAddUserField}>
           +
         </button>
-        <ul>
-          {this.props.newTaskUsers.map((u, idx) => {
-            return !!u.username ? (
-              <li key={u.username} name="newTaskUsers" className="username">
-                {u.username} <button onClick={()=>this.props.newTaskDeleteUserReload(this.props.newTask, u)}> x </button>
-            </li>
-          ) : (
-            <textarea key={idx} name="newTaskUsers" className="username"  type="contentEditable" onChange={this.props.newTaskAddlRefListener} />
-          )
-
+        {this.props.teamUsers.map((u) => {
+          return <label>{u.username}
+            <input type="checkbox" checked ={this.userCheck(u)} key={u._id["$oid"]} name="taskDetailUsers" className="username" value={u.username} onChange={this.props.newTaskUserPageListener} />
+          </label>
         })}
-
-      </ul>
 
     </label>
   </div>
