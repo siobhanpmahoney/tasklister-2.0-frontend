@@ -35,21 +35,14 @@ class TeamTaskContainer extends React.Component {
   }
 
   componentDidMount() {
-    console.log("in mount")
-
     let allTasks = this.props.teamTasks.slice(0)
-    console.log(allTasks)
-    // console.log(allTasks)
     this.setState({
       tasksDisplayed: allTasks,
       taskDetail: null
     }, this.tasksToList)
   }
 
-
-
   // tasks listed in sidebar begin
-
 
   allTasks = () => {
     return this.props.teamTasks.slice()
@@ -184,8 +177,6 @@ class TeamTaskContainer extends React.Component {
     }, this.tasksToList)
   }
 
-
-
   //filter listeners end
 
   // tasks listed in sidebar end
@@ -196,7 +187,7 @@ class TeamTaskContainer extends React.Component {
 
   renderTaskDetailSection = () => {
     if (this.state.taskDetail === 'new') {
-      return <TeamTaskNewItem newTaskDeletePageReload={this.newTaskDeletePageReload} newTaskDeleteTagReload={this.newTaskDeleteTagReload} newTaskDeleteUserReload={this.newTaskDeleteUserReload} newTaskFormListener={this.newTaskFormListener} newTaskAddPageField={this.newTaskAddPageField} newTaskAddTagField={this.newTaskAddTagField} newTaskAddUserField={this.newTaskAddUserField} newTaskDisplayAddlFields={this.newTaskDisplayAddlFields} newTaskDisplayAddIcon={this.newTaskDisplayAddIcon} newTaskStatusListener={this.newTaskStatusListener} newTaskRefListener={this.newTaskRefListener} newTaskUserPageListener={this.newTaskUserPageListener} newTaskAddlRefListener = {this.newTaskAddlRefListener} newTaskSubmit={this.newTaskSubmit} newTask = {this.state.newTask} newTaskPages={this.state.newTaskPages} newTaskTags={this.state.newTaskTags} newTaskUsers={this.state.newTaskUsers}/>
+      return <TeamTaskNewItem newTaskDeletePageReload={this.newTaskDeletePageReload} newTaskDeleteTagReload={this.newTaskDeleteTagReload}  newTaskFormListener={this.newTaskFormListener} newTaskAddPageField={this.newTaskAddPageField} newTaskAddTagField={this.newTaskAddTagField}  newTaskDisplayAddlFields={this.newTaskDisplayAddlFields} newTaskDisplayAddIcon={this.newTaskDisplayAddIcon} newTaskStatusListener={this.newTaskStatusListener} newTaskRefListener={this.newTaskRefListener} newTaskUserPageListener={this.newTaskUserPageListener} newTaskAddlRefListener = {this.newTaskAddlRefListener} newTaskSubmit={this.newTaskSubmit} newTask = {this.state.newTask} newTaskPages={this.state.newTaskPages} newTaskTags={this.state.newTaskTags} newTaskUsers={this.state.newTaskUsers}/>
     } else if (!!this.state.taskDetail) {
 
       let selectedTask = this.props.teamTasks.find((t) => t.task._id === this.state.taskDetail._id)
@@ -238,17 +229,17 @@ class TeamTaskContainer extends React.Component {
       let name = event.target.name
 
       let keyName = event.target.className
-      console.log(keyName)
+
       let kV = {}
       kV[keyName] = value
-      console.log(kV)
+
       const currentRef = this.state[name].slice(0)
-      console.log(currentRef)
+
       currentRef[currentRef.length-1][keyName] = value
-        console.log(currentRef)
+
       this.setState({
         name: currentRef
-      }, console.log("after state update", this.state))
+      })
 
   }
 
@@ -269,11 +260,7 @@ class TeamTaskContainer extends React.Component {
 
   newTaskUserPageListener = (event) => {
     let value = event.target.value
-    console.log(value)
     let userState = this.state.newTaskUsers.slice(0)
-    console.log(userState)
-    console.log(event.target.checked)
-
     if (event.target.checked) {
       let addUser = {}
       addUser["username"] = value
@@ -284,10 +271,8 @@ class TeamTaskContainer extends React.Component {
       let user = this.state.newTaskUsers.find((u) => {
         return u.username == value
       })
-      console.log(user)
       userState.splice(userState.indexOf(value), 1)
     }
-    console.log(userState)
     this.setState({
       newTaskUsers: userState
     })
@@ -318,7 +303,6 @@ class TeamTaskContainer extends React.Component {
     let t = task
     let currentPageState = this.state.newTaskPages.slice(0)
     let updatedPageState = [...currentPageState.slice(0, currentPageState.indexOf(page)),... currentPageState.slice(currentPageState.indexOf(page)+1)]
-    // console.log(updatedPageState)
     this.setState({
       newTaskPages: updatedPageState
     })
@@ -328,7 +312,6 @@ class TeamTaskContainer extends React.Component {
     let t = task
     let currentTagState = this.state.newTaskTags.slice(0)
     let updatedTagState = [...currentTagState.slice(0, currentTagState.indexOf(tag)),... currentTagState.slice(currentTagState.indexOf(tag)+1)]
-    // console.log(updatedTagState)
     this.setState({
       newTaskTags: updatedTagState
     })
@@ -338,7 +321,6 @@ class TeamTaskContainer extends React.Component {
     let t = task
     let currentUserState = this.state.newTaskUsers.slice(0)
     let updatedUserState = [...currentUserState.slice(0, currentUserState.indexOf(user)),... currentUserState.slice(currentUserState.indexOf(user)+1)]
-    // console.log(updatedUserState)
     this.setState({
       newTaskUsers: updatedUserState
     })
@@ -349,13 +331,10 @@ class TeamTaskContainer extends React.Component {
 
   newTaskSubmit = (event) => {
     event.preventDefault()
-    // console.log(this.props.teamTasks)
     let task = this.state.newTask
     let taskPages = this.state.newTaskPages.slice(0)
     let taskTags = this.state.newTaskTags.slice(0)
     let taskUsers = this.state.newTaskUsers.slice(0)
-    console.log(taskUsers)
-    
     this.props.createNewTask(task, taskPages, taskTags, taskUsers)
     this.setState({
       taskDetail: null,
@@ -376,15 +355,13 @@ class TeamTaskContainer extends React.Component {
   // edit task begin
 
   taskEditListener = (event) => {
-
     let value = event.target.type === "checkbox" ? event.target.checked : event.target.value
     let name = event.target.name
     let currentTaskState = Object.assign({}, this.state.taskDetail)
     currentTaskState[name] = value
     this.setState({
       taskDetail: currentTaskState
-
-    }, console.log("in taskDetail after state update", this.state.taskDetail))
+    })
   }
 
   taskEditAddPageField = () => {
@@ -454,7 +431,6 @@ class TeamTaskContainer extends React.Component {
     }
     let currentPageState = this.state.taskDetailPages.slice(0)
     let updatedPageState = [...currentPageState.slice(0, currentPageState.indexOf(page)),... currentPageState.slice(currentPageState.indexOf(page)+1)]
-    // console.log(updatedPageState)
     this.setState({
       taskDetailPages: updatedPageState
     })
@@ -496,8 +472,6 @@ class TeamTaskContainer extends React.Component {
   // delete task
 
   abstractedDelete = (t) => {
-    console.log("in abstracted delete")
-    console.log(this.state.taskDetail.task)
     this.props.deleteTask(this.state.taskDetail.task)
   }
 
