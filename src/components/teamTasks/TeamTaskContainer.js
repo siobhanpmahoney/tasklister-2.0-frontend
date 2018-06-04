@@ -9,21 +9,15 @@ import TeamTaskList from './taskListSection/TeamTaskList'
 import TeamTaskNewItem from './taskDetailSection/TeamTaskNewItem'
 import TeamTaskDetail from './taskDetailSection/TeamTaskDetail'
 import SidebarContainer from './taskSidebarSection/SidebarContainer'
+import TaskAlert from './taskNotifications/TaskAlert'
 
 class TeamTaskContainer extends React.Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      newTask: {status_summary: ''},
-      newTaskPages: [{path: ""}],
-      newTaskTags: [{title: ""}],
-      newTaskUsers: [],
-      taskDetail: null,
-      taskDetailPages:[{path: ""}],
-      taskDetailUsers: [{username: ""}],
-      taskDetailTags: [{}, {title: ""}],
       tasksDisplayed: [],
+
       textFilter: "",
       priorityFilter: false,
       statusFilter: [],
@@ -31,7 +25,19 @@ class TeamTaskContainer extends React.Component {
       teamFilter: [],
       tagFilter: [],
       userFilter: [],
-      sortSelection: null
+      sortSelection: null,
+
+      newTask: {status_summary: ''},
+      newTaskPages: [{path: ""}],
+      newTaskTags: [{title: ""}],
+      newTaskUsers: [],
+
+      taskDetail: null,
+      taskDetailPages:[{path: ""}],
+      taskDetailUsers: [{username: ""}],
+      taskDetailTags: [{}, {title: ""}],
+
+
     }
   }
 
@@ -241,7 +247,6 @@ class TeamTaskContainer extends React.Component {
 
       return <TeamTaskDetail editTaskDeletePageReload={this.editTaskDeletePageReload} editTaskDeleteTagReload={this.editTaskDeleteTagReload} taskEditAddlRefListener={this.taskEditAddlRefListener} taskEditUserPageListener={this.taskEditUserPageListener} taskDetail={this.state.taskDetail} taskDetailUsers={this.state.taskDetailUsers} taskDetailTags={this.state.taskDetailTags} taskEditAddPageField={this.taskEditAddPageField} taskEditAddTagField={this.taskEditAddTagField} taskDetailPages={this.state.taskDetailPages} taskEditAddUserField = {this.taskEditAddUserField}  taskEditListener={this.taskEditListener} taskEditSubmit={this.taskEditSubmit} deleteAndReload={this.deleteAndReload}/>
     } else {
-      this.listFilteredTasks
       return <div className="fillerText">Select a task or create a new one!</div>
     }
   }
@@ -536,7 +541,20 @@ class TeamTaskContainer extends React.Component {
 
   // task listed in detail section end
 
+    //BEGIN notification style
+
+  alertVisibility = () => {
+    if (!this.props.isRenderingAlert) {
+      return {display:"none"}
+    } else {
+      return {display:"flex"}
+    }
+  }
+
+    //END notification style
+
   render() {
+    console.log(this.props.isRenderingAlert)
     return (
       <div>
         <div className="header"><h1>Team Tasks</h1></div>
@@ -545,12 +563,24 @@ class TeamTaskContainer extends React.Component {
             <SidebarContainer sortSelection={this.state.sortSelection} sortListener = {this.sortListener} textFilterListener={this.textFilterListener} priorityFilterListener = {this.PriorityFilterListener} statusFilterListener = {this.statusFilterListener} pageFilterListener = {this.pageFilterListener} userFilterListener = {this.userFilterListener} tagFilterListener = {this.tagFilterListener} selectTaskDetail={this.selectTaskDetail}/>
           </div>
 
+
+
           <div className="section-2">
             {this.renderTasks()}
           </div>
 
+
+
           <div className="section-3">
+
+            <div className="task-detail-notification-container" style={this.alertVisibility()} onClick={this.props.closeAlert}>
+
+                <TaskAlert alertType={this.props.alertType}/>
+
+            </div>
+
             {this.renderTaskDetailSection()}
+
           </div>
         </div>
       </div>
@@ -565,7 +595,9 @@ function mapStateToProps(state, props) {
     teamPages: state.teamPages.allPages,
     teamTags: state.teamTags.allTags,
     teamTasks: state.teamTasks.allTasks,
-    teamUsers: state.teamUsers.allUsers
+    teamUsers: state.teamUsers.allUsers,
+    isRenderingAlert: state.teamTasks.isRenderingAlert,
+    alertType: state.teamTasks.alertType
   }
 }
 

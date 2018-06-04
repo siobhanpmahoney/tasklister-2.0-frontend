@@ -9,6 +9,7 @@ export const DELETE_TASK = 'DELETE_TASK'
 export const ALL_PAGES = 'ALL_PAGES'
 export const ALL_TAGS = 'ALL_TAGS'
 export const ALL_USERS = 'ALL_USERS'
+export const CLOSE_ALERT = 'CLOSE_ALERT'
 
 
 export function loadCurrentUser(user) {
@@ -65,6 +66,9 @@ export function loadAllUsers() {
     }))
   }
 }
+
+
+
 export function createNewTask(taskInfo, taskPageInfo, taskTagInfo, taskUserInfo) {
   console.log("Action: Create_Task")
   console.log("taskInfo", taskInfo)
@@ -188,5 +192,13 @@ export function deleteTask(relTask) {
       type: DELETE_TASK,
       updatedTaskList: json
     }))
+  }
+}
+
+export function closeAlert() {
+  return(dispatch) => {
+    return dispatch({
+      type: 'CLOSE_ALERT'
+    })
   }
 }

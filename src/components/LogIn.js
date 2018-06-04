@@ -82,7 +82,13 @@ class LogIn extends React.Component {
 function mapStateToProps(state, props) {
   return {
     user: state.user.currentUser,
-    tasks: state.user.userTasks
+    userTasks: state.user.userTasks,
+    teamPages: state.teamPages.allPages,
+    teamTags: state.teamTags.allTags,
+    teamTasks: state.teamTasks.allTasks,
+    teamUsers: state.teamUsers.allUsers,
+    isRenderingAlert: state.teamTasks.isRenderingAlert,
+    alertType: state.teamTasks.alertType
   }
 }
 

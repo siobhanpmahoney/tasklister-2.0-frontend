@@ -180,6 +180,10 @@ will-change: overflow;
   /* overflow-y: auto; */
   height: auto;
   padding: .5rem;
+  height: 100%;
+  position: relative;
+  width: 100%;
+  /* justify-content: stretch; */
 }
 
 .task-list-item {

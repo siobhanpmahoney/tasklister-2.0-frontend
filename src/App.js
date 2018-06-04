@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import './App.css';
 import './stylesheets/sidebar.css'
 import './stylesheets/taskdetail.css'
+import './stylesheets/tasknotifications.css'
 import './web-fonts.css'
 import registerServiceWorker from './registerServiceWorker';
 
@@ -157,8 +158,9 @@ function mapStateToProps(state, props) {
     teamPages: state.teamPages.allPages,
     teamTags: state.teamTags.allTags,
     teamTasks: state.teamTasks.allTasks,
-    teamUsers: state.teamUsers.allUsers
-
+    teamUsers: state.teamUsers.allUsers,
+    isRenderingAlert: state.teamTasks.isRenderingAlert,
+    alertType: state.teamTasks.alertType
   }
 }
 

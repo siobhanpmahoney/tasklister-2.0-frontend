@@ -122,7 +122,9 @@ function mapStateToProps(state, props) {
     teamPages: state.teamPages.allPages,
     teamTags: state.teamTags.allTags,
     teamTasks: state.teamTasks.allTasks,
-    teamUsers: state.teamUsers.allUsers
+    teamUsers: state.teamUsers.allUsers,
+    isRenderingAlert: state.teamTasks.isRenderingAlert,
+    alertType: state.teamTasks.alertType
   }
 }
 
