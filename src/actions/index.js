@@ -14,7 +14,7 @@ export const CLOSE_ALERT = 'CLOSE_ALERT'
 
 export function loadCurrentUser(user) {
   return (dispatch) => {
-    fetch(`http://localhost:3000/api/v1/users/${user.username}`)
+    fetch(`https://capstack-tasks-api.herokuapp.com/api/v1/users/${user.username}`)
     .then(response => response.json())
     .then(json => dispatch({
       type: CURRENT_USER,
@@ -25,7 +25,7 @@ export function loadCurrentUser(user) {
 
 export function loadAllTasks() {
   return (dispatch) => {
-    fetch('http://localhost:3000/api/v1/tasks')
+    fetch('https://capstack-tasks-api.herokuapp.com/api/v1/tasks')
     .then(response => response.json())
     .then(json => dispatch({
       type: ALL_TASKS,
@@ -36,7 +36,7 @@ export function loadAllTasks() {
 
 export function loadAllPages() {
   return (dispatch) => {
-    fetch('http://localhost:3000/api/v1/pages')
+    fetch('https://capstack-tasks-api.herokuapp.com/api/v1/pages')
     .then(response => response.json())
     .then(json => dispatch({
       type: ALL_PAGES,
@@ -47,7 +47,7 @@ export function loadAllPages() {
 
 export function loadAllTags() {
   return (dispatch) => {
-    fetch('http://localhost:3000/api/v1/tags')
+    fetch('https://capstack-tasks-api.herokuapp.com/api/v1/tags')
     .then(response => response.json())
     .then(json => dispatch({
       type: ALL_TAGS,
@@ -58,7 +58,7 @@ export function loadAllTags() {
 
 export function loadAllUsers() {
   return (dispatch) => {
-    fetch('http://localhost:3000/api/v1/users')
+    fetch('https://capstack-tasks-api.herokuapp.com/api/v1/users')
     .then(response => response.json())
     .then(json => dispatch({
       type: ALL_USERS,
@@ -76,7 +76,7 @@ export function createNewTask(taskInfo, taskPageInfo, taskTagInfo, taskUserInfo)
   console.log("taskTagInfo", taskTagInfo)
   console.log("taskUserInfo", taskUserInfo)
   return (dispatch) => {
-    fetch(`http://localhost:3000/api/v1/tasks`,
+    fetch(`https://capstack-tasks-api.herokuapp.com/api/v1/tasks`,
     {
       method: 'post',
       headers: {
@@ -105,7 +105,7 @@ export function createNewTask(taskInfo, taskPageInfo, taskTagInfo, taskUserInfo)
 }
 
 export function editTask(selectedTask, selectedTaskPages, selectedTaskTags, selectedTaskUsers) {
-  let url = "http://localhost:3000/api/v1/tasks/" + selectedTask._id["$oid"]
+  let url = "https://capstack-tasks-api.herokuapp.com/api/v1/tasks/" + selectedTask._id["$oid"]
   return (dispatch) => {
     return fetch(url,
       {
@@ -134,7 +134,7 @@ export function editTask(selectedTask, selectedTaskPages, selectedTaskTags, sele
 }
 
 export function editTaskDeletePage(relTask, relPage) {
-  let url = "http://localhost:3000/api/v1/tasks/" + relTask._id["$oid"] + "/pages/" + relPage._id["$oid"]
+  let url = "https://capstack-tasks-api.herokuapp.com/api/v1/tasks/" + relTask._id["$oid"] + "/pages/" + relPage._id["$oid"]
   return (dispatch) => {
     return fetch(url, {
       method: 'DELETE'
@@ -150,7 +150,7 @@ export function editTaskDeletePage(relTask, relPage) {
 }
 
 export function editTaskDeleteTag(relTask, relTag) {
-  let url = "http://localhost:3000/api/v1/tasks/" + relTask._id["$oid"] + "/tags/" + relTag._id["$oid"]
+  let url = "https://capstack-tasks-api.herokuapp.com/api/v1/tasks/" + relTask._id["$oid"] + "/tags/" + relTag._id["$oid"]
   return (dispatch) => {
     return fetch(url, {
       method: 'DELETE'
@@ -166,7 +166,7 @@ export function editTaskDeleteTag(relTask, relTag) {
 }
 
 export function editTaskDeleteUser(relTask, relUser) {
-  let url = "http://localhost:3000/api/v1/tasks/" + relTask._id["$oid"] + "/users/" + relUser._id["$oid"]
+  let url = "https://capstack-tasks-api.herokuapp.com/api/v1/tasks/" + relTask._id["$oid"] + "/users/" + relUser._id["$oid"]
   return (dispatch) => {
     return fetch(url, {
       method: 'DELETE'
@@ -182,7 +182,7 @@ export function editTaskDeleteUser(relTask, relUser) {
 }
 
 export function deleteTask(relTask) {
-  let url = "http://localhost:3000/api/v1/tasks/" + relTask._id["$oid"]
+  let url = "https://capstack-tasks-api.herokuapp.com/api/v1/tasks/" + relTask._id["$oid"]
   return(dispatch) => {
     return fetch(url, {
       method: 'DELETE'

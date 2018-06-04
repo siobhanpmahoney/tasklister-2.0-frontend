@@ -59,7 +59,7 @@ class App extends Component {
 
     const token=localStorage.getItem('token')
     if (token) {
-      return fetch("http://localhost:3000/api/v1/current_user", {
+      return fetch("https://capstack-tasks-api.herokuapp.com/api/v1/current_user", {
         headers:  {
           'Content-Type': 'application/json',
           Accepts: 'application/json',

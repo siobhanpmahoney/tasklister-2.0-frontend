@@ -551,6 +551,12 @@ class TeamTaskContainer extends React.Component {
     }
   }
 
+  renderAlert = () => {
+    if (!!this.props.isRenderingAlert) {
+      return <TaskAlert alertType={this.props.alertType}/>
+    }
+  }
+
     //END notification style
 
   render() {
@@ -575,7 +581,7 @@ class TeamTaskContainer extends React.Component {
 
             <div className="task-detail-notification-container" style={this.alertVisibility()} onClick={this.props.closeAlert}>
 
-                <TaskAlert alertType={this.props.alertType}/>
+                {this.renderAlert()}
 
             </div>
 

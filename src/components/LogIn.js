@@ -34,7 +34,7 @@ class LogIn extends React.Component {
   loginUser = (event) => {
     event.preventDefault()
     const token = localStorage.getItem('token')
-    return fetch("http://localhost:3000/api/v1/login", {
+    return fetch("https://capstack-tasks-api.herokuapp.com/api/v1/login", {
       method: 'POST',
       headers:  {
         'Content-Type': 'application/json',
