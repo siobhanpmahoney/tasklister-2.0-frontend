@@ -38,7 +38,9 @@ class TeamTaskDetail extends React.Component {
 
     formattedSavedDate = (dateArg) => {
       let dateSaved = new Date(dateArg)
-      return dateSaved.toLocaleDateString()
+      let timeSaved =  new Date(dateArg).toLocaleTimeString()
+      console.log(timeSaved)
+      return `${dateSaved.toLocaleDateString()} at ${timeSaved}`
     }
 
     taskEditAddPageField = () => {

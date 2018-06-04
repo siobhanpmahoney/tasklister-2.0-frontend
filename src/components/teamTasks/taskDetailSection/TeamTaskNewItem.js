@@ -101,7 +101,9 @@ class TeamTaskNewItem extends React.Component {
 <div><label>Status Summary:
   <select name='status_summary' value={this.props.newTask.status_summary} onChange={this.props.newTaskFormListener}>
     <option value=''>Select...</option>
-    <option value="open">Open</option>
+    <option value="new">New</option>
+    <option value="in progress">In Progress</option>
+    <option value="under review">Under Review</option>
     <option value="closed">Closed</option>
   </select>
 </label></div>

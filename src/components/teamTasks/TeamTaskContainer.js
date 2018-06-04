@@ -15,6 +15,14 @@ class TeamTaskContainer extends React.Component {
     super(props)
 
     this.state = {
+      newTask: {status_summary: ''},
+      newTaskPages: [{path: ""}],
+      newTaskTags: [{title: ""}],
+      newTaskUsers: [],
+      taskDetail: null,
+      taskDetailPages:[{path: ""}],
+      taskDetailUsers: [{username: ""}],
+      taskDetailTags: [{}, {title: ""}],
       tasksDisplayed: [],
       textFilter: "",
       priorityFilter: false,
@@ -23,14 +31,7 @@ class TeamTaskContainer extends React.Component {
       teamFilter: [],
       tagFilter: [],
       userFilter: [],
-      taskDetail: null,
-      taskDetailPages:[{path: ""}],
-      taskDetailUsers: [{username: ""}],
-      taskDetailTags: [{}, {title: ""}],
-      newTask: {status_summary: ''},
-      newTaskPages: [{path: ""}],
-      newTaskTags: [{title: ""}],
-      newTaskUsers: []
+      sortSelection: null
     }
   }
 
@@ -39,14 +40,14 @@ class TeamTaskContainer extends React.Component {
     this.setState({
       tasksDisplayed: allTasks,
       taskDetail: null
-    }, this.tasksToList)
+    }, this.listFilteredTasks)
   }
 
   componentDidUpdate(prevProps, prevState) {
     if (prevProps.teamTasks != this.props.teamTasks || prevProps.teamPages != this.props.teamPages || prevProps.teamTags != this.props.teamTags) {
       this.setState({
         tasksDisplayed: this.props.teamTasks.slice(0)
-      })
+      }, this.listFilteredTasks)
     }
 
   }
@@ -57,8 +58,35 @@ class TeamTaskContainer extends React.Component {
     return this.props.teamTasks.slice()
   }
 
-  tasksToList = () => {
+
+
+
+  listFilteredTasks = () => {
     let taskProps = this.props.teamTasks.slice()
+
+    if (this.state.sortSelection === 'title') {
+        taskProps = taskProps.sort((a, b)=>{
+          return a.task.title.localeCompare(b.task.title)
+        })
+        console.log(taskProps)
+      } else if (this.state.sortSelection === 'updated') {
+        taskProps = taskProps.sort((a, b) => {
+          let dateA = new Date(a.task.updated_at).valueOf()
+          let dateB = new Date(b.task.updated_at).valueOf()
+          return dateB - dateA
+        })
+      }
+      else if (this.state.sortSelection === 'status_summary') {
+        taskProps = taskProps.sort((a, b) => {
+          return a.task.status_summary.localeCompare(b.task.status_summary)
+        })
+      } else {
+        taskProps = taskProps.sort((a, b) => {
+              let dateA = new Date(a.task.created_at).valueOf()
+              let dateB = new Date(b.task.created_at).valueOf()
+              return dateB - dateA
+            })
+      }
 
     if (this.state.textFilter === "") {
       taskProps = taskProps
@@ -112,7 +140,6 @@ class TeamTaskContainer extends React.Component {
   }
 
   renderTasks = () => {
-
     return <TeamTaskList tasks={this.state.tasksDisplayed.slice(0)} selectTaskDetail={this.selectTaskDetail}/>
   }
 
@@ -122,7 +149,7 @@ class TeamTaskContainer extends React.Component {
     let v = event.target.value
     this.setState({
       textFilter: v
-    }, this.tasksToList)
+    }, this.listFilteredTasks)
   }
 
 
@@ -130,11 +157,11 @@ class TeamTaskContainer extends React.Component {
     if (event.target.checked) {
       this.setState({
         priorityFilter: true
-      }, this.tasksToList)
+      }, this.listFilteredTasks)
     } else {
       this.setState({
         priorityFilter: false
-      }, this.tasksToList)
+      }, this.listFilteredTasks)
     }
   }
 
@@ -147,7 +174,7 @@ class TeamTaskContainer extends React.Component {
     }
     this.setState({
       statusFilter: currentStatusFilters
-    }, this.tasksToList)
+    }, this.listFilteredTasks)
   }
 
   pageFilterListener = (event) => {
@@ -159,7 +186,7 @@ class TeamTaskContainer extends React.Component {
     }
     this.setState({
       pageFilter: currentPageFilters
-    }, this.tasksToList)
+    }, this.listFilteredTasks)
   }
 
   userFilterListener = (event) => {
@@ -171,7 +198,7 @@ class TeamTaskContainer extends React.Component {
     }
     this.setState({
       userFilter: currentUserFilters
-    }, this.tasksToList)
+    }, this.listFilteredTasks)
   }
 
   tagFilterListener = (event) => {
@@ -183,10 +210,21 @@ class TeamTaskContainer extends React.Component {
     }
     this.setState({
       tagFilter: currentTagFilters
-    }, this.tasksToList)
+    }, this.listFilteredTasks)
   }
 
   //filter listeners end
+
+
+  sortListener = (event) => {
+    event.preventDefault()
+    let value = event.target.value
+    console.log(value)
+    this.setState({
+      sortSelection: value
+    }, this.listFilteredTasks)
+  }
+
 
   // tasks listed in sidebar end
 
@@ -203,7 +241,7 @@ class TeamTaskContainer extends React.Component {
 
       return <TeamTaskDetail editTaskDeletePageReload={this.editTaskDeletePageReload} editTaskDeleteTagReload={this.editTaskDeleteTagReload} taskEditAddlRefListener={this.taskEditAddlRefListener} taskEditUserPageListener={this.taskEditUserPageListener} taskDetail={this.state.taskDetail} taskDetailUsers={this.state.taskDetailUsers} taskDetailTags={this.state.taskDetailTags} taskEditAddPageField={this.taskEditAddPageField} taskEditAddTagField={this.taskEditAddTagField} taskDetailPages={this.state.taskDetailPages} taskEditAddUserField = {this.taskEditAddUserField}  taskEditListener={this.taskEditListener} taskEditSubmit={this.taskEditSubmit} deleteAndReload={this.deleteAndReload}/>
     } else {
-      this.tasksToList
+      this.listFilteredTasks
       return <div className="fillerText">Select a task or create a new one!</div>
     }
   }
@@ -215,7 +253,7 @@ class TeamTaskContainer extends React.Component {
       taskDetailPages: tskPages,
       taskDetailTags: tskTags,
       taskDetailUsers: tskUsers
-    }, this.tasksToList)
+    }, this.listFilteredTasks)
   }
 
   // task render end
@@ -233,22 +271,22 @@ class TeamTaskContainer extends React.Component {
   }
 
   newTaskRefListener = (event) => {
-      let value = event.target.type === "checkbox" ? event.target.checked : event.target.value
+    let value = event.target.type === "checkbox" ? event.target.checked : event.target.value
 
-      let name = event.target.name
+    let name = event.target.name
 
-      let keyName = event.target.className
+    let keyName = event.target.className
 
-      let kV = {}
-      kV[keyName] = value
+    let kV = {}
+    kV[keyName] = value
 
-      const currentRef = this.state[name].slice(0)
+    const currentRef = this.state[name].slice(0)
 
-      currentRef[currentRef.length-1][keyName] = value
+    currentRef[currentRef.length-1][keyName] = value
 
-      this.setState({
-        name: currentRef
-      })
+    this.setState({
+      name: currentRef
+    })
 
   }
 
@@ -354,7 +392,7 @@ class TeamTaskContainer extends React.Component {
       newTaskPages: [{path: ""}],
       newTaskTags: [{title: ""}],
       newTaskUsers: [{username: ""}]
-    }, this.tasksToList)
+    }, this.listFilteredTasks)
 
   }
 
@@ -469,10 +507,10 @@ class TeamTaskContainer extends React.Component {
 
     this.props.editTask(this.state.taskDetail, relPages, relTags, relUsers)
     let relTask = this.props.teamTasks.find((t) => t.task._id["$oid"] == this.state.taskDetail._id["$oid"])
-    // console.log(relTask)
-    // debugger
-    this.selectTaskDetail(event, this.state.taskDetail, relPages, relTags, this.state.taskDetailUsers)
 
+    this.setState({
+      taskDetail: null
+    }, this.listFilteredTasks)
   }
 
 
@@ -487,14 +525,9 @@ class TeamTaskContainer extends React.Component {
   deleteAndReload = (event) => {
     event.preventDefault()
     let selectedTask = Object.assign({}, this.state.taskDetail)
-    // let displayedTasks = this.state.tasksDisplayed.slice(0)
-    // let findTask = displayedTasks.find((t) => {
-    //   return t.task._id["$oid"] == selectedTask._id["$oid"]})
     this.props.deleteTask(selectedTask)
-    // displayedTasks.splice(displayedTasks.indexOf(findTask), 1)
     this.setState({
       taskDetail: null,
-      // tasksDisplayed: displayedTasks
     })
   }
 
@@ -509,7 +542,7 @@ class TeamTaskContainer extends React.Component {
         <div className="header"><h1>Team Tasks</h1></div>
         <div className="team-task-container">
           <div className="section-1">
-            <SidebarContainer textFilterListener={this.textFilterListener} priorityFilterListener = {this.PriorityFilterListener} statusFilterListener = {this.statusFilterListener} pageFilterListener = {this.pageFilterListener} userFilterListener = {this.userFilterListener} tagFilterListener = {this.tagFilterListener} selectTaskDetail={this.selectTaskDetail}/>
+            <SidebarContainer sortSelection={this.state.sortSelection} sortListener = {this.sortListener} textFilterListener={this.textFilterListener} priorityFilterListener = {this.PriorityFilterListener} statusFilterListener = {this.statusFilterListener} pageFilterListener = {this.pageFilterListener} userFilterListener = {this.userFilterListener} tagFilterListener = {this.tagFilterListener} selectTaskDetail={this.selectTaskDetail}/>
           </div>
 
           <div className="section-2">

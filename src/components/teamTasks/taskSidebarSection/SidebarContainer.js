@@ -1,4 +1,5 @@
 import React from 'react'
+import TaskSortContainer from './TaskSortContainer'
 import TaskFilterContainer from './TaskFilterContainer'
 
 class SidebarContainer extends React.Component {
@@ -17,6 +18,11 @@ class SidebarContainer extends React.Component {
           </div>
         </div>
 
+        <div className="sidebar-section">
+          <span className="sidebar-heading">Sort</span>
+            <TaskSortContainer sortListener={this.props.sortListener}/>
+        </div>
+
 
         <div className="sidebar-section">
           <details>
@@ -27,9 +33,6 @@ class SidebarContainer extends React.Component {
           </details>
         </div>
 
-        <div className="sidebar-section">
-          <span className="sidebar-heading">Sort</span>
-        </div>
       </div>
     )
   }
