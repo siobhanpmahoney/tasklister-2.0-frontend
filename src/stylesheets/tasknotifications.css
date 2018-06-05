@@ -1,13 +1,18 @@
+@keyframes alert {
+    from  {left: 100%; width: content;}
+    to {left: 20%; width: content;}
+}
+
 .task-detail-notification-container {
   display: flex;
   flex-direction: column;
-  flex-grow: 1;
   padding: 0.5em;
   margin: 0.5em;
   border-radius: 8px;
   height: 12%;
   width: 48%;
   position: relative;
+
 
   /* transition-timing-function: ease, step-start, cubic-bezier(0.1, 0.7, 1.0, 0.1); */
   /* align-self: flex-start;
@@ -16,19 +21,23 @@
 }
 
 .task-alert-created, .task-alert-updated, .task-alert-deleted {
-  display: flex;
-  flex-direction: column;
-  /* flex-grow: 1; */
-  padding: 0.85em;
-  margin: 0.5em;
-  border-radius: 8px;
-  /* height: 100%; */
-  width: 100%;
-  size: 80%;
-  position: relative;
-  text-align: center;
-  /* transition-timing-function: ease, step-start, cubic-bezier(0.1, 0.7, 1.0, 0.1); */
-  /* position: relative; */
+    display: flex;
+    flex-direction: column;
+    /* flex-grow: 1; */
+    padding: 0.85em;
+    margin: 0.5em;
+    border-radius: 8px;
+    /* height: 100%; */
+    width: 100%;
+    size: 80%;
+    position: relative;
+    text-align: center;
+    /* animation duration: 3s; */
+    animation-name: alert;
+    animation-direction: normal;
+    animation-duration: 1s;
+    animation-iteration-count: 1;
+    animation-fill-mode: both;
 }
 
 .task-alert-created {

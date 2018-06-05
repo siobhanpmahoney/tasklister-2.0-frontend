@@ -4,7 +4,9 @@ import { connect } from 'react-redux';
 import * as Actions from '../../actions'
 import { withRouter } from 'react-router';
 // import { Redirect } from 'react-router-dom'
-
+import { CSSTransitionGroup } from 'react-transition-group'
+import { Transition } from 'react-transition-group'
+import {TransitionGroup} from 'react-transition-group'
 import TeamTaskList from './taskListSection/TeamTaskList'
 import TeamTaskNewItem from './taskDetailSection/TeamTaskNewItem'
 import TeamTaskDetail from './taskDetailSection/TeamTaskDetail'
@@ -57,7 +59,9 @@ class TeamTaskContainer extends React.Component {
     }
 
     if (!!this.props.isRenderingAlert) {
+      console.log("componentDidUpdate - alert", this.props.isRenderingAlert)
       this.alertTimer()
+
     }
 
   }
@@ -566,7 +570,7 @@ class TeamTaskContainer extends React.Component {
 
 
   alertTimer = () => {
-     setTimeout(this.props.closeAlert, 100000)
+     setTimeout(this.props.closeAlert, 10000)
   }
 
     //END notification style
@@ -592,8 +596,7 @@ class TeamTaskContainer extends React.Component {
           <div className="section-3">
 
             <div className="task-detail-notification-container" style={this.alertVisibility()} onClick={this.props.closeAlert}>
-
-                {this.renderAlert()}
+              {this.renderAlert()}
 
             </div>
 
