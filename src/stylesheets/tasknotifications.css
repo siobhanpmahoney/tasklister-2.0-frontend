@@ -1,11 +1,42 @@
 .task-detail-notification-container {
-  /* display: flex; */
+  display: flex;
   flex-direction: column;
-  background: red;
-  /* flex-grow: 1; */
+  flex-grow: 1;
   padding: 0.5em;
   margin: 0.5em;
   border-radius: 8px;
-  height: 15%;
-  color: white;
+  height: 12%;
+  width: 48%;
+  position: relative;
+
+  /* transition-timing-function: ease, step-start, cubic-bezier(0.1, 0.7, 1.0, 0.1); */
+  /* align-self: flex-start;
+  align-content: flex-end; */
+  /* flex-basis: content; */
+}
+
+.task-alert-created, .task-alert-updated, .task-alert-deleted {
+  display: flex;
+  flex-direction: column;
+  /* flex-grow: 1; */
+  padding: 0.85em;
+  margin: 0.5em;
+  border-radius: 8px;
+  /* height: 100%; */
+  width: 100%;
+  size: 80%;
+  position: relative;
+  text-align: center;
+  /* transition-timing-function: ease, step-start, cubic-bezier(0.1, 0.7, 1.0, 0.1); */
+  /* position: relative; */
+}
+
+.task-alert-created {
+  background-color: #e4f6f6;
+  color: #43cac2;
+}
+
+.task-alert-updated {
+  background-color: #43cac2;
+  color: #caedf2;
 }

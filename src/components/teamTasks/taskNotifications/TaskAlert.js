@@ -5,7 +5,7 @@ class TaskAlert extends React.Component {
     const type = this.props.alertType.split("_")[1]
     const alertClass = 'task-alert-' + type
     return (
-      <div className={alertClass}>{this.props.alertType}</div>
+      <div className={alertClass}>Task has been {type}</div>
     )
   }
 }

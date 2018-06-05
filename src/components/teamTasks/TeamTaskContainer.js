@@ -56,6 +56,10 @@ class TeamTaskContainer extends React.Component {
       }, this.listFilteredTasks)
     }
 
+    if (!!this.props.isRenderingAlert) {
+      this.alertTimer()
+    }
+
   }
 
   // tasks listed in sidebar begin
@@ -555,6 +559,14 @@ class TeamTaskContainer extends React.Component {
     if (!!this.props.isRenderingAlert) {
       return <TaskAlert alertType={this.props.alertType}/>
     }
+  }
+
+
+
+
+
+  alertTimer = () => {
+     setTimeout(this.props.closeAlert, 100000)
   }
 
     //END notification style
