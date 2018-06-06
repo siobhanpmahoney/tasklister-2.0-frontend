@@ -247,6 +247,9 @@ class TeamTaskContainer extends React.Component {
   // task render begin
 
   renderTaskDetailSection = () => {
+    if (this.props.isRenderingAlert) {
+      this.props.closeAlert()
+    }
     if (this.state.taskDetail === 'new') {
       return <TeamTaskNewItem newTaskDeletePageReload={this.newTaskDeletePageReload} newTaskDeleteTagReload={this.newTaskDeleteTagReload}  newTaskFormListener={this.newTaskFormListener} newTaskAddPageField={this.newTaskAddPageField} newTaskAddTagField={this.newTaskAddTagField}  newTaskDisplayAddlFields={this.newTaskDisplayAddlFields} newTaskDisplayAddIcon={this.newTaskDisplayAddIcon} newTaskStatusListener={this.newTaskStatusListener} newTaskRefListener={this.newTaskRefListener} newTaskUserPageListener={this.newTaskUserPageListener} newTaskAddlRefListener = {this.newTaskAddlRefListener} newTaskSubmit={this.newTaskSubmit} newTask = {this.state.newTask} newTaskPages={this.state.newTaskPages} newTaskTags={this.state.newTaskTags} newTaskUsers={this.state.newTaskUsers}/>
     } else if (!!this.state.taskDetail) {
@@ -396,7 +399,8 @@ class TeamTaskContainer extends React.Component {
     let taskTags = this.state.newTaskTags.slice(0)
     let taskUsers = this.state.newTaskUsers.slice(0)
     this.props.createNewTask(task, taskPages, taskTags, taskUsers)
-    this.setState({
+    this.setState((state, props) => {
+      return {
       taskDetail: null,
       taskDetailPages:[{path: ""}],
       taskDetailUsers: [{username: ""}],
@@ -405,8 +409,9 @@ class TeamTaskContainer extends React.Component {
       newTaskPages: [{path: ""}],
       newTaskTags: [{title: ""}],
       newTaskUsers: [{username: ""}]
-    }, this.listFilteredTasks)
-
+    }
+    })
+    this.listFilteredTasks
   }
 
 
