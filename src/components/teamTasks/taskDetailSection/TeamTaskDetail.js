@@ -70,10 +70,15 @@ class TeamTaskDetail extends React.Component {
         <div className="task-detail-container">
 
           <div className="task-detail-header">
+          <div className="task-detail-buttons">
+            <span className="task-detail-edit-submit-button">
+              <button onClick={this.props.taskEditSubmit}>Save</button>
+            </span>
 
-            <div className="task-detail-delete-button">
+            <span className="task-detail-delete-button">
               <button onClick={this.props.deleteAndReload}>Delete</button>
-            </div><br />
+            </span>
+            </div>
 
             <div className="task-detail-title">
                 {this.props.taskDetail.title}
@@ -89,50 +94,56 @@ class TeamTaskDetail extends React.Component {
 
           <div className="task-detail-detais">
 
-            <div className="task-detail-edit-submit-button">
-              <button onClick={this.props.taskEditSubmit}>Save</button>
-            </div>
+
             <div className="task-detail-details-dashboard">
 
 
               <textarea className="task-detail-description" name="description" value={this.props.taskDetail.description} type="contentEditable" contentEditable={true} onChange={this.props.taskEditListener} />
 
 
-              <div className="task-detail-date-updated">
+              <div className="task-detail-section date-updated">
                 <span className="field-name">
                   Updated:
                 </span>
                 <span name="updated_at">{this.formattedSavedDate(this.props.taskDetail.updated_at)}</span>
               </div>
-              <div className="task-detail-date-created">
-                <span className="field-name">Created: </span>{this.formattedSavedDate(this.props.taskDetail.created_at)}
+
+              <div className="task-detail-section date-created">
+                <span className="field-name">Created: </span>
+
+              {this.formattedSavedDate(this.props.taskDetail.created_at)}
                 </div>
 
-                <div className="task-detail-priority">
+                <div className="task-detail-section priority">
                   <span className="field-name">
                     Priority
-                    <input type="checkbox" name="priority" checked={this.priorityCheck()} onChange={this.props.taskEditListener} />
                   </span>
+                    <input type="checkbox" name="priority" checked={this.priorityCheck()} onChange={this.props.taskEditListener} />
+
                 </div>
 
-                <div className="task-detail-users">
+                <div className="task-detail-section users">
                   <span className="field-name">
                     Responsible Team Members:
                   </span>
 
+                  <div className="users-edit">
+
                   {this.props.teamUsers.map((u) => {
                     return <label>{u.username}
-                      <input type="checkbox" checked ={this.userCheck(u)} key={u._id["$oid"]} name="taskDetailUsers" className="username" value={u.username}   onChange={this.props.taskEditUserPageListener} />
+                      <input type="checkbox" checked ={this.userCheck(u)} key={u._id["$oid"]} name="taskDetailUsers" className="username" value={u.username}   onChange={this.props.taskEditUserPageListener} /><br />
                     </label>
                   })}
+                  </div>
 
               </div>
 
-              <div className="task-detail-relevant-pages">
+              <div className="task-detail-section relevant-pages">
                 <span className="field-name">Relevant Paths: </span>
                 <button className="add ref" onClick={this.props.taskEditAddPageField}>
-                  <i className="material-icons add-ref">add_circle_outline</i>
+                  +
                 </button>
+                <div className="pages-edit">
                 <ul>
                   {this.props.taskDetailPages.map((p, idx) => {
                     return !!p.path ? (
@@ -147,12 +158,14 @@ class TeamTaskDetail extends React.Component {
 
                 </ul>
               </div>
+              </div>
 
-              <div className="task-detail-relevant-tags">
+              <div className="task-detail-section relevant-tags">
                 <span className="field-name">Tags: </span>
                 <button className="add ref" onClick={this.props.taskEditAddTagField}>
-                  <i className="material-icons add-ref">add_circle_outline</i>
+                  +
                 </button>
+                <div className="tags-edit">
                 <ul>
                   {this.props.taskDetailTags.map((t, idx) => {
                     return !!t.title ? (
@@ -166,26 +179,29 @@ class TeamTaskDetail extends React.Component {
                 })}
 
                 </ul>
+                </div>
               </div>
 
-            <div className="task-detail-github-branch">
+            <div className="task-detail-section github-branch">
               <span className="field-name">
                 GitHub Branch:
               </span>
               {this.props.taskDetail.github_branch}
             </div>
 
-            <div className="task-detail-status-summary">
+            <div className="task-detail-section status-summary">
               <span className="field-name">
                 Current Status:
               </span>
-              <select name='status_summary'  value={this.props.taskDetail.status_summary} onChange={this.props.taskEditListener}>
+              <div className="status-summary-edit">
+                <select name='status_summary'  value={this.props.taskDetail.status_summary} onChange={this.props.taskEditListener}>
                 <option value=''>Select...</option>
                 <option value="new">New</option>
                 <option value="in progress">In Progress</option>
                 <option value="under review">Under Review</option>
                 <option value="closed">Closed</option>
               </select>
+            </div>
             </div>
           </div>
 

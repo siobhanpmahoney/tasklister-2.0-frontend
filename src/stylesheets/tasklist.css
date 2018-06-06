@@ -1,0 +1,25 @@
+.task-list-item {
+  padding: 1em 0.5em;
+  font-size: 95%;
+  border-bottom: #f6f7fb solid 2px;
+  min-height: 40px;
+  /* background-color: #f9fafc; */
+}
+
+.task-list-item:hover {
+  background-color: #f6f7fb;
+}
+
+
+.task-list-item-title, .task-list-item-tags-section {
+  display: inline;
+}
+
+.task-list-item-title {
+  float: left;
+}
+
+.task-list-item-tags-section {
+  float:right;
+
+}

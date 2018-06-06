@@ -7,11 +7,13 @@ grey: #f6f7fb
    */
 
   @import 'web-fonts.css';
+  @import 'hk_grotesk/stylesheet.css';
+  @import 'Franklin_Gothic_FS_Book-Webfont/Webfonts/stylesheet.css';
 
 .App {
   text-align: center;
   margin: 0em;
-  font-family: "SamoSans-Regular";
+  font-family: 'hk grotesk';
 }
 
 .App-logo {
@@ -54,16 +56,22 @@ html {
 body {
   width: 100%;
   padding: 0.5em;
-  font-family: "SamoSans-Regular";
+  font-family: 'hk grotesk';
   /* overflow-x: hidden; */
   background-size: cover;
 }
 
 .header, .header-logo, .header-nav, .header-cell {
-  font-family: "SamoSans-Regular";
+  font-family: 'hk grotesk';
   font-weight: 600;
 
 }
+
+input[type=text], textarea, select, option {
+  font-family: 'hk grotesk';
+  font-size: 90%;
+}
+
 
 
 
@@ -184,25 +192,4 @@ will-change: overflow;
   position: relative;
   width: 100%;
   /* justify-content: stretch; */
-}
-
-.task-list-item {
-  padding: 1em 0.5em;
-  font-size: 95%;
-  border-bottom: #f6f7fb solid 2px;
-  min-height: 40px;
-}
-
-
-.task-list-item-title, .task-list-item-tags-section {
-  display: inline;
-}
-
-.task-list-item-title {
-  float: left;
-}
-
-.task-list-item-tags-section {
-  float:right;
-
 }
