@@ -72,11 +72,11 @@ class TeamTaskDetail extends React.Component {
           <div className="task-detail-header">
           <div className="task-detail-buttons">
             <span className="task-detail-edit-submit-button">
-              <button onClick={this.props.taskEditSubmit}>Save</button>
+              <button className="edit-submit" onClick={this.props.taskEditSubmit}>Save</button>
             </span>
 
             <span className="task-detail-delete-button">
-              <button onClick={this.props.deleteAndReload}>Delete</button>
+              <button className="edit-delete" onClick={this.props.deleteAndReload}>Delete</button>
             </span>
             </div>
 
@@ -105,13 +105,13 @@ class TeamTaskDetail extends React.Component {
                 <span className="field-name">
                   Updated:
                 </span>
-                <span name="updated_at">{this.formattedSavedDate(this.props.taskDetail.updated_at)}</span>
+                <span className="updated_at" name="updated_at">{this.formattedSavedDate(this.props.taskDetail.updated_at)}</span>
               </div>
 
               <div className="task-detail-section date-created">
                 <span className="field-name">Created: </span>
 
-              {this.formattedSavedDate(this.props.taskDetail.created_at)}
+              <span className="created_at">{this.formattedSavedDate(this.props.taskDetail.created_at)}</span>
                 </div>
 
                 <div className="task-detail-section priority">

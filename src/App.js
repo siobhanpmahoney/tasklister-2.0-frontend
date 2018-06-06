@@ -9,6 +9,7 @@ import './stylesheets/tasknotifications.css'
 import './stylesheets/tasklist.css'
 import './web-fonts.css'
 import './hk_grotesk/stylesheet.css'
+import './Haboro_Fonts/Haboro_Fonts.css'
 import './Franklin_Gothic_FS_Book-Webfont/Webfonts/stylesheet.css'
 import registerServiceWorker from './registerServiceWorker';
 

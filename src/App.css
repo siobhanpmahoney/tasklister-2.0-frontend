@@ -9,11 +9,12 @@ grey: #f6f7fb
   @import 'web-fonts.css';
   @import 'hk_grotesk/stylesheet.css';
   @import 'Franklin_Gothic_FS_Book-Webfont/Webfonts/stylesheet.css';
+  @import 'Haboro_Fonts/Haboro_Fonts.css';
 
 .App {
   text-align: center;
   margin: 0em;
-  font-family: 'hk grotesk';
+  font-family: 'Haboro Sans';
 }
 
 .App-logo {
@@ -56,7 +57,7 @@ html {
 body {
   width: 100%;
   padding: 0.5em;
-  font-family: 'hk grotesk';
+  font-family: 'Haboro Sans';
   /* overflow-x: hidden; */
   background-size: cover;
 }
@@ -68,7 +69,7 @@ body {
 }
 
 input[type=text], textarea, select, option {
-  font-family: 'hk grotesk';
+  font-family: 'Haboro Sans';
   font-size: 90%;
 }
 

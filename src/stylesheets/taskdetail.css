@@ -60,6 +60,12 @@
 
 }
 
+button.edit-submit, button.edit-delete {
+  font-family: "Haboro Sans";
+}
+
+
+
 .ind-tag {
   /* display: inline; */
   float:right;
@@ -101,11 +107,17 @@ button.add-ref {
 }
 
 .field-name {
-  font-family:"hk grotesk";
+  font-family:"Avenir";
   font-weight: bold;
   padding: 0.25em;
   font-size: 90%;
 }
+
+.updated_at, .created_at {
+  font-family: "Haboro Sans";
+  font-size: 90%;
+}
+
 
 /* .task-detail-details-dashboard {
   display: flex;
@@ -146,6 +158,12 @@ textarea.task-detail-description {
   /* box-sizing: border-box; */
 
 
+}
+
+.users-edit {
+  font-family: "Haboro Sans";
+  font-size: 90%;
+  margin: 0.35em;
 }
 
 
