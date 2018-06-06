@@ -101,7 +101,7 @@ button.add-ref {
   font-size: 95%; */
 }
 
-.task-detail-section {
+.task-detail-section, .new-task-section {
   margin: 0.5em;
   padding: 0.5em;
 }
@@ -140,14 +140,14 @@ textarea {
   /* box-sizing: border-box; */
   border: #E5E6E9 solid 1px;
   box-sizing: border-box;
-  min-height: 25px;
-  margin: 0.25em;
+  min-height: 18px;
+  /* margin: 0.25em; */
   resize: none;
   overflow: hidden;
-   white-space: pre-wrap;
+  white-space: pre-wrap;
 }
 
-textarea.task-detail-description {
+textarea.task-detail-description, textarea.new-task-title, textarea.new-task-description {
   width: 80%;
   align-items: center;
 
@@ -160,13 +160,30 @@ textarea.task-detail-description {
 
 }
 
-.users-edit {
+.users-edit, .new-task-users {
   font-family: "Haboro Sans";
   font-size: 90%;
   margin: 0.35em;
 }
 
+textarea.title, textarea.path {
+  height: 24px;
+  padding: 0.2em;
+  margin: 0.4em 0.3em;
+  width: 40%;
+  align-items: flex-start;
+  align-self: flex-start;
+}
 
+input[type=text], textarea, select, option {
+  font-family: 'Haboro Sans';
+  font-size: 90%;
+}
+
+option {
+  margin: 0.2em;
+  padding: 0.2em;
+}
 
 /*
 .table-header-row. .table-row {

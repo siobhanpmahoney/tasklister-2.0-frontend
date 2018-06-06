@@ -19,62 +19,69 @@ class TeamTaskNewItem extends React.Component {
         <form>
           <h3><label>New Task</label></h3>
 
-          <div><label><span className="field-name">Task Title:</span>
-          <textarea name="title" onChange={this.props.newTaskFormListener} />
+          <div className="new-task-section"><label><div className="field-name">Task Title:</div>
+          <textarea name="title" className="new-task-title" onChange={this.props.newTaskFormListener} />
         </label></div>
 
-        <div><label><span className="field-name">Task Description:</span>
-        <textarea name="description" onChange={this.props.newTaskFormListener} />
+      <div className="new-task-section">
+        <label>
+          <div className="field-name">Task Description:</div>
+        <textarea name="description" className="new-task-description" onChange={this.props.newTaskFormListener} />
       </label></div>
 
-      <div>
+    <div className="new-task-section">
         <label>
           <span className="field-name">Priority:</span>
           <input type="checkbox" name="priority" onChange={this.props.newTaskFormListener} />
         </label>
       </div>
 
-      <div className="new-task-relevant-pages">
+      <div className="new-task-section">
         <span className="field-name">
           Relevant Paths:
         </span>
         <button className="add ref" onClick={this.props.newTaskAddPageField}>
           +
         </button>
-        <ul>
+        <div className="new-task-pages">
+
           {this.props.newTaskPages.map((p, idx) => {
             return !!p.path ? (
-              <li key={p.path} name="newTaskPages" className="path">
+              <div key={p.path} name="newTaskPages" className="path">
                 {p.path} <button onClick={()=>this.props.newTaskDeletePageReload(this.props.newTask, p)}> x </button>
-            </li>
+            </div>
           ) : (
-            <textarea key={idx} name="newTaskPages" className="path"  type="contentEditable" onChange={this.props.newTaskAddlRefListener} />
+            <div><textarea key={idx} name="newTaskPages" className="path"  type="contentEditable" onChange={this.props.newTaskAddlRefListener} /></div>
           )
 
         })}
 
-      </ul>
+
+      </div>
     </div>
 
-    <div>
+    <div className="new-task-section">
       <label>
-        <span className="field-name">
+        <div className="field-name">
           Assign Team
-        </span>
+
 
         <button className="add ref" onClick={this.props.newTaskAddUserField}>
           +
         </button>
+      </div>
+      <div className="new-task-users">
         {this.props.teamUsers.map((u) => {
           return <label>{u.username}
             <input type="checkbox" checked ={this.userCheck(u)} key={u._id["$oid"]} name="taskDetailUsers" className="username" value={u.username} onChange={this.props.newTaskUserPageListener} />
-          </label>
+          <br /></label>
         })}
+        </div>
 
     </label>
   </div>
 
-  <div>
+  <div className="new-task-section">
     <label>
       <span className="field-name">
         Tags
@@ -82,23 +89,26 @@ class TeamTaskNewItem extends React.Component {
       <button className="add ref" onClick={this.props.newTaskAddTagField}>
         +
       </button>
-      <ul>
+      <div className="new-task-tags">
+
         {this.props.newTaskTags.map((t, idx) => {
           return !!t.title ? (
-            <li key={t.title} name="newTaskTags" className="title">
+            <div key={t.title} name="newTaskTags" className="title">
               {t.title} <button onClick={()=>this.props.newTaskDeleteTagReload(this.props.newTask, t)}> x </button>
-          </li>
+          </div>
         ) : (
-          <textarea key={idx} name="newTaskTags" className="title"  type="contentEditable" onChange={this.props.newTaskAddlRefListener} />
+          <div><textarea key={idx} name="newTaskTags" className="title"  type="contentEditable" onChange={this.props.newTaskAddlRefListener} /></div>
         )
 
       })}
 
-    </ul>
+
+    </div>
   </label>
 </div>
 
-<div><label>Status Summary:
+<div className="new-task-section"><label>
+  <div className="field-name">Status Summary:</div>
   <select name='status_summary' value={this.props.newTask.status_summary} onChange={this.props.newTaskFormListener}>
     <option value=''>Select...</option>
     <option value="new">New</option>
