@@ -62,7 +62,7 @@ body {
 }
 
 .header, .header-logo, .header-nav, .header-cell {
-  font-family: 'hk grotesk';
+  font-family: 'Avenir Next';
   font-weight: 600;
 
 }
@@ -89,17 +89,20 @@ input[type=text], textarea, select, option {
   width: 106%;
   padding: 1em;
   position: absolute;
+  font-family: 'Avenir';
 }
 
 .header-logo {
   display: inline-flex;
   justify-content: flex-start;
   font-weight: 700;
+  font-family: 'Avenir';
 }
 
 .header-links {
   display: inline-flex;
   justify-content: flex-end;
+  font-family: 'Avenir';
 }
 
 .header-links span {
