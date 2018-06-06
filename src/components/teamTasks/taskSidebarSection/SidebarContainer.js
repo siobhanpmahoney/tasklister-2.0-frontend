@@ -13,7 +13,7 @@ class SidebarContainer extends React.Component {
       <div className="sidebar-container">
         <div className="sidebar-section">
           <div className="sidebar-create-new-task">
-            <span className="sidebar-heading">Create New Task</span>
+            <span className="sidebar-heading">Create New Task </span>
             <button onClick={this.selectTaskDetail}> + </button>
           </div>
         </div>
