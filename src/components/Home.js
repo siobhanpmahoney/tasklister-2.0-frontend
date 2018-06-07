@@ -5,6 +5,7 @@ import * as Actions from '../actions'
 import { withRouter } from 'react-router';
 import { Redirect } from 'react-router-dom'
 import TeamTaskContainer from './teamTasks/TeamTaskContainer'
+import WithAuth from '../wrappers/WithAuth'
 
 class Home extends React.Component {
 
@@ -61,4 +62,4 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators(Actions, dispatch);
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Home));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(WithAuth(Home)));

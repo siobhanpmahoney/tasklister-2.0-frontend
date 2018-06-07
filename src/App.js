@@ -19,6 +19,7 @@ import Home from './components/Home'
 import LogIn from './components/LogIn'
 import LogOut from './components/LogOut'
 import NavBar from './components/NavBar'
+import WithAuth from './wrappers/WithAuth'
 
 class App extends Component {
   constructor(props) {
@@ -119,11 +120,14 @@ class App extends Component {
   render() {
 
 
-if (this.state.auth.loggingIn) {
+// if (this.state.auth.loggingIn) {
     return (
 
       <Router>
               <div className="App">
+
+                <Route exact path="/login" render={() => <LogIn setLoggedInUser={this.setLoggedInUser} auth={this.state.auth} /> } />
+
 
                 <NavBar auth={this.state.auth} loggedIn = {this.state.auth.loggingIn} logOutUser = {this.logOutUser} />
 
@@ -137,19 +141,19 @@ if (this.state.auth.loggingIn) {
     )
   }
 
-  if (!this.state.auth.loggingIn) {
-
-    return (
-      <Router>
-        <div>
-        <Route exact path="/login" render={() => <LogIn setLoggedInUser={this.setLoggedInUser} auth={this.state.auth} /> } />
-
-      </div>
-
-      </Router>
-    )
-  }
-  }
+  // if (!this.state.auth.loggingIn) {
+  //
+  //   return (
+  //     <Router>
+  //       <div>
+  //       <Route exact path="/login" render={() => <LogIn setLoggedInUser={this.setLoggedInUser} auth={this.state.auth} /> } />
+  //
+  //     </div>
+  //
+  //     </Router>
+  //   )
+  // }
+  // }
 }
 
 

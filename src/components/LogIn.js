@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as Actions from '../actions'
-import { withRouter } from 'react-router';
+import { withRouter, Redirect } from 'react-router';
 
 class LogIn extends React.Component {
   static propTypes = {
@@ -75,7 +75,13 @@ class LogIn extends React.Component {
 
       </div>
     )
-  }}
+  } else if (this.props.auth.loggingIn) {
+    return (
+      <Redirect to="/" />
+    )
+  }
+
+}
 }
 
 

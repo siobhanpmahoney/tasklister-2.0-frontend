@@ -3,7 +3,7 @@ import { Redirect } from 'react-router'
 
 const WithAuth = WrappedComponent => {
     return (props) => {
-      return (!props.auth.loggingIn || props.auth.currentUser) ?
+      return (props.auth.loggingIn || !props.auth.currentUser) ?
         <WrappedComponent {...props} />
       :
         <Redirect to="/login" />
