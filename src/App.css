@@ -6,10 +6,10 @@ grey: #f6f7fb
   background-color: #2C3A51;
    */
 
-  @import 'web-fonts.css';
-  @import 'hk_grotesk/stylesheet.css';
-  @import 'Franklin_Gothic_FS_Book-Webfont/Webfonts/stylesheet.css';
-  @import 'Haboro_Fonts/Haboro_Fonts.css';
+  @import 'stylesheets/web-fonts.css';
+  @import 'stylesheets/hk_grotesk/stylesheet.css';
+  @import 'stylesheets/Franklin_Gothic_FS_Book-Webfont/Webfonts/stylesheet.css';
+  @import 'stylesheets/Haboro_Fonts/Haboro_Fonts.css';
 
 .App {
   text-align: center;
